@@ -7,7 +7,7 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const navItems = [
-    { label: 'About', href: '#about' },
+    { label: 'RWAI', href: '/' },
     { label: '挖矿', href: '/mint' },
     { label: '质押', href: '/staking' },
     { label: '邀请', href: '/referral' },

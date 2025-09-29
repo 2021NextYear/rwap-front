@@ -13,8 +13,10 @@ import { genErc20ApproveForContract, getReferral, getUserInfo } from '@/utils'
 import { CHAIN_CONFIG } from '@/constants'
 import { useAccount } from 'wagmi'
 import { number2Big, sanitizeInput, sendTransaction, stakeMiningInterface, times } from '@/lib'
+import { useBalance } from '@/hooks/useBalance'
 
 const Staking = () => {
+  const { RWAT } = useBalance()
   const chainId = CHAIN_CONFIG.chainId
   const { rwat, staking, usdt } = CHAIN_CONFIG.contract
   const { address } = useAccount()
@@ -146,7 +148,6 @@ const Staking = () => {
             </p>
           </div>
         </section>
-
         {/* Staking Stats */}
         <section className="py-16 px-4">
           <div className="container mx-auto">
@@ -186,6 +187,8 @@ const Staking = () => {
                     <CardDescription>质押或取消质押您的 RWAT 代币</CardDescription>
                   </CardHeader>
                   <CardContent>
+                    <div className="mb-2">我的RWAT余额：{RWAT}</div>
+
                     <Tabs defaultValue="stake" className="w-full">
                       <TabsList className="grid w-full grid-cols-2">
                         <TabsTrigger value="stake">质押</TabsTrigger>
@@ -336,7 +339,7 @@ const Staking = () => {
                       <div className="flex justify-between items-center">
                         <span className="text-sm text-muted-foreground">待领取奖励</span>
                         <span className="font-medium text-primary">
-                          {myStakingData.pendingRewards}
+                          {userInfo.claimableRewards.stakingReward}
                         </span>
                       </div>
                       <div className="flex justify-between items-center">
@@ -355,7 +358,7 @@ const Staking = () => {
 
                     <div className="space-y-2">
                       <Button className="w-full" size="sm">
-                        领取奖励 ({myStakingData.pendingRewards})
+                        领取奖励 ({userInfo.claimableRewards.stakingReward})
                       </Button>
                       <Button className="w-full" variant="outline" size="sm">
                         复投奖励

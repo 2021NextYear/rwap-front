@@ -1,3 +1,4 @@
+import { useBalance } from '@/hooks/useBalance'
 import { useEffect } from 'react'
 import { isAddress } from 'viem'
 
@@ -6,6 +7,7 @@ import { useReconnect } from 'wagmi'
 export function Updater() {
   useWagmiReconnect()
   useSaveReferral()
+  useBalance()
   return null
 }
 

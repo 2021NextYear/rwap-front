@@ -13,31 +13,39 @@ import { WagmiProvider } from 'wagmi'
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import '@rainbow-me/rainbowkit/styles.css'
 import { Updater } from './components/Updater'
+import { SWRConfig } from 'swr'
 
 const queryClient = new QueryClient()
 
 const App = () => (
-  <WagmiProvider config={wagmiConfig}>
-    <QueryClientProvider client={queryClient}>
-      <RainbowKitProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <Updater />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/mint" element={<MintMining />} />
-              <Route path="/staking" element={<Staking />} />
-              <Route path="/referral" element={<Referral />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
-      </RainbowKitProvider>
-    </QueryClientProvider>
-  </WagmiProvider>
+  <SWRConfig
+    value={{
+      refreshWhenHidden: false,
+      refreshWhenOffline: false,
+    }}
+  >
+    <WagmiProvider config={wagmiConfig}>
+      <QueryClientProvider client={queryClient}>
+        <RainbowKitProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <Updater />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/mint" element={<MintMining />} />
+                <Route path="/staking" element={<Staking />} />
+                <Route path="/referral" element={<Referral />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </TooltipProvider>
+        </RainbowKitProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
+  </SWRConfig>
 )
 
 export default App

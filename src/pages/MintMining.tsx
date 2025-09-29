@@ -21,8 +21,10 @@ import { genErc20ApproveForContract, getReferral, getUserInfo } from '@/utils'
 import { useAccount } from 'wagmi'
 import { zeroAddress } from 'viem'
 import { Input } from '@/components/ui/input'
+import { useBalance } from '@/hooks/useBalance'
 
 const MintMining = () => {
+  const { USDT } = useBalance()
   const chainId = CHAIN_CONFIG.chainId
   const { rwat, staking, usdt } = CHAIN_CONFIG.contract
   const { address } = useAccount()
@@ -171,7 +173,7 @@ const MintMining = () => {
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span>余额</span>
-                      <span>0.1 USDT</span>
+                      <span>{USDT} USDT</span>
                     </div>
                   </div>
 
@@ -216,7 +218,7 @@ const MintMining = () => {
 
                   <div className="pt-4 border-t">
                     <Button className="w-full" variant="secondary">
-                      领取收益 (45.2 RWAT)
+                      领取收益 ({userInfo.claimableRewards.miningReward} RWAT)
                     </Button>
                   </div>
                 </CardContent>
