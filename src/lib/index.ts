@@ -1,6 +1,4 @@
-export * from './mutilcall'
 export * from './number'
-export * from './request'
 export * from './utils'
 export * from './contractInstance'
 export * from './rpcProvider'

@@ -1,66 +1,120 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { Wallet, Coins, Zap, TrendingUp, Users, Clock } from "lucide-react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import FloatingShapes from "@/components/FloatingShapes";
+import { useEffect, useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Progress } from '@/components/ui/progress'
+import { Badge } from '@/components/ui/badge'
+import { Wallet, Coins, Zap, TrendingUp, Users, Clock } from 'lucide-react'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
+import FloatingShapes from '@/components/FloatingShapes'
+import {
+  getRwatContract,
+  getStakeMiningContract,
+  number2Big,
+  rwatInterface,
+  sanitizeInput,
+  sendTransaction,
+  stakeMiningInterface,
+} from '@/lib'
+import { CHAIN_CONFIG } from '@/constants'
+import { genErc20ApproveForContract, getReferral, getUserInfo } from '@/utils'
+import { useAccount } from 'wagmi'
+import { zeroAddress } from 'viem'
+import { Input } from '@/components/ui/input'
 
 const MintMining = () => {
-  const [isConnected, setIsConnected] = useState(false);
-  const [mintAmount, setMintAmount] = useState(1);
+  const chainId = CHAIN_CONFIG.chainId
+  const { rwat, staking, usdt } = CHAIN_CONFIG.contract
+  const { address } = useAccount()
+  const [mintAmount, setMintAmount] = useState('100')
+
+  const [userInfo, setUserInfo] = useState({
+    directInviter: '',
+    directInviteCount: '0',
+    totalMiningAmount: '0',
+    totalStakingAmount: '0',
+    claimableRewards: {
+      miningReward: '0',
+      stakingReward: '0',
+      inviteReward: '0',
+      dividendReward: '0',
+    },
+    claimedRewards: {
+      miningReward: '0',
+      stakingReward: '0',
+      inviteReward: '0',
+      dividendReward: '0',
+    },
+  })
 
   const stats = [
-    { label: "总供应量", value: "10,000", icon: Coins },
-    { label: "已挖出", value: "3,847", icon: TrendingUp },
-    { label: "活跃矿工", value: "1,234", icon: Users },
-    { label: "挖矿难度", value: "2.5x", icon: Zap },
-  ];
+    { label: '总供应量', value: '10,000', icon: Coins },
+    { label: '已挖出', value: '3,847', icon: TrendingUp },
+    { label: '活跃矿工', value: '1,234', icon: Users },
+    { label: '挖矿难度', value: '2.5x', icon: Zap },
+  ]
+
+  const setStaking = async () => {
+    const rwatContract = getRwatContract(rwat, chainId)
+    const calldata = rwatInterface.encodeFunctionData('setStakingContractAddress', [staking])
+    await sendTransaction({ to: rwat, data: calldata, value: '0' }, chainId)
+  }
+
+  const setDexpair = async () => {
+    const rwatContract = getRwatContract(rwat, chainId)
+    const calldata = rwatInterface.encodeFunctionData('setDexPair', [
+      '0xc7bb02fb86605d6d7be7c407fb464ff5a6c300fc',
+      true,
+    ])
+    await sendTransaction({ to: rwat, data: calldata, value: '0' }, chainId)
+  }
+
+  const mining = async () => {
+    const _amount = number2Big(mintAmount, 18)
+    const erc20Approve = await genErc20ApproveForContract(usdt, staking, address, _amount, chainId)
+    if (erc20Approve) {
+      await sendTransaction(erc20Approve, chainId)
+    }
+
+    const calldata = stakeMiningInterface.encodeFunctionData('mining', [_amount, getReferral()])
+
+    await sendTransaction({ to: staking, data: calldata, value: '0' }, chainId)
+
+    fetchUserInfo()
+  }
+
+  const fetchUserInfo = async () => {
+    const info = await getUserInfo(address)
+    setUserInfo(info)
+  }
+
+  useEffect(() => {
+    address && fetchUserInfo()
+  }, [address])
 
   return (
     <div className="relative min-h-screen">
       <FloatingShapes />
       <Header />
-      
+
       <main className="relative z-10 pt-20">
         {/* Hero Section */}
+        {/* <div className="">
+          <div className="" onClick={setStaking}>
+            set staking
+          </div>
+          <div className="" onClick={setDexpair}>
+            set pair
+          </div>
+        </div> */}
         <section className="py-20 px-4">
           <div className="container mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
               Mint & Mining
             </h1>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              参与RWAI挖矿生态，铸造专属NFT，获取丰厚奖励
+              参与RWAT挖矿生态，铸造专属NFT，获取丰厚奖励
             </p>
-            
-            {/* Wallet Connection */}
-            <div className="mb-12">
-              {!isConnected ? (
-                <Button 
-                  size="lg" 
-                  onClick={() => setIsConnected(true)}
-                  className="text-lg px-8 py-4"
-                >
-                  <Wallet className="mr-2 h-5 w-5" />
-                  连接钱包
-                </Button>
-              ) : (
-                <div className="flex items-center justify-center gap-4">
-                  <Badge variant="secondary" className="px-4 py-2 text-sm">
-                    <Wallet className="mr-2 h-4 w-4" />
-                    钱包已连接: 0x1234...5678
-                  </Badge>
-                  <Button 
-                    variant="outline" 
-                    onClick={() => setIsConnected(false)}
-                  >
-                    断开连接
-                  </Button>
-                </div>
-              )}
-            </div>
           </div>
         </section>
 
@@ -69,7 +123,7 @@ const MintMining = () => {
           <div className="container mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
               {stats.map((stat, index) => {
-                const Icon = stat.icon;
+                const Icon = stat.icon
                 return (
                   <Card key={index} className="bg-gradient-card border-0 backdrop-blur-sm">
                     <CardContent className="p-6">
@@ -84,7 +138,7 @@ const MintMining = () => {
                       </div>
                     </CardContent>
                   </Card>
-                );
+                )
               })}
             </div>
           </div>
@@ -99,63 +153,30 @@ const MintMining = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Coins className="h-5 w-5" />
-                    铸造 RWAI NFT
+                    RWAT
                   </CardTitle>
-                  <CardDescription>
-                    铸造专属NFT，开启挖矿之旅
-                  </CardDescription>
+                  <CardDescription>认购RWAT，开启挖矿之旅</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div>
-                    <label className="block text-sm font-medium mb-2">
-                      铸造数量
-                    </label>
+                    <label className="block text-sm font-medium mb-2">认购</label>
                     <div className="flex items-center gap-2">
-                      <Button 
-                        variant="outline" 
-                        size="sm"
-                        onClick={() => setMintAmount(Math.max(1, mintAmount - 1))}
-                        disabled={!isConnected}
-                      >
-                        -
-                      </Button>
-                      <div className="flex-1 text-center py-2 px-4 border rounded-md">
-                        {mintAmount}
-                      </div>
-                      <Button 
-                        variant="outline" 
-                        size="sm"
-                        onClick={() => setMintAmount(Math.min(10, mintAmount + 1))}
-                        disabled={!isConnected}
-                      >
-                        +
-                      </Button>
+                      <Input
+                        value={mintAmount}
+                        onChange={e => setMintAmount(sanitizeInput(e.target.value, 6, false))}
+                      />
                     </div>
                   </div>
-                  
+
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
-                      <span>单价</span>
-                      <span>0.1 ETH</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span>Gas费用</span>
-                      <span>~0.005 ETH</span>
-                    </div>
-                    <div className="border-t pt-2">
-                      <div className="flex justify-between font-medium">
-                        <span>总计</span>
-                        <span>{(mintAmount * 0.1 + 0.005).toFixed(3)} ETH</span>
-                      </div>
+                      <span>余额</span>
+                      <span>0.1 USDT</span>
                     </div>
                   </div>
-                  
-                  <Button 
-                    className="w-full" 
-                    size="lg"
-                    disabled={!isConnected}
-                  >
-                    {isConnected ? `铸造 ${mintAmount} 个 NFT` : "请先连接钱包"}
+
+                  <Button className="w-full" size="lg" onClick={mining}>
+                    认购
                   </Button>
                 </CardContent>
               </Card>
@@ -167,52 +188,37 @@ const MintMining = () => {
                     <Zap className="h-5 w-5" />
                     我的挖矿
                   </CardTitle>
-                  <CardDescription>
-                    查看挖矿进度和收益
-                  </CardDescription>
+                  <CardDescription>查看挖矿进度和收益</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                  {isConnected ? (
-                    <>
-                      <div className="space-y-4">
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm">我的NFT</span>
-                          <Badge>3 个</Badge>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm">算力</span>
-                          <span className="font-medium">150 TH/s</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm">今日收益</span>
-                          <span className="font-medium text-primary">+12.5 RWAI</span>
-                        </div>
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <div className="flex justify-between text-sm">
-                          <span>挖矿进度</span>
-                          <span>67%</span>
-                        </div>
-                        <Progress value={67} className="h-2" />
-                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                          <Clock className="h-3 w-3" />
-                          下次奖励: 2小时15分钟
-                        </div>
-                      </div>
-                      
-                      <div className="pt-4 border-t">
-                        <Button className="w-full" variant="secondary">
-                          领取收益 (45.2 RWAI)
-                        </Button>
-                      </div>
-                    </>
-                  ) : (
-                    <div className="text-center text-muted-foreground py-8">
-                      <Wallet className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                      <p>连接钱包查看挖矿数据</p>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm">认购金额</span>
+                      <Badge>{userInfo.totalMiningAmount} USDT</Badge>
                     </div>
-                  )}
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm">算力</span>
+                      <span className="font-medium">150 TH/s</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm">今日收益</span>
+                      <span className="font-medium text-primary">+12.5 RWAT</span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span>挖矿进度</span>
+                      <span>67%</span>
+                    </div>
+                    <Progress value={67} className="h-2" />
+                  </div>
+
+                  <div className="pt-4 border-t">
+                    <Button className="w-full" variant="secondary">
+                      领取收益 (45.2 RWAT)
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             </div>
@@ -223,15 +229,15 @@ const MintMining = () => {
         <section className="py-16 px-4">
           <div className="container mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">挖矿池</h2>
-              <p className="text-muted-foreground">选择合适的挖矿池，最大化收益</p>
+              <h2 className="text-3xl font-bold mb-4">节点分布</h2>
+              <p className="text-muted-foreground">节点数据展示，超级节点享受手续费分红</p>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
-                { name: "标准池", apy: "15%", difficulty: "低", fee: "2%" },
-                { name: "高级池", apy: "25%", difficulty: "中", fee: "3%" },
-                { name: "专业池", apy: "40%", difficulty: "高", fee: "5%" },
+                { name: '普通用户', apy: '15%', difficulty: '低', fee: '0%' },
+                { name: '节点', apy: '25%', difficulty: '中', fee: '40%' },
+                { name: '超级节点', apy: '40%', difficulty: '高', fee: '60%' },
               ].map((pool, index) => (
                 <Card key={index} className="bg-gradient-card border-0 backdrop-blur-sm">
                   <CardHeader>
@@ -239,16 +245,18 @@ const MintMining = () => {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="text-center">
-                      <div className="text-3xl font-bold text-primary mb-1">
-                        {pool.apy}
-                      </div>
+                      <div className="text-3xl font-bold text-primary mb-1">{pool.apy}</div>
                       <div className="text-sm text-muted-foreground">年化收益率</div>
                     </div>
-                    
+
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
                         <span>难度</span>
-                        <Badge variant={index === 0 ? "secondary" : index === 1 ? "default" : "destructive"}>
+                        <Badge
+                          variant={
+                            index === 0 ? 'secondary' : index === 1 ? 'default' : 'destructive'
+                          }
+                        >
                           {pool.difficulty}
                         </Badge>
                       </div>
@@ -257,9 +265,9 @@ const MintMining = () => {
                         <span>{pool.fee}</span>
                       </div>
                     </div>
-                    
-                    <Button className="w-full" variant={index === 1 ? "default" : "outline"}>
-                      {index === 1 ? "推荐" : "加入挖矿"}
+
+                    <Button className="w-full" variant={index === 1 ? 'default' : 'outline'}>
+                      {index === 1 ? '推荐' : '加入挖矿'}
                     </Button>
                   </CardContent>
                 </Card>
@@ -268,10 +276,10 @@ const MintMining = () => {
           </div>
         </section>
       </main>
-      
+
       <Footer />
     </div>
-  );
-};
+  )
+}
 
-export default MintMining;
+export default MintMining

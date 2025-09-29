@@ -7,7 +7,7 @@ const providers: {
 
 export function getRPCProvider(chainId: number) {
   if (!providers[chainId]) {
-    const rpc = CHAIN_CONFIG[chainId].networks.rpcUrl
+    const rpc = CHAIN_CONFIG.rpc
     const currentProvider = new JsonRpcProvider(rpc)
     providers[chainId] = currentProvider
   }

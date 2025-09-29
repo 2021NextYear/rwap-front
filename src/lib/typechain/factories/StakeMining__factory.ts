@@ -721,11 +721,29 @@ const _abi = [
       },
       {
         internalType: "address",
+        name: "_user",
+        type: "address",
+      },
+    ],
+    name: "stakingForOther",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_amount",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
         name: "_inviter",
         type: "address",
       },
     ],
-    name: "staking",
+    name: "stakingForSelf",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

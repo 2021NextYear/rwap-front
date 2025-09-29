@@ -1,20 +1,17 @@
-import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { Button } from '@/components/ui/button'
+import { Menu, X } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 const Header = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const navItems = [
-    { label: "About", href: "#about" },
-    { label: "Timeline", href: "#timeline" },
-    { label: "Utility", href: "#utility" },
-    { label: "Tokenomics", href: "#tokenomics" },
-    { label: "挖矿", href: "/mint" },
-    { label: "质押", href: "/staking" },
-    { label: "邀请", href: "/referral" },
-    { label: "Follow us", href: "#follow" }
-  ];
+    { label: 'About', href: '#about' },
+    { label: '挖矿', href: '/mint' },
+    { label: '质押', href: '/staking' },
+    { label: '邀请', href: '/referral' },
+  ]
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 glass transition-smooth">
@@ -26,13 +23,13 @@ const Header = () => {
             </div>
             <span className="text-xl font-bold gradient-text">rwai</span>
           </div>
-          
+
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item, index) => (
-              <a 
+              <a
                 key={index}
-                href={item.href} 
+                href={item.href}
                 className="text-muted-foreground hover:text-primary transition-smooth"
               >
                 {item.label}
@@ -41,10 +38,8 @@ const Header = () => {
           </div>
 
           <div className="flex items-center space-x-4">
-            <Button className="bg-gradient-primary hover:opacity-90 text-white border-0 shadow-glow">
-              Launch Agent
-            </Button>
-            
+            <ConnectButton chainStatus="none" showBalance={false} />
+
             {/* Mobile Menu Button */}
             <button
               className="md:hidden w-10 h-10 flex items-center justify-center text-muted-foreground hover:text-primary transition-smooth"
@@ -74,7 +69,7 @@ const Header = () => {
         )}
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

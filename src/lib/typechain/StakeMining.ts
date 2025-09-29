@@ -57,7 +57,8 @@ export interface StakeMiningInterface extends Interface {
       | "owner"
       | "renounceOwnership"
       | "rewardToken"
-      | "staking"
+      | "stakingForOther"
+      | "stakingForSelf"
       | "superNodes"
       | "totalOrdinaryNodePerformance"
       | "totalSuperNodePerformance"
@@ -201,7 +202,11 @@ export interface StakeMiningInterface extends Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "staking",
+    functionFragment: "stakingForOther",
+    values: [BigNumberish, AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "stakingForSelf",
     values: [BigNumberish, AddressLike]
   ): string;
   encodeFunctionData(
@@ -365,7 +370,14 @@ export interface StakeMiningInterface extends Interface {
     functionFragment: "rewardToken",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "staking", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "stakingForOther",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "stakingForSelf",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "superNodes", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalOrdinaryNodePerformance",
@@ -691,7 +703,13 @@ export interface StakeMining extends BaseContract {
 
   rewardToken: TypedContractMethod<[], [string], "view">;
 
-  staking: TypedContractMethod<
+  stakingForOther: TypedContractMethod<
+    [_amount: BigNumberish, _user: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+
+  stakingForSelf: TypedContractMethod<
     [_amount: BigNumberish, _inviter: AddressLike],
     [void],
     "nonpayable"
@@ -930,7 +948,14 @@ export interface StakeMining extends BaseContract {
     nameOrSignature: "rewardToken"
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
-    nameOrSignature: "staking"
+    nameOrSignature: "stakingForOther"
+  ): TypedContractMethod<
+    [_amount: BigNumberish, _user: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "stakingForSelf"
   ): TypedContractMethod<
     [_amount: BigNumberish, _inviter: AddressLike],
     [void],

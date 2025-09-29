@@ -5,9 +5,9 @@ const CHAIN_CONFIG_TEST = {
   chainId: 97,
   rpc: 'https://data-seed-prebsc-2-s2.binance.org:8545',
   contract: {
-    usdt: '0x337610d27c682E347C9cD60BD4b3b107C9d34dDd',
+    usdt: '0x42031fE0c351Ab6B07BfCA7E393F15E4EEFDC10f',
     rwat: '0x2460EA428DAe5E2eb469EF88313Fb4746AA2dB6c',
-    staking: '0x0afcef0059A5aF2AA5514Ae46B07f96104d9A309',
+    staking: '0xb8d4d26a9333a8A3D38F2E1F4589A2F4D07F2fEB',
     getBalance: '0xb5f9B45877C3c89d491F3D66e13b1d506550418D',
   },
 }
