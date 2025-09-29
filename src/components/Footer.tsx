@@ -3,24 +3,24 @@ import { Button } from "@/components/ui/button";
 
 const Footer = () => {
   const socialLinks = [
-    { icon: Twitter, label: "Twitter", href: "#" },
+    { icon: Twitter, label: "Twitter", href: "https://x.com/bitconncet_f" },
     { icon: MessageCircle, label: "Telegram", href: "#" },
     { icon: Github, label: "GitHub", href: "#" },
     { icon: Mail, label: "Email", href: "mailto:contact@rwai.inc" }
   ];
 
   const quickLinks = [
-    { label: "About", href: "#about" },
-    { label: "Timeline", href: "#timeline" },
-    { label: "Tokenomics", href: "#tokenomics" },
-    { label: "Utility", href: "#utility" }
+    // { label: "About", href: "#about" },
+    // { label: "Timeline", href: "#timeline" },
+    { label: "Dexscreener", href: "https://dexscreener.com/solana/b1jkxqh1yvtqtravmastwoy2pu54ssjlqfwphl9vwpgu" },
+    { label: "AVE", href: "https://ave.ai/token/0x2c54c60600e1d786b2dfc139a38a5a99-hyperliquid" }
   ];
 
   const resources = [
-    { label: "Documentation", href: "#" },
-    { label: "Whitepaper", href: "#" },
-    { label: "API", href: "#" },
-    { label: "Support", href: "#" }
+    { label: "Docs", href: "https://bitc.gitbook.io/bitconnect" },
+    // { label: "Whitepaper", href: "#" },
+    // { label: "API", href: "#" },
+    { label: "Support", href: "https://bitc.gitbook.io/bitconnect/reesource/faq" }
   ];
 
   return (
@@ -33,10 +33,10 @@ const Footer = () => {
               <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">R</span>
               </div>
-              <span className="text-xl font-bold gradient-text">rwai</span>
+              <span className="text-xl font-bold gradient-text">RWAF</span>
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              Your crypto research, reporting, and launch AI agent. Built for the future of decentralized finance.
+            Through RWAF, investors can flexibly select investment opportunities tailored to their needs and risk tolerance.
             </p>
             <div className="flex space-x-3">
               {socialLinks.map((link, index) => {
@@ -90,7 +90,7 @@ const Footer = () => {
           </div>
 
           {/* Newsletter */}
-          <div>
+          {/* <div>
             <h3 className="font-semibold gradient-text mb-4">Stay Updated</h3>
             <p className="text-muted-foreground text-sm mb-4">
               Get the latest updates and insights from RWAI.
@@ -105,25 +105,25 @@ const Footer = () => {
                 Subscribe
               </Button>
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* Bottom Section */}
         <div className="border-t border-border/40 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-muted-foreground text-sm">
-              © 2024 RWAI. All rights reserved.
+              © 2025 RWAFINANCE. All rights reserved.
             </div>
             <div className="flex space-x-6 text-sm">
-              <a href="#" className="text-muted-foreground hover:text-primary transition-smooth">
+              <a href="https://bitc.gitbook.io/bitconnect" className="text-muted-foreground hover:text-primary transition-smooth">
                 Privacy Policy
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-smooth">
+              <a href="https://bitc.gitbook.io/bitconnect" className="text-muted-foreground hover:text-primary transition-smooth">
                 Terms of Service
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-smooth">
+              {/* <a href="#" className="text-muted-foreground hover:text-primary transition-smooth">
                 Cookie Policy
-              </a>
+              </a> */}
             </div>
           </div>
         </div>

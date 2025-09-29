@@ -4,28 +4,28 @@ const Tokenomics = () => {
   const distribution = [
     {
       category: "Public Sale",
-      percentage: 40,
+      percentage: 90,
       color: "from-violet-500 to-purple-500",
       icon: Users,
-      description: "Available for community purchase"
+      description: "Available for community purchase and Minging"
     },
     {
       category: "Liquidity",
-      percentage: 25,
+      percentage: 1,
       color: "from-blue-500 to-cyan-500", 
       icon: TrendingUp,
       description: "DEX liquidity provision"
     },
     {
-      category: "Team & Advisors",
-      percentage: 20,
+      category: "Satking",
+      percentage: 4,
       color: "from-emerald-500 to-teal-500",
       icon: Lock,
-      description: "Vested over 2 years"
+      description: "Vested over 2000 days"
     },
     {
-      category: "Development",
-      percentage: 15,
+      category: "Node award ",
+      percentage: 5,
       color: "from-orange-500 to-red-500",
       icon: PieChart,
       description: "Platform development & operations"
@@ -33,8 +33,8 @@ const Tokenomics = () => {
   ];
 
   const stats = [
-    { label: "Total Supply", value: "1,000,000,000", unit: "RWAI" },
-    { label: "Circulating Supply", value: "400,000,000", unit: "RWAI" },
+    { label: "Total Supply", value: "1,000,000,000", unit: "RWAF" },
+    { label: "Liquity Supply", value: "100,000", unit: "RWAF" },
     { label: "Market Cap", value: "$2.5M", unit: "USD" },
     { label: "Holders", value: "15,420", unit: "+" }
   ];
@@ -99,7 +99,7 @@ const Tokenomics = () => {
                 
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
-                    <div className="text-3xl font-bold gradient-text">RWAI</div>
+                    <div className="text-3xl font-bold gradient-text">RWAF</div>
                     <div className="text-sm text-muted-foreground">Token</div>
                   </div>
                 </div>
