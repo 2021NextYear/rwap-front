@@ -45,11 +45,16 @@ export interface StakeMiningInterface extends Interface {
       | "USDT_ADDRESS"
       | "claimRewards"
       | "claimRewardsForUser"
+      | "directInvitees"
       | "distributeDividends"
       | "emergencyWithdraw"
       | "getClaimableRewards"
       | "getClaimedRewards"
+      | "getGlobalStats"
+      | "getIndirectInviteCount"
       | "getUserInfo"
+      | "hasMined"
+      | "hasStaked"
       | "isOrdinaryNode"
       | "isSuperNode"
       | "mining"
@@ -60,8 +65,10 @@ export interface StakeMiningInterface extends Interface {
       | "stakingForOther"
       | "stakingForSelf"
       | "superNodes"
-      | "totalOrdinaryNodePerformance"
-      | "totalSuperNodePerformance"
+      | "totalMiningAddresses"
+      | "totalMiningClaimedRewards"
+      | "totalStakingAddresses"
+      | "totalStakingClaimedRewards"
       | "transferOwnership"
       | "usdtReceiver"
       | "userClaimedInviteRewards"
@@ -70,6 +77,8 @@ export interface StakeMiningInterface extends Interface {
       | "userOrdinaryDividends"
       | "userStakingRecords"
       | "userSuperDividends"
+      | "userTotalMiningAmount"
+      | "userTotalStakingAmount"
       | "users"
   ): FunctionFragment;
 
@@ -157,6 +166,10 @@ export interface StakeMiningInterface extends Interface {
     values: [AddressLike]
   ): string;
   encodeFunctionData(
+    functionFragment: "directInvitees",
+    values: [AddressLike, BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "distributeDividends",
     values: [BigNumberish]
   ): string;
@@ -173,7 +186,23 @@ export interface StakeMiningInterface extends Interface {
     values: [AddressLike]
   ): string;
   encodeFunctionData(
+    functionFragment: "getGlobalStats",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getIndirectInviteCount",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
     functionFragment: "getUserInfo",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "hasMined",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "hasStaked",
     values: [AddressLike]
   ): string;
   encodeFunctionData(
@@ -214,11 +243,19 @@ export interface StakeMiningInterface extends Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "totalOrdinaryNodePerformance",
+    functionFragment: "totalMiningAddresses",
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "totalSuperNodePerformance",
+    functionFragment: "totalMiningClaimedRewards",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "totalStakingAddresses",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "totalStakingClaimedRewards",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -252,6 +289,14 @@ export interface StakeMiningInterface extends Interface {
   encodeFunctionData(
     functionFragment: "userSuperDividends",
     values: [AddressLike, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "userTotalMiningAmount",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "userTotalStakingAmount",
+    values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "users", values: [AddressLike]): string;
 
@@ -329,6 +374,10 @@ export interface StakeMiningInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "directInvitees",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "distributeDividends",
     data: BytesLike
   ): Result;
@@ -345,9 +394,19 @@ export interface StakeMiningInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "getGlobalStats",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getIndirectInviteCount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "getUserInfo",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "hasMined", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "hasStaked", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isOrdinaryNode",
     data: BytesLike
@@ -380,11 +439,19 @@ export interface StakeMiningInterface extends Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "superNodes", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "totalOrdinaryNodePerformance",
+    functionFragment: "totalMiningAddresses",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "totalSuperNodePerformance",
+    functionFragment: "totalMiningClaimedRewards",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "totalStakingAddresses",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "totalStakingClaimedRewards",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -417,6 +484,14 @@ export interface StakeMiningInterface extends Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "userSuperDividends",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "userTotalMiningAmount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "userTotalStakingAmount",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "users", data: BytesLike): Result;
@@ -631,6 +706,12 @@ export interface StakeMining extends BaseContract {
     "nonpayable"
   >;
 
+  directInvitees: TypedContractMethod<
+    [arg0: AddressLike, arg1: BigNumberish],
+    [string],
+    "view"
+  >;
+
   distributeDividends: TypedContractMethod<
     [_amount: BigNumberish],
     [void],
@@ -669,6 +750,29 @@ export interface StakeMining extends BaseContract {
     "view"
   >;
 
+  getGlobalStats: TypedContractMethod<
+    [],
+    [
+      [bigint, bigint, bigint, bigint, bigint, bigint, bigint, bigint] & {
+        miningAddresses: bigint;
+        stakingAddresses: bigint;
+        miningClaimedRewards: bigint;
+        stakingClaimedRewards: bigint;
+        totalMiningAmount: bigint;
+        totalStakingAmount: bigint;
+        ordinaryNodeCount: bigint;
+        superNodeCount: bigint;
+      }
+    ],
+    "view"
+  >;
+
+  getIndirectInviteCount: TypedContractMethod<
+    [_user: AddressLike],
+    [bigint],
+    "view"
+  >;
+
   getUserInfo: TypedContractMethod<
     [_user: AddressLike],
     [
@@ -684,6 +788,10 @@ export interface StakeMining extends BaseContract {
     ],
     "view"
   >;
+
+  hasMined: TypedContractMethod<[arg0: AddressLike], [boolean], "view">;
+
+  hasStaked: TypedContractMethod<[arg0: AddressLike], [boolean], "view">;
 
   isOrdinaryNode: TypedContractMethod<[arg0: AddressLike], [boolean], "view">;
 
@@ -717,9 +825,13 @@ export interface StakeMining extends BaseContract {
 
   superNodes: TypedContractMethod<[arg0: BigNumberish], [string], "view">;
 
-  totalOrdinaryNodePerformance: TypedContractMethod<[], [bigint], "view">;
+  totalMiningAddresses: TypedContractMethod<[], [bigint], "view">;
 
-  totalSuperNodePerformance: TypedContractMethod<[], [bigint], "view">;
+  totalMiningClaimedRewards: TypedContractMethod<[], [bigint], "view">;
+
+  totalStakingAddresses: TypedContractMethod<[], [bigint], "view">;
+
+  totalStakingClaimedRewards: TypedContractMethod<[], [bigint], "view">;
 
   transferOwnership: TypedContractMethod<
     [newOwner: AddressLike],
@@ -793,13 +905,18 @@ export interface StakeMining extends BaseContract {
     "view"
   >;
 
+  userTotalMiningAmount: TypedContractMethod<[], [bigint], "view">;
+
+  userTotalStakingAmount: TypedContractMethod<[], [bigint], "view">;
+
   users: TypedContractMethod<
     [arg0: AddressLike],
     [
-      [string, bigint, bigint, bigint] & {
+      [string, bigint, bigint, bigint, bigint] & {
         directInviter: string;
         totalMiningAmount: bigint;
         totalStakingAmount: bigint;
+        kpi: bigint;
         directInviteCount: bigint;
       }
     ],
@@ -868,6 +985,13 @@ export interface StakeMining extends BaseContract {
     nameOrSignature: "claimRewardsForUser"
   ): TypedContractMethod<[_user: AddressLike], [void], "nonpayable">;
   getFunction(
+    nameOrSignature: "directInvitees"
+  ): TypedContractMethod<
+    [arg0: AddressLike, arg1: BigNumberish],
+    [string],
+    "view"
+  >;
+  getFunction(
     nameOrSignature: "distributeDividends"
   ): TypedContractMethod<[_amount: BigNumberish], [void], "nonpayable">;
   getFunction(
@@ -906,6 +1030,27 @@ export interface StakeMining extends BaseContract {
     "view"
   >;
   getFunction(
+    nameOrSignature: "getGlobalStats"
+  ): TypedContractMethod<
+    [],
+    [
+      [bigint, bigint, bigint, bigint, bigint, bigint, bigint, bigint] & {
+        miningAddresses: bigint;
+        stakingAddresses: bigint;
+        miningClaimedRewards: bigint;
+        stakingClaimedRewards: bigint;
+        totalMiningAmount: bigint;
+        totalStakingAmount: bigint;
+        ordinaryNodeCount: bigint;
+        superNodeCount: bigint;
+      }
+    ],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "getIndirectInviteCount"
+  ): TypedContractMethod<[_user: AddressLike], [bigint], "view">;
+  getFunction(
     nameOrSignature: "getUserInfo"
   ): TypedContractMethod<
     [_user: AddressLike],
@@ -922,6 +1067,12 @@ export interface StakeMining extends BaseContract {
     ],
     "view"
   >;
+  getFunction(
+    nameOrSignature: "hasMined"
+  ): TypedContractMethod<[arg0: AddressLike], [boolean], "view">;
+  getFunction(
+    nameOrSignature: "hasStaked"
+  ): TypedContractMethod<[arg0: AddressLike], [boolean], "view">;
   getFunction(
     nameOrSignature: "isOrdinaryNode"
   ): TypedContractMethod<[arg0: AddressLike], [boolean], "view">;
@@ -965,10 +1116,16 @@ export interface StakeMining extends BaseContract {
     nameOrSignature: "superNodes"
   ): TypedContractMethod<[arg0: BigNumberish], [string], "view">;
   getFunction(
-    nameOrSignature: "totalOrdinaryNodePerformance"
+    nameOrSignature: "totalMiningAddresses"
   ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
-    nameOrSignature: "totalSuperNodePerformance"
+    nameOrSignature: "totalMiningClaimedRewards"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "totalStakingAddresses"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "totalStakingClaimedRewards"
   ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "transferOwnership"
@@ -1043,14 +1200,21 @@ export interface StakeMining extends BaseContract {
     "view"
   >;
   getFunction(
+    nameOrSignature: "userTotalMiningAmount"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "userTotalStakingAmount"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
     nameOrSignature: "users"
   ): TypedContractMethod<
     [arg0: AddressLike],
     [
-      [string, bigint, bigint, bigint] & {
+      [string, bigint, bigint, bigint, bigint] & {
         directInviter: string;
         totalMiningAmount: bigint;
         totalStakingAmount: bigint;
+        kpi: bigint;
         directInviteCount: bigint;
       }
     ],

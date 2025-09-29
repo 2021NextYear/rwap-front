@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Progress } from '@/components/ui/progress'
@@ -9,13 +9,26 @@ import { Wallet, Lock, Unlock, TrendingUp, Clock, Coins, Trophy, DollarSign } fr
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import FloatingShapes from '@/components/FloatingShapes'
-import { genErc20ApproveForContract, getReferral, getUserInfo } from '@/utils'
+import { collectReward, genErc20ApproveForContract, getReferral, getUserInfo } from '@/utils'
 import { CHAIN_CONFIG } from '@/constants'
 import { useAccount } from 'wagmi'
-import { number2Big, sanitizeInput, sendTransaction, stakeMiningInterface, times } from '@/lib'
+import {
+  number2Big,
+  sanitizeInput,
+  sendTransaction,
+  stakeMiningInterface,
+  times,
+  toFixed,
+} from '@/lib'
 import { useBalance } from '@/hooks/useBalance'
+import { useGlobalInfo } from '@/hooks/useContract'
+import { useToast } from '@/hooks/use-toast'
+import { isAddress } from 'viem'
 
 const Staking = () => {
+  const { totalStakingAmount, stakingAddresses, stakingClaimedRewards } = useGlobalInfo()
+  const { toast } = useToast()
+
   const { RWAT } = useBalance()
   const chainId = CHAIN_CONFIG.chainId
   const { rwat, staking, usdt } = CHAIN_CONFIG.contract
@@ -23,6 +36,8 @@ const Staking = () => {
   const [stakeSelfAmount, setStakeSelfAmount] = useState('')
   const [stakeOtherAmount, setStakeOtherAmount] = useState('')
   const [otherAddress, setOtherAddress] = useState('')
+  const [miningLoading, setMiningLoading] = useState(false)
+  const [collectLoading, setCollectLoading] = useState(false)
 
   const [userInfo, setUserInfo] = useState({
     directInviter: '',
@@ -44,10 +59,10 @@ const Staking = () => {
   })
 
   const stakingStats = [
-    { label: '总质押量', value: '2.5M RWAT', icon: Lock, trend: '+12.5%' },
+    { label: '总质押量', value: `${totalStakingAmount} RWAT`, icon: Lock, trend: '+12.5%' },
     { label: '年化收益率', value: '18.5%', icon: TrendingUp, trend: '+2.1%' },
-    { label: '质押者数量', value: '8,234', icon: Wallet, trend: '+156' },
-    { label: '总奖励发放', value: '450K RWAT', icon: Trophy, trend: '+8.2%' },
+    { label: '质押者数量', value: stakingAddresses, icon: Wallet, trend: '+156' },
+    { label: '总奖励发放', value: `${stakingClaimedRewards} RWAT`, icon: Trophy, trend: '+8.2%' },
   ]
 
   const stakingPools = [
@@ -91,35 +106,71 @@ const Staking = () => {
   }
 
   const stakingForSelf = async () => {
-    const _amount = number2Big(stakeSelfAmount, 18)
-    const erc20Approve = await genErc20ApproveForContract(rwat, staking, address, _amount, chainId)
-    if (erc20Approve) {
-      await sendTransaction(erc20Approve, chainId)
+    try {
+      setMiningLoading(true)
+      const _amount = number2Big(stakeSelfAmount, 18)
+      const erc20Approve = await genErc20ApproveForContract(
+        rwat,
+        staking,
+        address,
+        _amount,
+        chainId
+      )
+      if (erc20Approve) {
+        await sendTransaction(erc20Approve, chainId)
+      }
+
+      const calldata = stakeMiningInterface.encodeFunctionData('stakingForSelf', [
+        _amount,
+        getReferral(),
+      ])
+
+      await sendTransaction({ to: staking, data: calldata, value: '0' }, chainId)
+      toast({ title: '质押成功' })
+      fetchUserInfo()
+    } catch (error) {
+      toast({ title: '质押失败' })
     }
-
-    const calldata = stakeMiningInterface.encodeFunctionData('stakingForSelf', [
-      _amount,
-      getReferral(),
-    ])
-
-    await sendTransaction({ to: staking, data: calldata, value: '0' }, chainId)
-
-    fetchUserInfo()
+    setMiningLoading(false)
   }
 
   const stakingForOther = async () => {
-    const _amount = number2Big(stakeOtherAmount, 18)
-    const erc20Approve = await genErc20ApproveForContract(rwat, staking, address, _amount, chainId)
-    if (erc20Approve) {
-      await sendTransaction(erc20Approve, chainId)
+    try {
+      setMiningLoading(true)
+      toast({ title: '质押成功' })
+      const _amount = number2Big(stakeOtherAmount, 18)
+      const erc20Approve = await genErc20ApproveForContract(
+        rwat,
+        staking,
+        address,
+        _amount,
+        chainId
+      )
+      if (erc20Approve) {
+        await sendTransaction(erc20Approve, chainId)
+      }
+
+      const calldata = stakeMiningInterface.encodeFunctionData('stakingForOther', [
+        _amount,
+        otherAddress,
+      ])
+
+      await sendTransaction({ to: staking, data: calldata, value: '0' }, chainId)
+    } catch (error) {
+      toast({ title: '质押失败' })
     }
+    setMiningLoading(false)
+  }
 
-    const calldata = stakeMiningInterface.encodeFunctionData('stakingForOther', [
-      _amount,
-      otherAddress,
-    ])
-
-    await sendTransaction({ to: staking, data: calldata, value: '0' }, chainId)
+  const collect = async () => {
+    try {
+      setCollectLoading(true)
+      await collectReward()
+      toast({ title: '领取成功' })
+    } catch (error) {
+      toast({ title: '领取失败' })
+    }
+    setCollectLoading(false)
   }
 
   const fetchUserInfo = async () => {
@@ -209,6 +260,9 @@ const Staking = () => {
                               variant="ghost"
                               size="sm"
                               className="absolute right-2 top-1/2 -translate-y-1/2"
+                              onClick={() => {
+                                setStakeSelfAmount(toFixed(RWAT, 6))
+                              }}
                             >
                               最大
                             </Button>
@@ -216,13 +270,13 @@ const Staking = () => {
                         </div>
 
                         <div className="grid grid-cols-3 gap-2">
-                          {['25%', '50%', '75%'].map(percent => (
+                          {['25%', '50%', '75%'].map((percent, i) => (
                             <Button
                               key={percent}
                               variant="outline"
                               size="sm"
                               onClick={() => {
-                                //setStakeAmount(((10000 * parseInt(percent)) / 100).toString())
+                                setStakeSelfAmount(times(RWAT, (i + 1) * 0.25, 6))
                               }}
                             >
                               {percent}
@@ -254,8 +308,9 @@ const Staking = () => {
                         <Button
                           className="w-full"
                           size="lg"
-                          disabled={!stakeSelfAmount}
+                          disabled={!stakeSelfAmount || miningLoading}
                           onClick={stakingForSelf}
+                          loading={miningLoading}
                         >
                           <Lock className="mr-2 h-4 w-4" />
                           质押 RWAT
@@ -276,6 +331,9 @@ const Staking = () => {
                               variant="ghost"
                               size="sm"
                               className="absolute right-2 top-1/2 -translate-y-1/2"
+                              onClick={() => {
+                                setStakeOtherAmount(toFixed(RWAT, 6))
+                              }}
                             >
                               最大
                             </Button>
@@ -303,8 +361,9 @@ const Staking = () => {
                           className="w-full"
                           size="lg"
                           variant="outline"
-                          disabled={!stakeOtherAmount}
+                          disabled={!stakeOtherAmount || miningLoading || !isAddress(otherAddress)}
                           onClick={stakingForOther}
+                          loading={miningLoading}
                         >
                           <Unlock className="mr-2 h-4 w-4" />
                           帮助质押
@@ -333,7 +392,7 @@ const Staking = () => {
                       <div className="flex justify-between items-center">
                         <span className="text-sm text-muted-foreground">累计奖励</span>
                         <span className="font-medium text-primary">
-                          {times(userInfo.totalStakingAmount, 5)}
+                          {times(userInfo.claimedRewards.stakingReward, 1)}
                         </span>
                       </div>
                       <div className="flex justify-between items-center">
@@ -357,11 +416,16 @@ const Staking = () => {
                     </div>
 
                     <div className="space-y-2">
-                      <Button className="w-full" size="sm">
+                      <Button
+                        className="w-full"
+                        size="sm"
+                        loading={collectLoading}
+                        disabled={
+                          collectLoading || Number(userInfo.claimableRewards.stakingReward) === 0
+                        }
+                        onClick={collect}
+                      >
                         领取奖励 ({userInfo.claimableRewards.stakingReward})
-                      </Button>
-                      <Button className="w-full" variant="outline" size="sm">
-                        复投奖励
                       </Button>
                     </div>
                   </CardContent>
@@ -372,11 +436,10 @@ const Staking = () => {
         </section>
 
         {/* Staking Pools */}
-        <section className="py-16 px-4">
+        {/* <section className="py-16 px-4">
           <div className="container mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold mb-4">质押池</h2>
-              <p className="text-muted-foreground">选择适合您的质押方案</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -420,7 +483,7 @@ const Staking = () => {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* FAQ Section */}
         <section className="py-16 px-4">

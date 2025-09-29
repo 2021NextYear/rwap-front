@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Progress } from '@/components/ui/progress'
 import { Badge } from '@/components/ui/badge'
 import { Wallet, Coins, Zap, TrendingUp, Users, Clock } from 'lucide-react'
 import Header from '@/components/Header'
@@ -9,7 +7,7 @@ import Footer from '@/components/Footer'
 import FloatingShapes from '@/components/FloatingShapes'
 import {
   getRwatContract,
-  getStakeMiningContract,
+  gt,
   number2Big,
   rwatInterface,
   sanitizeInput,
@@ -17,22 +15,31 @@ import {
   stakeMiningInterface,
 } from '@/lib'
 import { CHAIN_CONFIG } from '@/constants'
-import { genErc20ApproveForContract, getReferral, getUserInfo } from '@/utils'
+import { collectReward, genErc20ApproveForContract, getReferral, getUserInfo } from '@/utils'
 import { useAccount } from 'wagmi'
-import { zeroAddress } from 'viem'
 import { Input } from '@/components/ui/input'
 import { useBalance } from '@/hooks/useBalance'
+import { useGlobalInfo, useTokenAmountByStake } from '@/hooks/useContract'
+import { useToast } from '@/hooks/use-toast'
+import { Button } from '@/components/Button'
 
 const MintMining = () => {
+  const { toast } = useToast()
+
   const { USDT } = useBalance()
+  const { miningClaimedRewards, miningAddresses, superNodeCount } = useGlobalInfo()
+  const totalSupply = useTokenAmountByStake()
   const chainId = CHAIN_CONFIG.chainId
   const { rwat, staking, usdt } = CHAIN_CONFIG.contract
   const { address } = useAccount()
   const [mintAmount, setMintAmount] = useState('100')
+  const [miningLoading, setMiningLoading] = useState(false)
+  const [collectLoading, setCollectLoading] = useState(false)
 
   const [userInfo, setUserInfo] = useState({
     directInviter: '',
     directInviteCount: '0',
+    indirectCount: '0',
     totalMiningAmount: '0',
     totalStakingAmount: '0',
     claimableRewards: {
@@ -50,10 +57,10 @@ const MintMining = () => {
   })
 
   const stats = [
-    { label: '总供应量', value: '10,000', icon: Coins },
-    { label: '已挖出', value: '3,847', icon: TrendingUp },
-    { label: '活跃矿工', value: '1,234', icon: Users },
-    { label: '挖矿难度', value: '2.5x', icon: Zap },
+    { label: '总供应量', value: totalSupply, icon: Coins },
+    { label: '已挖出', value: miningClaimedRewards, icon: TrendingUp },
+    { label: '活跃矿工', value: miningAddresses, icon: Users },
+    { label: '超级节点', value: superNodeCount, icon: Zap },
   ]
 
   const setStaking = async () => {
@@ -72,17 +79,40 @@ const MintMining = () => {
   }
 
   const mining = async () => {
-    const _amount = number2Big(mintAmount, 18)
-    const erc20Approve = await genErc20ApproveForContract(usdt, staking, address, _amount, chainId)
-    if (erc20Approve) {
-      await sendTransaction(erc20Approve, chainId)
+    try {
+      setMiningLoading(true)
+      const _amount = number2Big(mintAmount, 18)
+      const erc20Approve = await genErc20ApproveForContract(
+        usdt,
+        staking,
+        address,
+        _amount,
+        chainId
+      )
+      if (erc20Approve) {
+        await sendTransaction(erc20Approve, chainId)
+      }
+
+      const calldata = stakeMiningInterface.encodeFunctionData('mining', [_amount, getReferral()])
+
+      await sendTransaction({ to: staking, data: calldata, value: '0' }, chainId)
+      toast({ title: '认购成功' })
+      fetchUserInfo()
+    } catch (error) {
+      toast({ title: '认购失败' })
     }
+    setMiningLoading(false)
+  }
 
-    const calldata = stakeMiningInterface.encodeFunctionData('mining', [_amount, getReferral()])
-
-    await sendTransaction({ to: staking, data: calldata, value: '0' }, chainId)
-
-    fetchUserInfo()
+  const collect = async () => {
+    try {
+      setCollectLoading(true)
+      await collectReward()
+      toast({ title: '领取成功' })
+    } catch (error) {
+      toast({ title: '领取失败' })
+    }
+    setCollectLoading(false)
   }
 
   const fetchUserInfo = async () => {
@@ -177,7 +207,13 @@ const MintMining = () => {
                     </div>
                   </div>
 
-                  <Button className="w-full" size="lg" onClick={mining}>
+                  <Button
+                    className="w-full"
+                    size="lg"
+                    onClick={mining}
+                    loading={miningLoading}
+                    disabled={miningLoading || gt(100, USDT || 0) || !Number(mintAmount)}
+                  >
                     认购
                   </Button>
                 </CardContent>
@@ -203,21 +239,31 @@ const MintMining = () => {
                       <span className="font-medium">150 TH/s</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">今日收益</span>
-                      <span className="font-medium text-primary">+12.5 RWAT</span>
+                      <span className="text-sm">挖矿收益</span>
+                      <span className="font-medium text-primary">
+                        +{userInfo.claimedRewards.miningReward} RWAT
+                      </span>
                     </div>
                   </div>
 
-                  <div className="space-y-2">
+                  {/* <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span>挖矿进度</span>
                       <span>67%</span>
                     </div>
                     <Progress value={67} className="h-2" />
-                  </div>
+                  </div> */}
 
                   <div className="pt-4 border-t">
-                    <Button className="w-full" variant="secondary">
+                    <Button
+                      className="w-full"
+                      variant="secondary"
+                      onClick={collect}
+                      disabled={
+                        collectLoading || Number(userInfo.claimableRewards.miningReward) === 0
+                      }
+                      loading={collectLoading}
+                    >
                       领取收益 ({userInfo.claimableRewards.miningReward} RWAT)
                     </Button>
                   </div>

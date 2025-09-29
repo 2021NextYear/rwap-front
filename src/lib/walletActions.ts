@@ -1,13 +1,8 @@
 import { wagmiConfig } from '@/constants'
-import type { TransactionParame, TypedDataParame } from '@/types'
-import {
-  sendTransaction as wagmiSendTransaction,
-  signMessage as wagmiSignMessage,
-  signTypedData as wagmiSignTypedData,
-  estimateGas,
-  switchChain,
-} from '@wagmi/core'
+import type { TransactionParame } from '@/types'
+import { sendTransaction as wagmiSendTransaction, estimateGas, switchChain } from '@wagmi/core'
 import { getRPCProvider } from '.'
+import { getAccount } from '@wagmi/core'
 
 export const sleep = (time: number) => {
   return new Promise(resolve => setTimeout(resolve, time))
@@ -26,25 +21,22 @@ export async function getTransactionReceipt(hash: string, chainId: number, time 
 }
 
 export async function sendTransaction(params: TransactionParame, chainId: number) {
-  try {
-    let gas = 1500000n
-    // _gas = BigInt(
-    // 	await estimateGas(wagmiConfig, {
-    //         to:params.to,
-    //         data:params.data,
-    //         value:params.value,
-    //         account:params.account as  `0x${string}`
-    //     })
-    // );
-    const _params = { gas, ...params }
-    await switchChain(wagmiConfig, { chainId: chainId as any })
+  const { address } = getAccount(wagmiConfig)
+  let gas = BigInt(
+    await estimateGas(wagmiConfig, {
+      to: params.to,
+      data: params.data,
+      value: params.value,
+      account: address,
+    })
+  )
+  gas = (gas / 3n) * 4n
+  const _params = { gas, ...params }
+  await switchChain(wagmiConfig, { chainId: chainId as any })
 
-    const hash = (await wagmiSendTransaction(wagmiConfig, _params as any)) as string
+  const hash = (await wagmiSendTransaction(wagmiConfig, _params as any)) as string
 
-    const receipt = await getTransactionReceipt(hash, chainId, 200)
+  const receipt = await getTransactionReceipt(hash, chainId, 200)
 
-    return { hash, success: receipt?.status === 1, receipt }
-  } catch (error) {
-    console.log('error', error)
-  }
+  return { hash, success: receipt?.status === 1, receipt }
 }

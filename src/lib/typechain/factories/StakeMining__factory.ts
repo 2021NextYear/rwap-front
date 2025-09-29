@@ -459,6 +459,30 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "directInvitees",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "uint256",
         name: "_amount",
         type: "uint256",
@@ -556,6 +580,73 @@ const _abi = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "getGlobalStats",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "miningAddresses",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "stakingAddresses",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "miningClaimedRewards",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "stakingClaimedRewards",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "totalMiningAmount",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "totalStakingAmount",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "ordinaryNodeCount",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "superNodeCount",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_user",
+        type: "address",
+      },
+    ],
+    name: "getIndirectInviteCount",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "address",
@@ -599,6 +690,44 @@ const _abi = [
         internalType: "uint256",
         name: "performance",
         type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "hasMined",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "hasStaked",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
       },
     ],
     stateMutability: "view",
@@ -769,7 +898,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "totalOrdinaryNodePerformance",
+    name: "totalMiningAddresses",
     outputs: [
       {
         internalType: "uint256",
@@ -782,7 +911,33 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "totalSuperNodePerformance",
+    name: "totalMiningClaimedRewards",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalStakingAddresses",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalStakingClaimedRewards",
     outputs: [
       {
         internalType: "uint256",
@@ -1019,6 +1174,32 @@ const _abi = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "userTotalMiningAmount",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "userTotalStakingAmount",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "address",
@@ -1041,6 +1222,11 @@ const _abi = [
       {
         internalType: "uint256",
         name: "totalStakingAmount",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "kpi",
         type: "uint256",
       },
       {

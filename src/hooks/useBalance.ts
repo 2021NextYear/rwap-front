@@ -20,7 +20,6 @@ export function useBalance() {
 
   return useMemo(() => {
     const balanceMap: Record<string, string> = {}
-
     ;['BNB', 'USDT', 'RWAT'].map((v, i) => {
       const balance = number2Small(String(data[i] || 0), 18)
       balanceMap[v] = balance

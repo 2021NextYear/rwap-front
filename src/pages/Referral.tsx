@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react'
-import { Button } from '@/components/ui/button'
+import { useEffect, useMemo, useState } from 'react'
+import { Button } from '@/components/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
@@ -10,48 +10,56 @@ import Footer from '@/components/Footer'
 import FloatingShapes from '@/components/FloatingShapes'
 import { useToast } from '@/hooks/use-toast'
 import { useAccount } from 'wagmi'
+import { collectReward, getUserInfo } from '@/utils'
+import { add } from '@/lib'
 
 const Referral = () => {
   const { address } = useAccount()
-  const [referralCode, setReferralCode] = useState('RWAT2024')
   const [copied, setCopied] = useState(false)
   const { toast } = useToast()
+  const [collectLoading, setCollectLoading] = useState(false)
 
+  const [userInfo, setUserInfo] = useState({
+    directInviter: '',
+    directInviteCount: '0',
+    indirectCount: '0',
+    totalMiningAmount: '0',
+    totalStakingAmount: '0',
+    claimableRewards: {
+      miningReward: '0',
+      stakingReward: '0',
+      inviteReward: '0',
+      dividendReward: '0',
+    },
+    claimedRewards: {
+      miningReward: '0',
+      stakingReward: '0',
+      inviteReward: '0',
+      dividendReward: '0',
+    },
+  })
   const referralLink = useMemo(() => `${window.location.origin}?referral=${address}`, [address])
 
   const stats = [
-    { label: '邀请人数', value: '156', icon: Users, reward: '+780 RWAT' },
-    { label: '累计奖励', value: '2,340 RWAT', icon: Gift, reward: '+12.5%' },
-    { label: '本月排名', value: '#23', icon: Trophy, reward: '前100名' },
-    { label: '邀请等级', value: '钻石', icon: Star, reward: '20% 奖励' },
+    { label: '直接邀请', value: userInfo.directInviteCount, icon: Users, reward: '+780 RWAT' },
+    { label: '间接邀请', value: userInfo.indirectCount, icon: Users, reward: '+780 RWAT' },
+    {
+      label: '邀请奖励',
+      value: add(userInfo.claimableRewards.inviteReward, userInfo.claimedRewards.inviteReward, 2),
+      icon: Gift,
+      reward: '+12.5%',
+    },
+    {
+      label: '团队用户',
+      value: add(userInfo.directInviteCount, userInfo.indirectCount),
+      icon: Trophy,
+      reward: '前100名',
+    },
   ]
 
   const rewardTiers = [
     { level: '青铜', invites: '1-10', commission: '5%', bonus: '10 RWAT', color: 'bg-amber-500' },
     { level: '白银', invites: '11-50', commission: '10%', bonus: '50 RWAT', color: 'bg-gray-400' },
-    {
-      level: '黄金',
-      invites: '51-100',
-      commission: '15%',
-      bonus: '150 RWAT',
-      color: 'bg-yellow-500',
-    },
-    { level: '钻石', invites: '100+', commission: '20%', bonus: '500 RWAT', color: 'bg-blue-500' },
-  ]
-
-  const leaderboard = [
-    { rank: 1, address: '0x1234...5678', invites: 1247, rewards: '62,350 RWAT', badge: '王者' },
-    { rank: 2, address: '0x2345...6789', invites: 892, rewards: '44,600 RWAT', badge: '钻石' },
-    { rank: 3, address: '0x3456...7890', invites: 634, rewards: '31,700 RWAT', badge: '钻石' },
-    { rank: 4, address: '0x4567...8901', invites: 445, rewards: '22,250 RWAT', badge: '黄金' },
-    { rank: 5, address: '0x5678...9012', invites: 321, rewards: '16,050 RWAT', badge: '黄金' },
-  ]
-
-  const myReferrals = [
-    { address: '0x1111...2222', joinDate: '2024-01-15', status: '活跃', rewards: '125 RWAT' },
-    { address: '0x3333...4444', joinDate: '2024-01-12', status: '活跃', rewards: '98 RWAT' },
-    { address: '0x5555...6666', joinDate: '2024-01-08', status: '不活跃', rewards: '45 RWAT' },
-    { address: '0x7777...8888', joinDate: '2024-01-05', status: '活跃', rewards: '203 RWAT' },
   ]
 
   const copyToClipboard = async (text: string) => {
@@ -72,20 +80,26 @@ const Referral = () => {
     }
   }
 
-  const shareOptions = [
-    {
-      name: 'Twitter',
-      icon: '🐦',
-      url: `https://twitter.com/intent/tweet?text=加入 RWAT 生态系统，获得丰厚奖励！&url=${referralLink}`,
-    },
-    {
-      name: 'Telegram',
-      icon: '✈️',
-      url: `https://t.me/share/url?url=${referralLink}&text=加入 RWAT 生态系统，获得丰厚奖励！`,
-    },
-    { name: 'Discord', icon: '🎮', url: referralLink },
-    { name: '微信', icon: '💬', url: referralLink },
-  ]
+  const collect = async () => {
+    try {
+      setCollectLoading(true)
+      await collectReward()
+      fetchUserInfo()
+      toast({ title: '领取成功' })
+    } catch (error) {
+      toast({ title: '领取失败' })
+    }
+    setCollectLoading(false)
+  }
+
+  const fetchUserInfo = async () => {
+    const info = await getUserInfo(address)
+    setUserInfo(info)
+  }
+
+  useEffect(() => {
+    address && fetchUserInfo()
+  }, [address])
 
   return (
     <div className="relative min-h-screen">
@@ -119,21 +133,6 @@ const Referral = () => {
                     <Button onClick={() => copyToClipboard(referralLink)} className="flex-shrink-0">
                       {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                     </Button>
-                  </div>
-
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                    {shareOptions.map(option => (
-                      <Button
-                        key={option.name}
-                        variant="outline"
-                        size="sm"
-                        onClick={() => window.open(option.url, '_blank')}
-                        className="flex items-center gap-2"
-                      >
-                        <span>{option.icon}</span>
-                        {option.name}
-                      </Button>
-                    ))}
                   </div>
                 </CardContent>
               </Card>
@@ -172,9 +171,8 @@ const Referral = () => {
         <section className="py-16 px-4">
           <div className="container mx-auto max-w-6xl">
             <Tabs defaultValue="rewards" className="w-full">
-              <TabsList className="grid w-full grid-cols-3">
+              <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="rewards">奖励体系</TabsTrigger>
-                <TabsTrigger value="leaderboard">排行榜</TabsTrigger>
                 <TabsTrigger value="my-referrals">我的邀请</TabsTrigger>
               </TabsList>
 
@@ -185,7 +183,7 @@ const Referral = () => {
                   <p className="text-muted-foreground">邀请越多，奖励越高！</p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
                   {rewardTiers.map((tier, index) => (
                     <Card
                       key={index}
@@ -251,62 +249,6 @@ const Referral = () => {
                 </Card>
               </TabsContent>
 
-              {/* Leaderboard */}
-              <TabsContent value="leaderboard" className="space-y-8">
-                <div className="text-center mb-8">
-                  <h2 className="text-3xl font-bold mb-4">邀请排行榜</h2>
-                  <p className="text-muted-foreground">本月邀请达人榜单</p>
-                </div>
-
-                <Card className="bg-gradient-card border-0 backdrop-blur-sm">
-                  <CardContent className="p-0">
-                    <div className="overflow-x-auto">
-                      <table className="w-full">
-                        <thead>
-                          <tr className="border-b border-border/40">
-                            <th className="text-left p-4">排名</th>
-                            <th className="text-left p-4">地址</th>
-                            <th className="text-left p-4">邀请数</th>
-                            <th className="text-left p-4">累计奖励</th>
-                            <th className="text-left p-4">等级</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {leaderboard.map(user => (
-                            <tr key={user.rank} className="border-b border-border/20">
-                              <td className="p-4">
-                                <div className="flex items-center gap-2">
-                                  {user.rank <= 3 && (
-                                    <Trophy
-                                      className={`h-4 w-4 ${
-                                        user.rank === 1
-                                          ? 'text-yellow-500'
-                                          : user.rank === 2
-                                          ? 'text-gray-400'
-                                          : 'text-amber-600'
-                                      }`}
-                                    />
-                                  )}
-                                  #{user.rank}
-                                </div>
-                              </td>
-                              <td className="p-4 font-mono text-sm">{user.address}</td>
-                              <td className="p-4 font-medium">{user.invites}</td>
-                              <td className="p-4 text-primary">{user.rewards}</td>
-                              <td className="p-4">
-                                <Badge variant={user.rank <= 3 ? 'default' : 'secondary'}>
-                                  {user.badge}
-                                </Badge>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-
               {/* My Referrals */}
               <TabsContent value="my-referrals" className="space-y-8">
                 <div className="text-center mb-8">
@@ -314,8 +256,8 @@ const Referral = () => {
                   <p className="text-muted-foreground">查看您邀请的用户详情</p>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                  <div className="lg:col-span-2">
+                <div className="grid grid-cols-1 lg:grid-cols-1 gap-6">
+                  {/* <div className="lg:col-span-2">
                     <Card className="bg-gradient-card border-0 backdrop-blur-sm">
                       <CardHeader>
                         <CardTitle>邀请列表</CardTitle>
@@ -354,37 +296,45 @@ const Referral = () => {
                         </div>
                       </CardContent>
                     </Card>
-                  </div>
+                  </div> */}
 
                   <div>
                     <Card className="bg-gradient-card border-0 backdrop-blur-sm">
                       <CardHeader>
-                        <CardTitle>邀请统计</CardTitle>
+                        <CardTitle>手续费分红</CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-4">
                         <div className="space-y-3">
                           <div className="flex justify-between">
-                            <span className="text-sm text-muted-foreground">总邀请</span>
-                            <span className="font-medium">156 人</span>
+                            <span className="text-sm text-muted-foreground">已领取</span>
+                            <span className="font-medium">
+                              {userInfo.claimedRewards.inviteReward} RWAT
+                            </span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-sm text-muted-foreground">活跃用户</span>
-                            <span className="font-medium">142 人</span>
+                            <span className="text-sm text-muted-foreground">待领取</span>
+                            <span className="font-medium">
+                              {userInfo.claimableRewards.inviteReward} RWAT
+                            </span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-sm text-muted-foreground">本月新增</span>
-                            <span className="font-medium">23 人</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-sm text-muted-foreground">转化率</span>
-                            <span className="font-medium">91.0%</span>
+                            <span className="text-sm text-muted-foreground">
+                              提示：团队额外收益，由DAO组织转账到地址
+                            </span>
                           </div>
                         </div>
 
                         <div className="pt-4 border-t border-border/40">
-                          <Button className="w-full" size="sm">
-                            <ExternalLink className="mr-2 h-4 w-4" />
-                            查看详细报告
+                          <Button
+                            className="w-full"
+                            size="sm"
+                            onClick={collect}
+                            loading={collectLoading}
+                            disabled={
+                              collectLoading || Number(userInfo.claimableRewards.inviteReward) === 0
+                            }
+                          >
+                            领取
                           </Button>
                         </div>
                       </CardContent>
