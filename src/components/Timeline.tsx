@@ -3,20 +3,20 @@ import { Calendar, Rocket, Target, Trophy } from "lucide-react";
 const Timeline = () => {
   const milestones = [
     {
-      quarter: "Q1 2024",
+      quarter: "Q3 2025",
       title: "Foundation & Launch",
       icon: Rocket,
       status: "completed",
       items: [
-        "RWAI Token Launch",
+        "RWAT Token Launch",
         "Community Building",
-        "Basic AI Research Tools",
+        "Basic Supply chain Research Tools",
         "Exchange Listings"
       ]
     },
     {
-      quarter: "Q2 2024", 
-      title: "AI Enhancement",
+      quarter: "Q4 2025", 
+      title: "Supply chain Enhancement",
       icon: Target,
       status: "completed",
       items: [
@@ -27,7 +27,7 @@ const Timeline = () => {
       ]
     },
     {
-      quarter: "Q3 2024",
+      quarter: "Q1 2026",
       title: "Platform Evolution",
       icon: Calendar,
       status: "in-progress",
@@ -35,11 +35,11 @@ const Timeline = () => {
         "Institutional Tools",
         "Launch Pad Integration",
         "Mobile Application",
-        "AI Model Improvements"
+        "Supply chain Model Improvements"
       ]
     },
     {
-      quarter: "Q4 2024",
+      quarter: "Q2 2026",
       title: "Ecosystem Expansion",
       icon: Trophy,
       status: "upcoming",

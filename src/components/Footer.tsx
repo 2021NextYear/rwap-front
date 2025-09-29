@@ -33,10 +33,10 @@ const Footer = () => {
               <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">R</span>
               </div>
-              <span className="text-xl font-bold gradient-text">rwai</span>
+              <span className="text-xl font-bold gradient-text">RWAF</span>
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              Your crypto research, reporting, and launch AI agent. Built for the future of decentralized finance.
+            Through RWAF, investors can flexibly select investment opportunities tailored to their needs and risk tolerance.
             </p>
             <div className="flex space-x-3">
               {socialLinks.map((link, index) => {
