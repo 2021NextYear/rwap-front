@@ -11,7 +11,7 @@ import FloatingShapes from '@/components/FloatingShapes'
 import { useToast } from '@/hooks/use-toast'
 import { useAccount } from 'wagmi'
 import { collectReward, getUserInfo } from '@/utils'
-import { add } from '@/lib'
+import { add, div, times } from '@/lib'
 import { useGlobalInfo, useUserInfo } from '@/hooks/useContract'
 
 const Referral = () => {
@@ -22,7 +22,6 @@ const Referral = () => {
   const globalInfo = useGlobalInfo()
   const userInfo = useUserInfo()
   const referralLink = useMemo(() => `${window.location.origin}?referral=${address}`, [address])
-  console.log('globalInfo', globalInfo)
   const stats = [
     { label: '直接邀请', value: userInfo.directInviteCount, icon: Users, reward: '' },
     { label: '间接邀请', value: userInfo.indirectCount, icon: Users, reward: '' },
@@ -44,6 +43,16 @@ const Referral = () => {
     { level: 'Level1', invites: '', commission: '10%', bonus: '节点分红', color: 'bg-amber-500' },
     { level: 'Level2', invites: '', commission: '5%', bonus: '节点分红', color: 'bg-gray-400' },
   ]
+
+  const proportion = useMemo(() => {
+    let _p = '0'
+    if (userInfo.nodeType === 1) {
+      _p = times(div(userInfo.performance, globalInfo.ordinaryNodesKpi), 100)
+    } else if (userInfo.nodeType === 2) {
+      _p = times(div(userInfo.performance, globalInfo.superNodesKpi), 100)
+    }
+    return _p
+  }, [globalInfo, userInfo])
 
   const copyToClipboard = async (text: string) => {
     try {
@@ -284,9 +293,7 @@ const Referral = () => {
                           </div>
                           <div className="flex justify-between">
                             <span className="text-sm text-muted-foreground">个人团队业绩占比</span>
-                            <span className="font-medium">
-                              {userInfo.claimedRewards.dividendReward} %
-                            </span>
+                            <span className="font-medium">{proportion} %</span>
                           </div>
                           <div className="flex justify-between">
                             <span className="text-sm text-muted-foreground">已领取</span>
