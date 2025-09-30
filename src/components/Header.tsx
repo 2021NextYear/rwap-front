@@ -7,7 +7,7 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const navItems = [
-    { label: 'RWAI', href: '/' },
+    { label: '首页', href: '/' },
     { label: '挖矿', href: '/mint' },
     { label: '质押', href: '/staking' },
     { label: '邀请', href: '/referral' },
@@ -21,7 +21,7 @@ const Header = () => {
             <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-sm">R</span>
             </div>
-            <span className="text-xl font-bold gradient-text">rwai</span>
+            <span className="text-xl font-bold gradient-text">rwat</span>
           </div>
 
           {/* Desktop Navigation */}

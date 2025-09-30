@@ -10,10 +10,10 @@ const Hero = () => {
           <div className="space-y-8">
             <div className="space-y-6">
               <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-                Hi, I am <span className="gradient-text">rwai</span>, your{" "}
-                <span className="gradient-text">crypto research</span>,{" "}
-                <span className="gradient-text">reporting, & launch</span>{" "}
-                <span className="gradient-text">AI agent</span>
+              RWAFinance（RWAF）<span className="gradient-text">是由Exovo Ltd、Elias Neocleous & Co LLC</span>{" "}
+                <span className="gradient-text">塞浦路斯银行</span>,{" "}
+                <span className="gradient-text">等众多知名权威机构</span>{" "}
+                <span className="gradient-text">支持的国际供应链金融RWA产品。</span>
               </h1>
             </div>
 
