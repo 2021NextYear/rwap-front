@@ -3,15 +3,15 @@ import { Button } from "@/components/ui/button";
 
 const Footer = () => {
   const socialLinks = [
-    { icon: Twitter, label: "Twitter", href: "https://x.com/bitconncet_f" },
+    { icon: Twitter, label: "Twitter", href: "https://x.com/RWAFinacne" },
     { icon: MessageCircle, label: "Telegram", href: "https://t.me/rwafcoin" }
   ];
 
   const quickLinks = [
     // { label: "About", href: "#about" },
     // { label: "Timeline", href: "#timeline" },
-    { label: "Dexscreener", href: "https://dexscreener.com/bsc/0x6d352b2f06f737f8db74808e7126d243995042a6" },
-    { label: "AVE", href: "https://ave.ai/token/0xaaffa85373701db3432dcaa2284a38e1c2e8b773-bsc?from=Home" }
+    { label: "Dexscreener", href: "https://dexscreener.com/bsc/0x16eae557919fedc8bda162919cc72d2e1317346a" },
+    { label: "AVE", href: "https://ave.ai/token/0x1e71525664b90393449494768a0120996d0be5b1-bsc?from=Home" }
   ];
 
   const resources = [
