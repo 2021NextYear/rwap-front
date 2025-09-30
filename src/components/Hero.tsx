@@ -37,9 +37,9 @@ const Hero = () => {
                     <span className="gradient-text font-semibold">KAIRON</span>
                   </div>
                 </div>
-              </div> */}
+              </div>
 
-              {/* <div className="space-y-3">
+              <div className="space-y-3">
                 <p className="text-muted-foreground">Listed on</p>
                 <div className="flex flex-wrap gap-4">
                   <div className="glass px-4 py-2 rounded-lg">
@@ -60,8 +60,8 @@ const Hero = () => {
               >
                 <Volume2 className="w-4 h-4" />
                 <span>Let me introduce myself</span>
-              </Button> */}
-            </div>
+              </Button>
+            </div> */}
           </div>
 
           <div className="flex justify-center lg:justify-end">
