@@ -31,7 +31,7 @@ const Referral = () => {
       label: '邀请奖励',
       value: add(userInfo.claimableRewards.inviteReward, userInfo.claimedRewards.inviteReward, 2),
       icon: Gift,
-      reward: '%',
+      reward: '',
     },
     {
       label: '团队用户',
@@ -224,8 +224,8 @@ const Referral = () => {
               {/* My Referrals */}
               <TabsContent value="my-referrals" className="space-y-8">
                 <div className="text-center mb-8">
-                  <h2 className="text-3xl font-bold mb-4">我的邀请记录</h2>
-                  <p className="text-muted-foreground">查看您邀请的用户详情</p>
+                  <h2 className="text-3xl font-bold mb-4">节点分红</h2>
+                  {/* <p className="text-muted-foreground">查看您邀请的用户详情</p> */}
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-1 gap-6">
