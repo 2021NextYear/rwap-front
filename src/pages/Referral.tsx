@@ -25,19 +25,19 @@ const Referral = () => {
   const referralLink = useMemo(() => `${window.location.origin}?referral=${address}`, [address])
 
   const stats = [
-    { label: '直接邀请', value: userInfo.directInviteCount, icon: Users, reward: '+780 RWAT' },
-    { label: '间接邀请', value: userInfo.indirectCount, icon: Users, reward: '+780 RWAT' },
+    { label: '直接邀请', value: userInfo.directInviteCount, icon: Users, reward: '' },
+    { label: '间接邀请', value: userInfo.indirectCount, icon: Users, reward: '' },
     {
       label: '邀请奖励',
       value: add(userInfo.claimableRewards.inviteReward, userInfo.claimedRewards.inviteReward, 2),
       icon: Gift,
-      reward: '+12.5%',
+      reward: '%',
     },
     {
       label: '团队用户',
       value: add(userInfo.directInviteCount, userInfo.indirectCount),
       icon: Trophy,
-      reward: '前100名',
+      reward: '',
     },
   ]
 
@@ -147,7 +147,7 @@ const Referral = () => {
             <Tabs defaultValue="rewards" className="w-full">
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="rewards">奖励体系</TabsTrigger>
-                <TabsTrigger value="my-referrals">我的邀请</TabsTrigger>
+                <TabsTrigger value="my-referrals">节点分红</TabsTrigger>
               </TabsList>
 
               {/* Rewards System */}
@@ -277,6 +277,18 @@ const Referral = () => {
                       </CardHeader>
                       <CardContent className="space-y-4">
                         <div className="space-y-3">
+                          <div className="flex justify-between">
+                            <span className="text-sm text-muted-foreground">奖池金额</span>
+                            <span className="font-medium">
+                              {userInfo.claimedRewards.dividendReward} RWAT
+                            </span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-sm text-muted-foreground">个人团队业绩占比</span>
+                            <span className="font-medium">
+                              {userInfo.claimedRewards.dividendReward} %
+                            </span>
+                          </div>
                           <div className="flex justify-between">
                             <span className="text-sm text-muted-foreground">已领取</span>
                             <span className="font-medium">
