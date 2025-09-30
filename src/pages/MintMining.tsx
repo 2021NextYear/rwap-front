@@ -258,9 +258,9 @@ const MintMining = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
-                { name: '普通用户', apy: '15%', difficulty: '低', fee: '0%' },
-                { name: '节点', apy: '25%', difficulty: '中', fee: '40%' },
-                { name: '超级节点', apy: '40%', difficulty: '高', fee: '60%' },
+                { name: ' 矿工', apy: '91.25%', difficulty: '低', fee: '0%' },
+                { name: '节点', apy: '109.5%', difficulty: '中', fee: '40%' },
+                { name: '超级节点', apy: '127.75%', difficulty: '高', fee: '60%' },
               ].map((pool, index) => (
                 <Card key={index} className="bg-gradient-card border-0 backdrop-blur-sm">
                   <CardHeader>
