@@ -4,16 +4,14 @@ import { Button } from "@/components/ui/button";
 const Footer = () => {
   const socialLinks = [
     { icon: Twitter, label: "Twitter", href: "https://x.com/bitconncet_f" },
-    { icon: MessageCircle, label: "Telegram", href: "#" },
-    { icon: Github, label: "GitHub", href: "#" },
-    { icon: Mail, label: "Email", href: "mailto:contact@rwai.inc" }
+    { icon: MessageCircle, label: "Telegram", href: "https://t.me/rwafcoin" }
   ];
 
   const quickLinks = [
     // { label: "About", href: "#about" },
     // { label: "Timeline", href: "#timeline" },
-    { label: "Dexscreener", href: "https://dexscreener.com/solana/b1jkxqh1yvtqtravmastwoy2pu54ssjlqfwphl9vwpgu" },
-    { label: "AVE", href: "https://ave.ai/token/0x2c54c60600e1d786b2dfc139a38a5a99-hyperliquid" }
+    { label: "Dexscreener", href: "https://dexscreener.com/bsc/0x6d352b2f06f737f8db74808e7126d243995042a6" },
+    { label: "AVE", href: "https://ave.ai/token/0xaaffa85373701db3432dcaa2284a38e1c2e8b773-bsc?from=Home" }
   ];
 
   const resources = [
