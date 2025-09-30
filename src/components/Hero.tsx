@@ -10,7 +10,7 @@ const Hero = () => {
           <div className="space-y-8">
             <div className="space-y-6">
               <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-              RWAFinance（RWAF）<span className="gradient-text">是由Exovo Ltd、Elias Neocleous & Co LLC</span>{" "}
+              RWAFinance（RWAF）<span className="gradient-text">是由Exovo Ltd、Elias Neocleous & Co LLC</span>,{" "}
                 <span className="gradient-text">塞浦路斯银行</span>,{" "}
                 <span className="gradient-text">等众多知名权威机构</span>{" "}
                 <span className="gradient-text">支持的国际供应链金融RWA产品。</span>
