@@ -177,10 +177,10 @@ const Referral = () => {
                         </div>
 
                         <div className="space-y-2 text-sm">
-                          <div className="flex justify-between">
+                          {/* <div className="flex justify-between">
                             <span>节点权益</span>
                             <span className="font-medium">{tier.bonus}</span>
-                          </div>
+                          </div> */}
                           {/* <div className="flex justify-between">
                             <span>状态</span>
                             <Badge variant={index === 3 ? 'default' : 'secondary'}>
