@@ -19,7 +19,7 @@ import { collectReward, genErc20ApproveForContract, getReferral, getUserInfo } f
 import { useAccount } from 'wagmi'
 import { Input } from '@/components/ui/input'
 import { useBalance } from '@/hooks/useBalance'
-import { useGlobalInfo, useTokenAmountByStake } from '@/hooks/useContract'
+import { useGlobalInfo, useTokenAmountByStake, useUserInfo } from '@/hooks/useContract'
 import { useToast } from '@/hooks/use-toast'
 import { Button } from '@/components/Button'
 
@@ -36,25 +36,7 @@ const MintMining = () => {
   const [miningLoading, setMiningLoading] = useState(false)
   const [collectLoading, setCollectLoading] = useState(false)
 
-  const [userInfo, setUserInfo] = useState({
-    directInviter: '',
-    directInviteCount: '0',
-    indirectCount: '0',
-    totalMiningAmount: '0',
-    totalStakingAmount: '0',
-    claimableRewards: {
-      miningReward: '0',
-      stakingReward: '0',
-      inviteReward: '0',
-      dividendReward: '0',
-    },
-    claimedRewards: {
-      miningReward: '0',
-      stakingReward: '0',
-      inviteReward: '0',
-      dividendReward: '0',
-    },
-  })
+  const userInfo = useUserInfo()
 
   const stats = [
     { label: '总供应量', value: totalSupply, icon: Coins },
@@ -97,7 +79,6 @@ const MintMining = () => {
 
       await sendTransaction({ to: staking, data: calldata, value: '0' }, chainId)
       toast({ title: '认购成功' })
-      fetchUserInfo()
     } catch (error) {
       toast({ title: '认购失败' })
     }
@@ -114,15 +95,6 @@ const MintMining = () => {
     }
     setCollectLoading(false)
   }
-
-  const fetchUserInfo = async () => {
-    const info = await getUserInfo(address)
-    setUserInfo(info)
-  }
-
-  useEffect(() => {
-    address && fetchUserInfo()
-  }, [address])
 
   return (
     <div className="relative min-h-screen">

@@ -4,9 +4,12 @@ import {
   getErc20Contract,
   getStakeMiningContract,
   number2Small,
+  singleContractMultipleDataFetcher,
+  stakeMiningInterface,
 } from '@/lib'
 import { useMemo } from 'react'
 import useSWR from 'swr'
+import { useAccount } from 'wagmi'
 
 export function useGlobalInfo() {
   const { contract, chainId } = CHAIN_CONFIG
@@ -63,5 +66,98 @@ export function useTokenAmountByStake() {
   )
   return useMemo(() => {
     return number2Small(String(data), 18, 0)
+  }, [data])
+}
+
+export function useUserInfo() {
+  const { address } = useAccount()
+  const { contract, chainId } = CHAIN_CONFIG
+  const { staking } = contract
+
+  const {
+    data = [
+      {
+        miningReward: '0',
+        stakingReward: '0',
+        inviteReward: '0',
+        dividendReward: '0',
+      },
+      {
+        miningReward: '0',
+        stakingReward: '0',
+        inviteReward: '0',
+        dividendReward: '0',
+      },
+      {
+        directInviter: '',
+        directInviteCount: '0',
+        totalMiningAmount: '0',
+        totalStakingAmount: '0',
+      },
+      '0',
+    ],
+  } = useSWR<any[]>(
+    address ? 'useUserInfo' : null,
+    () =>
+      singleContractMultipleDataFetcher(
+        [
+          staking,
+          ['getClaimableRewards', 'getClaimedRewards', 'users', 'getIndirectInviteCount'],
+          stakeMiningInterface,
+          [[address], [address], [address], [address]],
+        ],
+        chainId
+      ),
+    {
+      refreshInterval: 10 * 1000,
+      focusThrottleInterval: 10 * 1000,
+    }
+  )
+
+  return useMemo(() => {
+    const [claimableRewards, claimedRewards, user, indirectCount]: any = data
+
+    const { directInviter, directInviteCount, totalMiningAmount, totalStakingAmount } = user
+    let _claimableRewards = {
+        miningReward: '0',
+        stakingReward: '0',
+        inviteReward: '0',
+        dividendReward: '0',
+      },
+      _claimedRewards = {
+        miningReward: '0',
+        stakingReward: '0',
+        inviteReward: '0',
+        dividendReward: '0',
+      }
+    if (claimableRewards) {
+      const { miningReward, stakingReward, inviteReward, dividendReward } = claimableRewards
+      _claimableRewards = {
+        miningReward: number2Small(String(miningReward), 18),
+        stakingReward: number2Small(String(stakingReward), 18),
+        inviteReward: number2Small(String(inviteReward), 18),
+        dividendReward: number2Small(String(dividendReward), 18),
+      }
+    }
+
+    if (claimedRewards) {
+      const { miningReward, stakingReward, inviteReward, dividendReward } = claimedRewards
+      _claimedRewards = {
+        miningReward: number2Small(String(miningReward), 18),
+        stakingReward: number2Small(String(stakingReward), 18),
+        inviteReward: number2Small(String(inviteReward), 18),
+        dividendReward: number2Small(String(dividendReward), 18),
+      }
+    }
+
+    return {
+      directInviter,
+      directInviteCount: String(directInviteCount),
+      indirectCount: String(indirectCount),
+      totalMiningAmount: number2Small(String(totalMiningAmount), 18),
+      totalStakingAmount: number2Small(String(totalStakingAmount), 18),
+      claimableRewards: _claimableRewards,
+      claimedRewards: _claimedRewards,
+    }
   }, [data])
 }

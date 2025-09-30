@@ -12,6 +12,7 @@ import { useToast } from '@/hooks/use-toast'
 import { useAccount } from 'wagmi'
 import { collectReward, getUserInfo } from '@/utils'
 import { add } from '@/lib'
+import { useUserInfo } from '@/hooks/useContract'
 
 const Referral = () => {
   const { address } = useAccount()
@@ -19,25 +20,8 @@ const Referral = () => {
   const { toast } = useToast()
   const [collectLoading, setCollectLoading] = useState(false)
 
-  const [userInfo, setUserInfo] = useState({
-    directInviter: '',
-    directInviteCount: '0',
-    indirectCount: '0',
-    totalMiningAmount: '0',
-    totalStakingAmount: '0',
-    claimableRewards: {
-      miningReward: '0',
-      stakingReward: '0',
-      inviteReward: '0',
-      dividendReward: '0',
-    },
-    claimedRewards: {
-      miningReward: '0',
-      stakingReward: '0',
-      inviteReward: '0',
-      dividendReward: '0',
-    },
-  })
+  const userInfo = useUserInfo()
+
   const referralLink = useMemo(() => `${window.location.origin}?referral=${address}`, [address])
 
   const stats = [
@@ -84,22 +68,12 @@ const Referral = () => {
     try {
       setCollectLoading(true)
       await collectReward()
-      fetchUserInfo()
       toast({ title: '领取成功' })
     } catch (error) {
       toast({ title: '领取失败' })
     }
     setCollectLoading(false)
   }
-
-  const fetchUserInfo = async () => {
-    const info = await getUserInfo(address)
-    setUserInfo(info)
-  }
-
-  useEffect(() => {
-    address && fetchUserInfo()
-  }, [address])
 
   return (
     <div className="relative min-h-screen">
@@ -308,13 +282,13 @@ const Referral = () => {
                           <div className="flex justify-between">
                             <span className="text-sm text-muted-foreground">已领取</span>
                             <span className="font-medium">
-                              {userInfo.claimedRewards.inviteReward} RWAT
+                              {userInfo.claimedRewards.dividendReward} RWAT
                             </span>
                           </div>
                           <div className="flex justify-between">
                             <span className="text-sm text-muted-foreground">待领取</span>
                             <span className="font-medium">
-                              {userInfo.claimableRewards.inviteReward} RWAT
+                              {userInfo.claimableRewards.dividendReward} RWAT
                             </span>
                           </div>
                           <div className="flex justify-between">
@@ -331,7 +305,8 @@ const Referral = () => {
                             onClick={collect}
                             loading={collectLoading}
                             disabled={
-                              collectLoading || Number(userInfo.claimableRewards.inviteReward) === 0
+                              collectLoading ||
+                              Number(userInfo.claimableRewards.dividendReward) === 0
                             }
                           >
                             领取

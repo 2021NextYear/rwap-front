@@ -1,10 +1,5 @@
 import { CHAIN_CONFIG } from '@/constants'
-import {
-  getStakeMiningContract,
-  number2Small,
-  singleContractMultipleDataFetcher,
-  stakeMiningInterface,
-} from '@/lib'
+import { number2Small, singleContractMultipleDataFetcher, stakeMiningInterface } from '@/lib'
 
 export const getUserInfo = async (address: string) => {
   const { contract, chainId } = CHAIN_CONFIG

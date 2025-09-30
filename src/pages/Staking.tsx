@@ -21,7 +21,7 @@ import {
   toFixed,
 } from '@/lib'
 import { useBalance } from '@/hooks/useBalance'
-import { useGlobalInfo } from '@/hooks/useContract'
+import { useGlobalInfo, useUserInfo } from '@/hooks/useContract'
 import { useToast } from '@/hooks/use-toast'
 import { isAddress } from 'viem'
 
@@ -39,24 +39,7 @@ const Staking = () => {
   const [miningLoading, setMiningLoading] = useState(false)
   const [collectLoading, setCollectLoading] = useState(false)
 
-  const [userInfo, setUserInfo] = useState({
-    directInviter: '',
-    directInviteCount: '0',
-    totalMiningAmount: '0',
-    totalStakingAmount: '0',
-    claimableRewards: {
-      miningReward: '0',
-      stakingReward: '0',
-      inviteReward: '0',
-      dividendReward: '0',
-    },
-    claimedRewards: {
-      miningReward: '0',
-      stakingReward: '0',
-      inviteReward: '0',
-      dividendReward: '0',
-    },
-  })
+  const userInfo = useUserInfo()
 
   const stakingStats = [
     { label: '总质押量', value: `${totalStakingAmount} RWAT`, icon: Lock, trend: '+12.5%' },
@@ -127,7 +110,6 @@ const Staking = () => {
 
       await sendTransaction({ to: staking, data: calldata, value: '0' }, chainId)
       toast({ title: '质押成功' })
-      fetchUserInfo()
     } catch (error) {
       toast({ title: '质押失败' })
     }
@@ -172,15 +154,6 @@ const Staking = () => {
     }
     setCollectLoading(false)
   }
-
-  const fetchUserInfo = async () => {
-    const info = await getUserInfo(address)
-    setUserInfo(info)
-  }
-
-  useEffect(() => {
-    address && fetchUserInfo()
-  }, [address])
 
   return (
     <div className="relative min-h-screen">
