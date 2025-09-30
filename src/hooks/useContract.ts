@@ -17,7 +17,7 @@ export function useGlobalInfo() {
 
   const stakeMiningContract = getStakeMiningContract(staking, chainId)
 
-  const { data = [] } = useSWR<bigint[]>(
+  const { data = [], error } = useSWR<bigint[]>(
     'useGlobalInfo',
     () => stakeMiningContract.getGlobalStats(),
     {
@@ -25,7 +25,7 @@ export function useGlobalInfo() {
       focusThrottleInterval: 10 * 1000,
     }
   )
-
+  //console.log('useGlobalInfo error', error)
   return useMemo(() => {
     const [
       miningAddresses,
@@ -36,6 +36,9 @@ export function useGlobalInfo() {
       totalStakingAmount,
       ordinaryNodeCount,
       superNodeCount,
+      ordinaryNodesKpi,
+      superNodesKpi,
+      dividendPoolAmount,
     ] = data.map(String)
     return {
       miningAddresses,
@@ -46,6 +49,9 @@ export function useGlobalInfo() {
       totalStakingAmount: number2Small(totalStakingAmount, 18, 2),
       ordinaryNodeCount,
       superNodeCount,
+      ordinaryNodesKpi: number2Small(ordinaryNodesKpi, 18, 2),
+      superNodesKpi: number2Small(superNodesKpi, 18, 2),
+      dividendPoolAmount: number2Small(dividendPoolAmount, 18, 2),
     }
   }, [data])
 }
@@ -79,7 +85,6 @@ export function useUserInfo() {
       {
         miningReward: '0',
         stakingReward: '0',
-        inviteReward: '0',
         dividendReward: '0',
       },
       {
@@ -95,16 +100,28 @@ export function useUserInfo() {
         totalStakingAmount: '0',
       },
       '0',
+      {
+        secondInviter: '',
+        nodeType: '0', // 0: 普通用户, 1: 普通节点, 2: 超级节点
+        performance: '0',
+      },
     ],
+    error,
   } = useSWR<any[]>(
     address ? 'useUserInfo' : null,
     () =>
       singleContractMultipleDataFetcher(
         [
           staking,
-          ['getClaimableRewards', 'getClaimedRewards', 'users', 'getIndirectInviteCount'],
+          [
+            'getClaimableRewards',
+            'getClaimedRewards',
+            'users',
+            'getIndirectInviteCount',
+            'getUserInfo',
+          ],
           stakeMiningInterface,
-          [[address], [address], [address], [address]],
+          [[address], [address], [address], [address], [address]],
         ],
         chainId
       ),
@@ -113,15 +130,15 @@ export function useUserInfo() {
       focusThrottleInterval: 10 * 1000,
     }
   )
+  //console.log('useUserInfo error', error)
 
   return useMemo(() => {
-    const [claimableRewards, claimedRewards, user, indirectCount]: any = data
+    const [claimableRewards, claimedRewards, user, indirectCount, userInfo]: any = data
 
     const { directInviter, directInviteCount, totalMiningAmount, totalStakingAmount } = user
     let _claimableRewards = {
         miningReward: '0',
         stakingReward: '0',
-        inviteReward: '0',
         dividendReward: '0',
       },
       _claimedRewards = {
@@ -135,7 +152,7 @@ export function useUserInfo() {
       _claimableRewards = {
         miningReward: number2Small(String(miningReward), 18),
         stakingReward: number2Small(String(stakingReward), 18),
-        inviteReward: number2Small(String(inviteReward), 18),
+
         dividendReward: number2Small(String(dividendReward), 18),
       }
     }
@@ -158,6 +175,8 @@ export function useUserInfo() {
       totalStakingAmount: number2Small(String(totalStakingAmount), 18),
       claimableRewards: _claimableRewards,
       claimedRewards: _claimedRewards,
+      nodeType: Number(userInfo?.nodeType || 0),
+      performance: number2Small(String(userInfo?.performance || 0), 18),
     }
   }, [data])
 }

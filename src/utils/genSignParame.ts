@@ -28,8 +28,10 @@ export async function genErc20ApproveForContract(
   }
 }
 
-export async function collectReward() {
+export async function collectReward(
+  rewardType: 'claimDividendRewards' | 'claimMiningRewards' | 'claimStakingRewards'
+) {
   const { contract, chainId } = CHAIN_CONFIG
-  const calldata = stakeMiningInterface.encodeFunctionData('claimRewards')
+  const calldata = stakeMiningInterface.encodeFunctionData(rewardType as any)
   return sendTransaction({ to: contract.staking, data: calldata, value: '0' }, chainId)
 }

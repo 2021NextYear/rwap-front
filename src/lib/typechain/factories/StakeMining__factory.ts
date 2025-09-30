@@ -217,7 +217,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "DAILY_RELEASE_RATE_MINING",
+    name: "BLOCKS_PER_DAY",
     outputs: [
       {
         internalType: "uint256",
@@ -230,7 +230,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "DAILY_RELEASE_RATE_ORDINARY_DIVIDEND",
+    name: "BLOCK_RELEASE_RATE_MINING",
     outputs: [
       {
         internalType: "uint256",
@@ -243,7 +243,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "DAILY_RELEASE_RATE_STAKING",
+    name: "BLOCK_RELEASE_RATE_ORDINARY_DIVIDEND",
     outputs: [
       {
         internalType: "uint256",
@@ -256,7 +256,20 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "DAILY_RELEASE_RATE_SUPER_DIVIDEND",
+    name: "BLOCK_RELEASE_RATE_STAKING",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "BLOCK_RELEASE_RATE_SUPER_DIVIDEND",
     outputs: [
       {
         internalType: "uint256",
@@ -347,19 +360,6 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "SECONDS_PER_DAY",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
     name: "SECOND_INVITE_RATE",
     outputs: [
       {
@@ -438,7 +438,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "claimRewards",
+    name: "claimDividendRewards",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -451,7 +451,47 @@ const _abi = [
         type: "address",
       },
     ],
-    name: "claimRewardsForUser",
+    name: "claimDividendRewardsForUser",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "claimMiningRewards",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_user",
+        type: "address",
+      },
+    ],
+    name: "claimMiningRewardsForUser",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "claimStakingRewards",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_user",
+        type: "address",
+      },
+    ],
+    name: "claimStakingRewardsForUser",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -494,6 +534,19 @@ const _abi = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "dividendPoolAmount",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "address",
@@ -529,11 +582,6 @@ const _abi = [
       {
         internalType: "uint256",
         name: "stakingReward",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "inviteReward",
         type: "uint256",
       },
       {
@@ -621,6 +669,21 @@ const _abi = [
       {
         internalType: "uint256",
         name: "superNodeCount",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "ordinaryNodesKpi",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "superNodesKpi",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "dividendPool",
         type: "uint256",
       },
     ],
@@ -723,6 +786,25 @@ const _abi = [
       },
     ],
     name: "hasStaked",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "isGtSuperNodeAmount",
     outputs: [
       {
         internalType: "bool",
@@ -982,35 +1064,11 @@ const _abi = [
         type: "address",
       },
     ],
-    name: "userClaimedInviteRewards",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
     name: "userInviteRewards",
     outputs: [
       {
         internalType: "uint256",
-        name: "directReward",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "secondReward",
+        name: "",
         type: "uint256",
       },
     ],
@@ -1044,7 +1102,7 @@ const _abi = [
       },
       {
         internalType: "uint256",
-        name: "startTime",
+        name: "startBlock",
         type: "uint256",
       },
       {
@@ -1078,7 +1136,7 @@ const _abi = [
       },
       {
         internalType: "uint256",
-        name: "startTime",
+        name: "startBlock",
         type: "uint256",
       },
       {
@@ -1088,7 +1146,7 @@ const _abi = [
       },
       {
         internalType: "uint256",
-        name: "dailyRate",
+        name: "blockRate",
         type: "uint256",
       },
     ],
@@ -1122,7 +1180,7 @@ const _abi = [
       },
       {
         internalType: "uint256",
-        name: "startTime",
+        name: "startBlock",
         type: "uint256",
       },
       {
@@ -1156,7 +1214,7 @@ const _abi = [
       },
       {
         internalType: "uint256",
-        name: "startTime",
+        name: "startBlock",
         type: "uint256",
       },
       {
@@ -1166,7 +1224,7 @@ const _abi = [
       },
       {
         internalType: "uint256",
-        name: "dailyRate",
+        name: "blockRate",
         type: "uint256",
       },
     ],

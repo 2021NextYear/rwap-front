@@ -26,27 +26,32 @@ import type {
 export interface StakeMiningInterface extends Interface {
   getFunction(
     nameOrSignature:
-      | "DAILY_RELEASE_RATE_MINING"
-      | "DAILY_RELEASE_RATE_ORDINARY_DIVIDEND"
-      | "DAILY_RELEASE_RATE_STAKING"
-      | "DAILY_RELEASE_RATE_SUPER_DIVIDEND"
+      | "BLOCKS_PER_DAY"
+      | "BLOCK_RELEASE_RATE_MINING"
+      | "BLOCK_RELEASE_RATE_ORDINARY_DIVIDEND"
+      | "BLOCK_RELEASE_RATE_STAKING"
+      | "BLOCK_RELEASE_RATE_SUPER_DIVIDEND"
       | "DIRECT_INVITE_RATE"
       | "MINING_MULTIPLIER"
       | "MIN_MINING_AMOUNT"
       | "ORDINARY_NODE_DIVIDEND_RATE"
       | "ORDINARY_NODE_THRESHOLD"
       | "RATE_BASE"
-      | "SECONDS_PER_DAY"
       | "SECOND_INVITE_RATE"
       | "STAKING_MULTIPLIER"
       | "SUPER_NODE_DIVIDEND_RATE"
       | "SUPER_NODE_INVITE_THRESHOLD"
       | "SUPER_NODE_THRESHOLD"
       | "USDT_ADDRESS"
-      | "claimRewards"
-      | "claimRewardsForUser"
+      | "claimDividendRewards"
+      | "claimDividendRewardsForUser"
+      | "claimMiningRewards"
+      | "claimMiningRewardsForUser"
+      | "claimStakingRewards"
+      | "claimStakingRewardsForUser"
       | "directInvitees"
       | "distributeDividends"
+      | "dividendPoolAmount"
       | "emergencyWithdraw"
       | "getClaimableRewards"
       | "getClaimedRewards"
@@ -55,6 +60,7 @@ export interface StakeMiningInterface extends Interface {
       | "getUserInfo"
       | "hasMined"
       | "hasStaked"
+      | "isGtSuperNodeAmount"
       | "isOrdinaryNode"
       | "isSuperNode"
       | "mining"
@@ -71,7 +77,6 @@ export interface StakeMiningInterface extends Interface {
       | "totalStakingClaimedRewards"
       | "transferOwnership"
       | "usdtReceiver"
-      | "userClaimedInviteRewards"
       | "userInviteRewards"
       | "userMiningRecords"
       | "userOrdinaryDividends"
@@ -93,19 +98,23 @@ export interface StakeMiningInterface extends Interface {
   ): EventFragment;
 
   encodeFunctionData(
-    functionFragment: "DAILY_RELEASE_RATE_MINING",
+    functionFragment: "BLOCKS_PER_DAY",
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "DAILY_RELEASE_RATE_ORDINARY_DIVIDEND",
+    functionFragment: "BLOCK_RELEASE_RATE_MINING",
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "DAILY_RELEASE_RATE_STAKING",
+    functionFragment: "BLOCK_RELEASE_RATE_ORDINARY_DIVIDEND",
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "DAILY_RELEASE_RATE_SUPER_DIVIDEND",
+    functionFragment: "BLOCK_RELEASE_RATE_STAKING",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "BLOCK_RELEASE_RATE_SUPER_DIVIDEND",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -129,10 +138,6 @@ export interface StakeMiningInterface extends Interface {
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "RATE_BASE", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "SECONDS_PER_DAY",
-    values?: undefined
-  ): string;
   encodeFunctionData(
     functionFragment: "SECOND_INVITE_RATE",
     values?: undefined
@@ -158,11 +163,27 @@ export interface StakeMiningInterface extends Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "claimRewards",
+    functionFragment: "claimDividendRewards",
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "claimRewardsForUser",
+    functionFragment: "claimDividendRewardsForUser",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "claimMiningRewards",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "claimMiningRewardsForUser",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "claimStakingRewards",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "claimStakingRewardsForUser",
     values: [AddressLike]
   ): string;
   encodeFunctionData(
@@ -172,6 +193,10 @@ export interface StakeMiningInterface extends Interface {
   encodeFunctionData(
     functionFragment: "distributeDividends",
     values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "dividendPoolAmount",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "emergencyWithdraw",
@@ -203,6 +228,10 @@ export interface StakeMiningInterface extends Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "hasStaked",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "isGtSuperNodeAmount",
     values: [AddressLike]
   ): string;
   encodeFunctionData(
@@ -267,10 +296,6 @@ export interface StakeMiningInterface extends Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "userClaimedInviteRewards",
-    values: [AddressLike]
-  ): string;
-  encodeFunctionData(
     functionFragment: "userInviteRewards",
     values: [AddressLike]
   ): string;
@@ -301,19 +326,23 @@ export interface StakeMiningInterface extends Interface {
   encodeFunctionData(functionFragment: "users", values: [AddressLike]): string;
 
   decodeFunctionResult(
-    functionFragment: "DAILY_RELEASE_RATE_MINING",
+    functionFragment: "BLOCKS_PER_DAY",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "DAILY_RELEASE_RATE_ORDINARY_DIVIDEND",
+    functionFragment: "BLOCK_RELEASE_RATE_MINING",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "DAILY_RELEASE_RATE_STAKING",
+    functionFragment: "BLOCK_RELEASE_RATE_ORDINARY_DIVIDEND",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "DAILY_RELEASE_RATE_SUPER_DIVIDEND",
+    functionFragment: "BLOCK_RELEASE_RATE_STAKING",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "BLOCK_RELEASE_RATE_SUPER_DIVIDEND",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -337,10 +366,6 @@ export interface StakeMiningInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "RATE_BASE", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "SECONDS_PER_DAY",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "SECOND_INVITE_RATE",
     data: BytesLike
@@ -366,11 +391,27 @@ export interface StakeMiningInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "claimRewards",
+    functionFragment: "claimDividendRewards",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "claimRewardsForUser",
+    functionFragment: "claimDividendRewardsForUser",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "claimMiningRewards",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "claimMiningRewardsForUser",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "claimStakingRewards",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "claimStakingRewardsForUser",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -379,6 +420,10 @@ export interface StakeMiningInterface extends Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "distributeDividends",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "dividendPoolAmount",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -407,6 +452,10 @@ export interface StakeMiningInterface extends Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "hasMined", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "hasStaked", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "isGtSuperNodeAmount",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "isOrdinaryNode",
     data: BytesLike
@@ -460,10 +509,6 @@ export interface StakeMiningInterface extends Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "usdtReceiver",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "userClaimedInviteRewards",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -660,17 +705,19 @@ export interface StakeMining extends BaseContract {
     event?: TCEvent
   ): Promise<this>;
 
-  DAILY_RELEASE_RATE_MINING: TypedContractMethod<[], [bigint], "view">;
+  BLOCKS_PER_DAY: TypedContractMethod<[], [bigint], "view">;
 
-  DAILY_RELEASE_RATE_ORDINARY_DIVIDEND: TypedContractMethod<
+  BLOCK_RELEASE_RATE_MINING: TypedContractMethod<[], [bigint], "view">;
+
+  BLOCK_RELEASE_RATE_ORDINARY_DIVIDEND: TypedContractMethod<
     [],
     [bigint],
     "view"
   >;
 
-  DAILY_RELEASE_RATE_STAKING: TypedContractMethod<[], [bigint], "view">;
+  BLOCK_RELEASE_RATE_STAKING: TypedContractMethod<[], [bigint], "view">;
 
-  DAILY_RELEASE_RATE_SUPER_DIVIDEND: TypedContractMethod<[], [bigint], "view">;
+  BLOCK_RELEASE_RATE_SUPER_DIVIDEND: TypedContractMethod<[], [bigint], "view">;
 
   DIRECT_INVITE_RATE: TypedContractMethod<[], [bigint], "view">;
 
@@ -684,8 +731,6 @@ export interface StakeMining extends BaseContract {
 
   RATE_BASE: TypedContractMethod<[], [bigint], "view">;
 
-  SECONDS_PER_DAY: TypedContractMethod<[], [bigint], "view">;
-
   SECOND_INVITE_RATE: TypedContractMethod<[], [bigint], "view">;
 
   STAKING_MULTIPLIER: TypedContractMethod<[], [bigint], "view">;
@@ -698,9 +743,25 @@ export interface StakeMining extends BaseContract {
 
   USDT_ADDRESS: TypedContractMethod<[], [string], "view">;
 
-  claimRewards: TypedContractMethod<[], [void], "nonpayable">;
+  claimDividendRewards: TypedContractMethod<[], [void], "nonpayable">;
 
-  claimRewardsForUser: TypedContractMethod<
+  claimDividendRewardsForUser: TypedContractMethod<
+    [_user: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+
+  claimMiningRewards: TypedContractMethod<[], [void], "nonpayable">;
+
+  claimMiningRewardsForUser: TypedContractMethod<
+    [_user: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+
+  claimStakingRewards: TypedContractMethod<[], [void], "nonpayable">;
+
+  claimStakingRewardsForUser: TypedContractMethod<
     [_user: AddressLike],
     [void],
     "nonpayable"
@@ -718,6 +779,8 @@ export interface StakeMining extends BaseContract {
     "nonpayable"
   >;
 
+  dividendPoolAmount: TypedContractMethod<[], [bigint], "view">;
+
   emergencyWithdraw: TypedContractMethod<
     [_token: AddressLike, _amount: BigNumberish],
     [void],
@@ -727,10 +790,9 @@ export interface StakeMining extends BaseContract {
   getClaimableRewards: TypedContractMethod<
     [_user: AddressLike],
     [
-      [bigint, bigint, bigint, bigint] & {
+      [bigint, bigint, bigint] & {
         miningReward: bigint;
         stakingReward: bigint;
-        inviteReward: bigint;
         dividendReward: bigint;
       }
     ],
@@ -753,7 +815,19 @@ export interface StakeMining extends BaseContract {
   getGlobalStats: TypedContractMethod<
     [],
     [
-      [bigint, bigint, bigint, bigint, bigint, bigint, bigint, bigint] & {
+      [
+        bigint,
+        bigint,
+        bigint,
+        bigint,
+        bigint,
+        bigint,
+        bigint,
+        bigint,
+        bigint,
+        bigint,
+        bigint
+      ] & {
         miningAddresses: bigint;
         stakingAddresses: bigint;
         miningClaimedRewards: bigint;
@@ -762,6 +836,9 @@ export interface StakeMining extends BaseContract {
         totalStakingAmount: bigint;
         ordinaryNodeCount: bigint;
         superNodeCount: bigint;
+        ordinaryNodesKpi: bigint;
+        superNodesKpi: bigint;
+        dividendPool: bigint;
       }
     ],
     "view"
@@ -792,6 +869,12 @@ export interface StakeMining extends BaseContract {
   hasMined: TypedContractMethod<[arg0: AddressLike], [boolean], "view">;
 
   hasStaked: TypedContractMethod<[arg0: AddressLike], [boolean], "view">;
+
+  isGtSuperNodeAmount: TypedContractMethod<
+    [arg0: AddressLike],
+    [boolean],
+    "view"
+  >;
 
   isOrdinaryNode: TypedContractMethod<[arg0: AddressLike], [boolean], "view">;
 
@@ -841,17 +924,7 @@ export interface StakeMining extends BaseContract {
 
   usdtReceiver: TypedContractMethod<[], [string], "view">;
 
-  userClaimedInviteRewards: TypedContractMethod<
-    [arg0: AddressLike],
-    [bigint],
-    "view"
-  >;
-
-  userInviteRewards: TypedContractMethod<
-    [arg0: AddressLike],
-    [[bigint, bigint] & { directReward: bigint; secondReward: bigint }],
-    "view"
-  >;
+  userInviteRewards: TypedContractMethod<[arg0: AddressLike], [bigint], "view">;
 
   userMiningRecords: TypedContractMethod<
     [arg0: AddressLike, arg1: BigNumberish],
@@ -859,7 +932,7 @@ export interface StakeMining extends BaseContract {
       [bigint, bigint, bigint, bigint] & {
         amount: bigint;
         reward: bigint;
-        startTime: bigint;
+        startBlock: bigint;
         claimedReward: bigint;
       }
     ],
@@ -871,9 +944,9 @@ export interface StakeMining extends BaseContract {
     [
       [bigint, bigint, bigint, bigint] & {
         amount: bigint;
-        startTime: bigint;
+        startBlock: bigint;
         claimedAmount: bigint;
-        dailyRate: bigint;
+        blockRate: bigint;
       }
     ],
     "view"
@@ -885,7 +958,7 @@ export interface StakeMining extends BaseContract {
       [bigint, bigint, bigint, bigint] & {
         amount: bigint;
         reward: bigint;
-        startTime: bigint;
+        startBlock: bigint;
         claimedReward: bigint;
       }
     ],
@@ -897,9 +970,9 @@ export interface StakeMining extends BaseContract {
     [
       [bigint, bigint, bigint, bigint] & {
         amount: bigint;
-        startTime: bigint;
+        startBlock: bigint;
         claimedAmount: bigint;
-        dailyRate: bigint;
+        blockRate: bigint;
       }
     ],
     "view"
@@ -928,16 +1001,19 @@ export interface StakeMining extends BaseContract {
   ): T;
 
   getFunction(
-    nameOrSignature: "DAILY_RELEASE_RATE_MINING"
+    nameOrSignature: "BLOCKS_PER_DAY"
   ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
-    nameOrSignature: "DAILY_RELEASE_RATE_ORDINARY_DIVIDEND"
+    nameOrSignature: "BLOCK_RELEASE_RATE_MINING"
   ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
-    nameOrSignature: "DAILY_RELEASE_RATE_STAKING"
+    nameOrSignature: "BLOCK_RELEASE_RATE_ORDINARY_DIVIDEND"
   ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
-    nameOrSignature: "DAILY_RELEASE_RATE_SUPER_DIVIDEND"
+    nameOrSignature: "BLOCK_RELEASE_RATE_STAKING"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "BLOCK_RELEASE_RATE_SUPER_DIVIDEND"
   ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "DIRECT_INVITE_RATE"
@@ -958,9 +1034,6 @@ export interface StakeMining extends BaseContract {
     nameOrSignature: "RATE_BASE"
   ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
-    nameOrSignature: "SECONDS_PER_DAY"
-  ): TypedContractMethod<[], [bigint], "view">;
-  getFunction(
     nameOrSignature: "SECOND_INVITE_RATE"
   ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
@@ -979,10 +1052,22 @@ export interface StakeMining extends BaseContract {
     nameOrSignature: "USDT_ADDRESS"
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
-    nameOrSignature: "claimRewards"
+    nameOrSignature: "claimDividendRewards"
   ): TypedContractMethod<[], [void], "nonpayable">;
   getFunction(
-    nameOrSignature: "claimRewardsForUser"
+    nameOrSignature: "claimDividendRewardsForUser"
+  ): TypedContractMethod<[_user: AddressLike], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "claimMiningRewards"
+  ): TypedContractMethod<[], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "claimMiningRewardsForUser"
+  ): TypedContractMethod<[_user: AddressLike], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "claimStakingRewards"
+  ): TypedContractMethod<[], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "claimStakingRewardsForUser"
   ): TypedContractMethod<[_user: AddressLike], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "directInvitees"
@@ -995,6 +1080,9 @@ export interface StakeMining extends BaseContract {
     nameOrSignature: "distributeDividends"
   ): TypedContractMethod<[_amount: BigNumberish], [void], "nonpayable">;
   getFunction(
+    nameOrSignature: "dividendPoolAmount"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
     nameOrSignature: "emergencyWithdraw"
   ): TypedContractMethod<
     [_token: AddressLike, _amount: BigNumberish],
@@ -1006,10 +1094,9 @@ export interface StakeMining extends BaseContract {
   ): TypedContractMethod<
     [_user: AddressLike],
     [
-      [bigint, bigint, bigint, bigint] & {
+      [bigint, bigint, bigint] & {
         miningReward: bigint;
         stakingReward: bigint;
-        inviteReward: bigint;
         dividendReward: bigint;
       }
     ],
@@ -1034,7 +1121,19 @@ export interface StakeMining extends BaseContract {
   ): TypedContractMethod<
     [],
     [
-      [bigint, bigint, bigint, bigint, bigint, bigint, bigint, bigint] & {
+      [
+        bigint,
+        bigint,
+        bigint,
+        bigint,
+        bigint,
+        bigint,
+        bigint,
+        bigint,
+        bigint,
+        bigint,
+        bigint
+      ] & {
         miningAddresses: bigint;
         stakingAddresses: bigint;
         miningClaimedRewards: bigint;
@@ -1043,6 +1142,9 @@ export interface StakeMining extends BaseContract {
         totalStakingAmount: bigint;
         ordinaryNodeCount: bigint;
         superNodeCount: bigint;
+        ordinaryNodesKpi: bigint;
+        superNodesKpi: bigint;
+        dividendPool: bigint;
       }
     ],
     "view"
@@ -1072,6 +1174,9 @@ export interface StakeMining extends BaseContract {
   ): TypedContractMethod<[arg0: AddressLike], [boolean], "view">;
   getFunction(
     nameOrSignature: "hasStaked"
+  ): TypedContractMethod<[arg0: AddressLike], [boolean], "view">;
+  getFunction(
+    nameOrSignature: "isGtSuperNodeAmount"
   ): TypedContractMethod<[arg0: AddressLike], [boolean], "view">;
   getFunction(
     nameOrSignature: "isOrdinaryNode"
@@ -1134,15 +1239,8 @@ export interface StakeMining extends BaseContract {
     nameOrSignature: "usdtReceiver"
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
-    nameOrSignature: "userClaimedInviteRewards"
-  ): TypedContractMethod<[arg0: AddressLike], [bigint], "view">;
-  getFunction(
     nameOrSignature: "userInviteRewards"
-  ): TypedContractMethod<
-    [arg0: AddressLike],
-    [[bigint, bigint] & { directReward: bigint; secondReward: bigint }],
-    "view"
-  >;
+  ): TypedContractMethod<[arg0: AddressLike], [bigint], "view">;
   getFunction(
     nameOrSignature: "userMiningRecords"
   ): TypedContractMethod<
@@ -1151,7 +1249,7 @@ export interface StakeMining extends BaseContract {
       [bigint, bigint, bigint, bigint] & {
         amount: bigint;
         reward: bigint;
-        startTime: bigint;
+        startBlock: bigint;
         claimedReward: bigint;
       }
     ],
@@ -1164,9 +1262,9 @@ export interface StakeMining extends BaseContract {
     [
       [bigint, bigint, bigint, bigint] & {
         amount: bigint;
-        startTime: bigint;
+        startBlock: bigint;
         claimedAmount: bigint;
-        dailyRate: bigint;
+        blockRate: bigint;
       }
     ],
     "view"
@@ -1179,7 +1277,7 @@ export interface StakeMining extends BaseContract {
       [bigint, bigint, bigint, bigint] & {
         amount: bigint;
         reward: bigint;
-        startTime: bigint;
+        startBlock: bigint;
         claimedReward: bigint;
       }
     ],
@@ -1192,9 +1290,9 @@ export interface StakeMining extends BaseContract {
     [
       [bigint, bigint, bigint, bigint] & {
         amount: bigint;
-        startTime: bigint;
+        startBlock: bigint;
         claimedAmount: bigint;
-        dailyRate: bigint;
+        blockRate: bigint;
       }
     ],
     "view"

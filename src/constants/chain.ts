@@ -6,8 +6,8 @@ const CHAIN_CONFIG_TEST = {
   rpc: 'https://data-seed-prebsc-2-s2.binance.org:8545',
   contract: {
     usdt: '0x42031fE0c351Ab6B07BfCA7E393F15E4EEFDC10f',
-    rwat: '0x2460EA428DAe5E2eb469EF88313Fb4746AA2dB6c',
-    staking: '0xb506C8e86B7b8B838c2733A6c07e03E86D5697cf',
+    rwat: '0xCA0194Ef9201682B2678Fa7886257822a8cfCfd3',
+    staking: '0x4F66BF896743925A219f7D5192Ea570876EE51e9',
     getBalance: '0xb5f9B45877C3c89d491F3D66e13b1d506550418D',
     mutilCall: '0xca11bde05977b3631167028862be2a173976ca11',
   },

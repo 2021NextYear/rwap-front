@@ -22,12 +22,14 @@ import { useBalance } from '@/hooks/useBalance'
 import { useGlobalInfo, useTokenAmountByStake, useUserInfo } from '@/hooks/useContract'
 import { useToast } from '@/hooks/use-toast'
 import { Button } from '@/components/Button'
+import { Progress } from '@/components/ui/progress'
 
 const MintMining = () => {
   const { toast } = useToast()
 
   const { USDT } = useBalance()
-  const { miningClaimedRewards, miningAddresses, superNodeCount } = useGlobalInfo()
+  const { miningClaimedRewards, miningAddresses, superNodeCount, ordinaryNodeCount } =
+    useGlobalInfo()
   const totalSupply = useTokenAmountByStake()
   const chainId = CHAIN_CONFIG.chainId
   const { rwat, staking, usdt } = CHAIN_CONFIG.contract
@@ -42,6 +44,7 @@ const MintMining = () => {
     { label: '总供应量', value: totalSupply, icon: Coins },
     { label: '已挖出', value: miningClaimedRewards, icon: TrendingUp },
     { label: '活跃矿工', value: miningAddresses, icon: Users },
+    { label: '节点', value: ordinaryNodeCount, icon: Zap },
     { label: '超级节点', value: superNodeCount, icon: Zap },
   ]
 
@@ -54,7 +57,7 @@ const MintMining = () => {
   const setDexpair = async () => {
     const rwatContract = getRwatContract(rwat, chainId)
     const calldata = rwatInterface.encodeFunctionData('setDexPair', [
-      '0xc7bb02fb86605d6d7be7c407fb464ff5a6c300fc',
+      '0x5E4D765Bab86390871d0812e97A180f5B7861564',
       true,
     ])
     await sendTransaction({ to: rwat, data: calldata, value: '0' }, chainId)
@@ -88,7 +91,7 @@ const MintMining = () => {
   const collect = async () => {
     try {
       setCollectLoading(true)
-      await collectReward()
+      await collectReward('claimMiningRewards')
       toast({ title: '领取成功' })
     } catch (error) {
       toast({ title: '领取失败' })
@@ -125,7 +128,7 @@ const MintMining = () => {
         {/* Mining Stats */}
         <section className="py-16 px-4">
           <div className="container mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-16">
               {stats.map((stat, index) => {
                 const Icon = stat.icon
                 return (
@@ -217,8 +220,8 @@ const MintMining = () => {
                       </span>
                     </div>
                   </div>
-
-                  {/* <div className="space-y-2">
+                  {/* 
+                  <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span>挖矿进度</span>
                       <span>67%</span>

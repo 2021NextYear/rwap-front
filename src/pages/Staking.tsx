@@ -13,6 +13,7 @@ import { collectReward, genErc20ApproveForContract, getReferral, getUserInfo } f
 import { CHAIN_CONFIG } from '@/constants'
 import { useAccount } from 'wagmi'
 import {
+  div,
   number2Big,
   sanitizeInput,
   sendTransaction,
@@ -147,7 +148,7 @@ const Staking = () => {
   const collect = async () => {
     try {
       setCollectLoading(true)
-      await collectReward()
+      await collectReward('claimStakingRewards')
       toast({ title: '领取成功' })
     } catch (error) {
       toast({ title: '领取失败' })
@@ -261,8 +262,8 @@ const Staking = () => {
                           <div className="flex justify-between">
                             <span>预估年收益</span>
                             <span className="text-primary">
-                              {stakeSelfAmount
-                                ? (parseFloat(stakeSelfAmount) * 0.18).toFixed(2)
+                              {Number(stakeSelfAmount)
+                                ? times(div(times(stakeSelfAmount, 5), 2000), 365)
                                 : '0'}{' '}
                               RWAT
                             </span>
@@ -270,9 +271,7 @@ const Staking = () => {
                           <div className="flex justify-between">
                             <span>预估日收益</span>
                             <span className="text-primary">
-                              {stakeSelfAmount
-                                ? ((parseFloat(stakeSelfAmount) * 0.18) / 365).toFixed(4)
-                                : '0'}{' '}
+                              {Number(stakeSelfAmount) ? div(times(stakeSelfAmount, 5), 2000) : '0'}{' '}
                               RWAT
                             </span>
                           </div>
@@ -374,19 +373,19 @@ const Staking = () => {
                           {userInfo.claimableRewards.stakingReward}
                         </span>
                       </div>
-                      <div className="flex justify-between items-center">
+                      {/* <div className="flex justify-between items-center">
                         <span className="text-sm text-muted-foreground">质押占比</span>
                         <span className="font-medium">{myStakingData.stakingPower}</span>
-                      </div>
+                      </div> */}
                     </div>
 
-                    <div className="space-y-2">
+                    {/* <div className="space-y-2">
                       <div className="flex justify-between text-sm">
                         <span>质押进度</span>
                         <span>75%</span>
                       </div>
                       <Progress value={75} className="h-2" />
-                    </div>
+                    </div> */}
 
                     <div className="space-y-2">
                       <Button

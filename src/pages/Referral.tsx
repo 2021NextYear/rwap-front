@@ -12,24 +12,23 @@ import { useToast } from '@/hooks/use-toast'
 import { useAccount } from 'wagmi'
 import { collectReward, getUserInfo } from '@/utils'
 import { add } from '@/lib'
-import { useUserInfo } from '@/hooks/useContract'
+import { useGlobalInfo, useUserInfo } from '@/hooks/useContract'
 
 const Referral = () => {
   const { address } = useAccount()
   const [copied, setCopied] = useState(false)
   const { toast } = useToast()
   const [collectLoading, setCollectLoading] = useState(false)
-
+  const globalInfo = useGlobalInfo()
   const userInfo = useUserInfo()
-
   const referralLink = useMemo(() => `${window.location.origin}?referral=${address}`, [address])
-
+  console.log('globalInfo', globalInfo)
   const stats = [
     { label: '直接邀请', value: userInfo.directInviteCount, icon: Users, reward: '' },
     { label: '间接邀请', value: userInfo.indirectCount, icon: Users, reward: '' },
     {
       label: '邀请奖励',
-      value: add(userInfo.claimableRewards.inviteReward, userInfo.claimedRewards.inviteReward, 2),
+      value: userInfo.claimedRewards.inviteReward,
       icon: Gift,
       reward: '',
     },
@@ -67,7 +66,7 @@ const Referral = () => {
   const collect = async () => {
     try {
       setCollectLoading(true)
-      await collectReward()
+      await collectReward('claimDividendRewards')
       toast({ title: '领取成功' })
     } catch (error) {
       toast({ title: '领取失败' })
@@ -280,7 +279,7 @@ const Referral = () => {
                           <div className="flex justify-between">
                             <span className="text-sm text-muted-foreground">奖池金额</span>
                             <span className="font-medium">
-                              {userInfo.claimedRewards.dividendReward} RWAT
+                              {globalInfo.dividendPoolAmount} RWAT
                             </span>
                           </div>
                           <div className="flex justify-between">
