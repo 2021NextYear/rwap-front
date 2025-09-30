@@ -252,8 +252,8 @@ const MintMining = () => {
         <section className="py-16 px-4">
           <div className="container mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">节点分布</h2>
-              <p className="text-muted-foreground">节点数据展示，超级节点享受手续费分红</p>
+              <h2 className="text-3xl font-bold mb-4">节点收益</h2>
+              {/* <p className="text-muted-foreground">节点数据展示，超级节点享受手续费分红</p> */}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -284,14 +284,14 @@ const MintMining = () => {
                         </Badge>
                       </div>
                       <div className="flex justify-between">
-                        <span>手续费</span>
+                        <span>手续费分红</span>
                         <span>{pool.fee}</span>
                       </div>
                     </div>
 
-                    <Button className="w-full" variant={index === 1 ? 'default' : 'outline'}>
+                    {/* <Button className="w-full" variant={index === 1 ? 'default' : 'outline'}>
                       {index === 1 ? '推荐' : '加入挖矿'}
-                    </Button>
+                    </Button> */}
                   </CardContent>
                 </Card>
               ))}
