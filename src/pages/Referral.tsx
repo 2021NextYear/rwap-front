@@ -42,8 +42,8 @@ const Referral = () => {
   ]
 
   const rewardTiers = [
-    { level: '青铜', invites: '1-10', commission: '5%', bonus: '10 RWAT', color: 'bg-amber-500' },
-    { level: '白银', invites: '11-50', commission: '10%', bonus: '50 RWAT', color: 'bg-gray-400' },
+    { level: 'Level1', invites: '', commission: '10%', bonus: '节点分红', color: 'bg-amber-500' },
+    { level: 'Level2', invites: '', commission: '5%', bonus: '节点分红', color: 'bg-gray-400' },
   ]
 
   const copyToClipboard = async (text: string) => {
@@ -153,7 +153,7 @@ const Referral = () => {
               {/* Rewards System */}
               <TabsContent value="rewards" className="space-y-8">
                 <div className="text-center mb-8">
-                  <h2 className="text-3xl font-bold mb-4">邀请奖励等级</h2>
+                  <h2 className="text-3xl font-bold mb-4">邀请奖励</h2>
                   <p className="text-muted-foreground">邀请越多，奖励越高！</p>
                 </div>
 
@@ -178,15 +178,15 @@ const Referral = () => {
 
                         <div className="space-y-2 text-sm">
                           <div className="flex justify-between">
-                            <span>等级奖励</span>
+                            <span>节点权益</span>
                             <span className="font-medium">{tier.bonus}</span>
                           </div>
-                          <div className="flex justify-between">
+                          {/* <div className="flex justify-between">
                             <span>状态</span>
                             <Badge variant={index === 3 ? 'default' : 'secondary'}>
                               {index === 3 ? '当前等级' : '未解锁'}
                             </Badge>
-                          </div>
+                          </div>  */}
                         </div>
                       </CardContent>
                     </Card>
@@ -194,7 +194,7 @@ const Referral = () => {
                 </div>
 
                 {/* Rules */}
-                <Card className="bg-gradient-card border-0 backdrop-blur-sm">
+                {/* <Card className="bg-gradient-card border-0 backdrop-blur-sm">
                   <CardHeader>
                     <CardTitle>邀请规则</CardTitle>
                   </CardHeader>
@@ -203,10 +203,8 @@ const Referral = () => {
                       <div className="space-y-3">
                         <h4 className="font-semibold">奖励机制</h4>
                         <ul className="space-y-2 text-sm text-muted-foreground">
-                          <li>• 好友注册即获得 10 RWAT 奖励</li>
-                          <li>• 好友首次质押获得 5% 佣金</li>
-                          <li>• 好友挖矿收益 2% 永久佣金</li>
-                          <li>• 达到等级要求获得等级奖励</li>
+                          <li>• 邀请好友参与挖矿可获得第一层10%，第二层5%的挖矿返佣</li>
+                          <li>• 矿机算力大于3000，同时邀请5个人可享受手续费返佣</li>
                         </ul>
                       </div>
                       <div className="space-y-3">
@@ -217,10 +215,10 @@ const Referral = () => {
                           <li>• 被邀请人需完成实名认证</li>
                           <li>• 邀请奖励永久有效</li>
                         </ul>
-                      </div>
+                      </div> 
                     </div>
                   </CardContent>
-                </Card>
+                </Card> */}
               </TabsContent>
 
               {/* My Referrals */}
