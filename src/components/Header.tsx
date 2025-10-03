@@ -25,10 +25,10 @@ const Header = () => {
               <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">R</span>
               </div>
-              <span className="text-xl font-bold gradient-text">rwaf</span>
+              <span className="text-xl font-bold gradient-text hidden md:block">rwaf</span>
             </div>
             <div
-              className="ml-2 text-xl font-bold"
+              className="ml-2 md:text-xl font-bold"
               onClick={() => {
                 const newLng = language === 'en' ? 'zh-Hans' : 'en'
 
