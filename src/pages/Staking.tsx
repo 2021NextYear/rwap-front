@@ -55,8 +55,8 @@ const Staking = () => {
       name: '灵活质押',
       apy: '12%',
       lockPeriod: '无锁定期',
-      minStake: '100 RWAT',
-      totalStaked: '800K RWAT',
+      minStake: '100 RWAF',
+      totalStaked: '800K RWAF',
       description: '随时存取，灵活便捷',
       risk: '低',
     },
@@ -65,8 +65,8 @@ const Staking = () => {
       name: '30天锁定',
       apy: '18%',
       lockPeriod: '30天',
-      minStake: '500 RWAT',
-      totalStaked: '1.2M RWAT',
+      minStake: '500 RWAF',
+      totalStaked: '1.2M RWAF',
       description: '短期锁定，稳定收益',
       risk: '低',
     },
@@ -75,8 +75,8 @@ const Staking = () => {
       name: '90天锁定',
       apy: '25%',
       lockPeriod: '90天',
-      minStake: '1000 RWAT',
-      totalStaked: '500K RWAT',
+      minStake: '1000 RWAF',
+      totalStaked: '500K RWAF',
       description: '中期锁定，高额回报',
       risk: '中',
     },
@@ -166,10 +166,10 @@ const Staking = () => {
         <section className="py-20 px-4">
           <div className="container mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
-              RWAT 质押
+              RWAF 质押
             </h1>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              质押 RWAT 代币，获得稳定收益，参与网络治理
+              质押 RWAF 代币，获得稳定收益，参与网络治理
             </p>
           </div>
         </section>
@@ -209,10 +209,10 @@ const Staking = () => {
                 <Card className="bg-gradient-card border-0 backdrop-blur-sm">
                   <CardHeader>
                     <CardTitle>质押操作</CardTitle>
-                    <CardDescription>质押或取消质押您的 RWAT 代币</CardDescription>
+                    <CardDescription>质押或取消质押您的 RWAF 代币</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="mb-2">我的RWAT余额：{RWAT}</div>
+                    <div className="mb-2">我的RWAF余额：{RWAT}</div>
 
                     <Tabs defaultValue="stake" className="w-full">
                       <TabsList className="grid w-full grid-cols-2">
@@ -265,14 +265,14 @@ const Staking = () => {
                               {Number(stakeSelfAmount)
                                 ? times(div(times(stakeSelfAmount, 5), 2000), 365)
                                 : '0'}{' '}
-                              RWAT
+                              RWAF
                             </span>
                           </div>
                           <div className="flex justify-between">
                             <span>预估日收益</span>
                             <span className="text-primary">
                               {Number(stakeSelfAmount) ? div(times(stakeSelfAmount, 5), 2000) : '0'}{' '}
-                              RWAT
+                              RWAF
                             </span>
                           </div>
                         </div>
@@ -285,7 +285,7 @@ const Staking = () => {
                           loading={miningLoading}
                         >
                           <Lock className="mr-2 h-4 w-4" />
-                          质押 RWAT
+                          质押 RWAF
                         </Button>
                       </TabsContent>
 
@@ -294,7 +294,7 @@ const Staking = () => {
                           <label className="block text-sm font-medium mb-2">帮助质押</label>
                           <div className="relative">
                             <Input
-                              placeholder="输入要帮助质押的 RWAT 数量"
+                              placeholder="输入要帮助质押的 RWAF 数量"
                               value={stakeOtherAmount}
                               onChange={e => setStakeOtherAmount(sanitizeInput(e.target.value))}
                               className="pr-20"
@@ -468,12 +468,12 @@ const Staking = () => {
               {[
                 {
                   question: '什么是质押？',
-                  answer: '质押是指将您的 RWAT 代币锁定在智能合约中，以获得网络奖励和收益的过程。',
+                  answer: '质押是指将您的 RWAF 代币锁定在智能合约中，以获得网络奖励和收益的过程。',
                 },
                 {
                   question: '质押有风险吗？',
                   answer:
-                    '质押本身风险较低，但请注意市场波动风险和智能合约风险。我们建议分散投资。',
+                    '智能合约经过安全审计，确保了资金100%安全。',
                 },
                 {
                   question: '如何计算收益？',

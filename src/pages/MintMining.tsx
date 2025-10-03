@@ -120,7 +120,7 @@ const MintMining = () => {
               Mint & Mining
             </h1>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              参与RWAT挖矿生态，铸造专属NFT，获取丰厚奖励
+              参与RWAF挖矿生态，铸造专属NFT，获取丰厚奖励
             </p>
           </div>
         </section>

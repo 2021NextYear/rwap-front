@@ -8,7 +8,7 @@ const Timeline = () => {
       icon: Rocket,
       status: "completed",
       items: [
-        "RWAT Token Launch",
+        "RWAF Token Launch",
         "Community Building",
         "Basic Supply chain Research Tools",
         "Exchange Listings"

@@ -96,7 +96,7 @@ const Referral = () => {
               邀请好友
             </h1>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              邀请朋友加入 RWAT 生态，共同获得丰厚奖励
+              邀请朋友加入 RWAF 生态，共同获得丰厚奖励
             </p>
 
             {/* Referral Link Section */}
