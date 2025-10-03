@@ -25,9 +25,11 @@ import { useBalance } from '@/hooks/useBalance'
 import { useGlobalInfo, useUserInfo } from '@/hooks/useContract'
 import { useToast } from '@/hooks/use-toast'
 import { isAddress } from 'viem'
+import { useTranslation } from 'react-i18next'
 
 const Staking = () => {
   const { totalStakingAmount, stakingAddresses, stakingClaimedRewards } = useGlobalInfo()
+  const { t } = useTranslation()
   const { toast } = useToast()
 
   const { RWAT } = useBalance()
@@ -43,10 +45,20 @@ const Staking = () => {
   const userInfo = useUserInfo()
 
   const stakingStats = [
-    { label: '总质押量', value: `${totalStakingAmount} RWAT`, icon: Lock, trend: '+12.5%' },
-    { label: '年化收益率', value: '18.5%', icon: TrendingUp, trend: '+2.1%' },
-    { label: '质押者数量', value: stakingAddresses, icon: Wallet, trend: '+156' },
-    { label: '总奖励发放', value: `${stakingClaimedRewards} RWAT`, icon: Trophy, trend: '+8.2%' },
+    {
+      label: t('staking.stats.total'),
+      value: `${totalStakingAmount} RWAT`,
+      icon: Lock,
+      trend: '+12.5%',
+    },
+    { label: t('staking.stats.apy'), value: '18.5%', icon: TrendingUp, trend: '+2.1%' },
+    { label: t('staking.stats.count'), value: stakingAddresses, icon: Wallet, trend: '+156' },
+    {
+      label: t('staking.stats.totalRewards'),
+      value: `${stakingClaimedRewards} RWAT`,
+      icon: Trophy,
+      trend: '+8.2%',
+    },
   ]
 
   const stakingPools = [
@@ -110,9 +122,9 @@ const Staking = () => {
       ])
 
       await sendTransaction({ to: staking, data: calldata, value: '0' }, chainId)
-      toast({ title: '质押成功' })
+      toast({ title: t('common.toast.stake.success') })
     } catch (error) {
-      toast({ title: '质押失败' })
+      toast({ title: t('common.toast.stake.fail') })
     }
     setMiningLoading(false)
   }
@@ -120,7 +132,7 @@ const Staking = () => {
   const stakingForOther = async () => {
     try {
       setMiningLoading(true)
-      toast({ title: '质押成功' })
+      toast({ title: t('common.toast.stake.success') })
       const _amount = number2Big(stakeOtherAmount, 18)
       const erc20Approve = await genErc20ApproveForContract(
         rwat,
@@ -140,7 +152,7 @@ const Staking = () => {
 
       await sendTransaction({ to: staking, data: calldata, value: '0' }, chainId)
     } catch (error) {
-      toast({ title: '质押失败' })
+      toast({ title: t('common.toast.stake.fail') })
     }
     setMiningLoading(false)
   }
@@ -149,9 +161,9 @@ const Staking = () => {
     try {
       setCollectLoading(true)
       await collectReward('claimStakingRewards')
-      toast({ title: '领取成功' })
+      toast({ title: t('common.toast.claim.success') })
     } catch (error) {
-      toast({ title: '领取失败' })
+      toast({ title: t('common.toast.claim.fail') })
     }
     setCollectLoading(false)
   }
@@ -166,10 +178,10 @@ const Staking = () => {
         <section className="py-20 px-4">
           <div className="container mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
-              RWAF 质押
+              {t('staking.title')}
             </h1>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              质押 RWAF 代币，获得稳定收益，参与网络治理
+              {t('staking.subtitle')}
             </p>
           </div>
         </section>
@@ -208,24 +220,29 @@ const Staking = () => {
               <div className="lg:col-span-2">
                 <Card className="bg-gradient-card border-0 backdrop-blur-sm">
                   <CardHeader>
-                    <CardTitle>质押操作</CardTitle>
-                    <CardDescription>质押或取消质押您的 RWAF 代币</CardDescription>
+                    <CardTitle>{t('staking.ops.title')}</CardTitle>
+                    <CardDescription>{t('staking.ops.desc')}</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="mb-2">我的RWAF余额：{RWAT}</div>
+                    <div className="mb-2">
+                      {t('staking.balance')}
+                      {RWAT}
+                    </div>
 
                     <Tabs defaultValue="stake" className="w-full">
                       <TabsList className="grid w-full grid-cols-2">
-                        <TabsTrigger value="stake">质押</TabsTrigger>
-                        <TabsTrigger value="unstake">帮助质押</TabsTrigger>
+                        <TabsTrigger value="stake">{t('staking.tabs.stake')}</TabsTrigger>
+                        <TabsTrigger value="unstake">{t('staking.tabs.unstake')}</TabsTrigger>
                       </TabsList>
 
                       <TabsContent value="stake" className="space-y-6">
                         <div>
-                          <label className="block text-sm font-medium mb-2">质押数量</label>
+                          <label className="block text-sm font-medium mb-2">
+                            {t('staking.amount.label')}
+                          </label>
                           <div className="relative">
                             <Input
-                              placeholder="输入要质押的 RWAT 数量"
+                              placeholder={t('staking.amount.placeholder')}
                               value={stakeSelfAmount}
                               onChange={e => setStakeSelfAmount(sanitizeInput(e.target.value))}
                               className="pr-20"
@@ -238,7 +255,7 @@ const Staking = () => {
                                 setStakeSelfAmount(toFixed(RWAT, 6))
                               }}
                             >
-                              最大
+                              {t('common.max')}
                             </Button>
                           </div>
                         </div>
@@ -260,7 +277,7 @@ const Staking = () => {
 
                         <div className="space-y-2 text-sm">
                           <div className="flex justify-between">
-                            <span>预估年收益</span>
+                            <span>{t('staking.estimate.year')}</span>
                             <span className="text-primary">
                               {Number(stakeSelfAmount)
                                 ? times(div(times(stakeSelfAmount, 5), 2000), 365)
@@ -269,7 +286,7 @@ const Staking = () => {
                             </span>
                           </div>
                           <div className="flex justify-between">
-                            <span>预估日收益</span>
+                            <span>{t('staking.estimate.day')}</span>
                             <span className="text-primary">
                               {Number(stakeSelfAmount) ? div(times(stakeSelfAmount, 5), 2000) : '0'}{' '}
                               RWAF
@@ -285,16 +302,18 @@ const Staking = () => {
                           loading={miningLoading}
                         >
                           <Lock className="mr-2 h-4 w-4" />
-                          质押 RWAF
+                          {t('staking.cta.stake')}
                         </Button>
                       </TabsContent>
 
                       <TabsContent value="unstake" className="space-y-6">
                         <div>
-                          <label className="block text-sm font-medium mb-2">帮助质押</label>
+                          <label className="block text-sm font-medium mb-2">
+                            {t('staking.unstake.label')}
+                          </label>
                           <div className="relative">
                             <Input
-                              placeholder="输入要帮助质押的 RWAF 数量"
+                              placeholder={t('staking.unstake.amountPlaceholder')}
                               value={stakeOtherAmount}
                               onChange={e => setStakeOtherAmount(sanitizeInput(e.target.value))}
                               className="pr-20"
@@ -307,13 +326,13 @@ const Staking = () => {
                                 setStakeOtherAmount(toFixed(RWAT, 6))
                               }}
                             >
-                              最大
+                              {t('common.max')}
                             </Button>
                           </div>
 
                           <div className="relative mt-4">
                             <Input
-                              placeholder="输入要帮助质押的地址"
+                              placeholder={t('staking.unstake.addressPlaceholder')}
                               value={otherAddress}
                               onChange={e => setOtherAddress(e.target.value)}
                               className="pr-20"
@@ -324,9 +343,9 @@ const Staking = () => {
                         <div className="p-4 bg-muted/20 rounded-lg border border-border/40">
                           <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
                             <Clock className="h-4 w-4" />
-                            说明
+                            {t('staking.notice.title')}
                           </div>
-                          <p className="text-sm">一旦帮助别人质押，就不能取消，请谨慎操作</p>
+                          <p className="text-sm">{t('staking.notice.body')}</p>
                         </div>
 
                         <Button
@@ -338,7 +357,7 @@ const Staking = () => {
                           loading={miningLoading}
                         >
                           <Unlock className="mr-2 h-4 w-4" />
-                          帮助质押
+                          {t('staking.tabs.unstake')}
                         </Button>
                       </TabsContent>
                     </Tabs>
@@ -352,23 +371,29 @@ const Staking = () => {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <DollarSign className="h-5 w-5" />
-                      我的质押
+                      {t('staking.my.title')}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-6">
                     <div className="space-y-4">
                       <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground">总质押量</span>
+                        <span className="text-sm text-muted-foreground">
+                          {t('staking.my.total')}
+                        </span>
                         <span className="font-medium">{userInfo.totalStakingAmount}</span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground">累计奖励</span>
+                        <span className="text-sm text-muted-foreground">
+                          {t('staking.my.claimed')}
+                        </span>
                         <span className="font-medium text-primary">
                           {times(userInfo.claimedRewards.stakingReward, 1)}
                         </span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground">待领取奖励</span>
+                        <span className="text-sm text-muted-foreground">
+                          {t('staking.my.pending')}
+                        </span>
                         <span className="font-medium text-primary">
                           {userInfo.claimableRewards.stakingReward}
                         </span>
@@ -397,7 +422,7 @@ const Staking = () => {
                         }
                         onClick={collect}
                       >
-                        领取奖励 ({userInfo.claimableRewards.stakingReward})
+                        {t('staking.my.claim')} ({userInfo.claimableRewards.stakingReward})
                       </Button>
                     </div>
                   </CardContent>
@@ -461,27 +486,26 @@ const Staking = () => {
         <section className="py-16 px-4">
           <div className="container mx-auto max-w-4xl">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">常见问题</h2>
+              <h2 className="text-3xl font-bold mb-4">{t('staking.faq.title')}</h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
                 {
-                  question: '什么是质押？',
-                  answer: '质押是指将您的 RWAF 代币锁定在智能合约中，以获得网络奖励和收益的过程。',
+                  question: t('staking.faq.q1'),
+                  answer: t('staking.faq.a1'),
                 },
                 {
-                  question: '质押有风险吗？',
-                  answer:
-                    '智能合约经过安全审计，确保了资金100%安全。',
+                  question: t('staking.faq.q2'),
+                  answer: t('staking.faq.a2'),
                 },
                 {
-                  question: '如何计算收益？',
-                  answer: '收益按照年化收益率（APY）计算，每日按比例分发到您的账户中。',
+                  question: t('staking.faq.q3'),
+                  answer: t('staking.faq.a3'),
                 },
                 {
-                  question: '可以提前取消质押吗？',
-                  answer: '灵活质押可随时取消，锁定质押需要等待锁定期结束才能取出。',
+                  question: t('staking.faq.q4'),
+                  answer: t('staking.faq.a4'),
                 },
               ].map((faq, index) => (
                 <Card key={index} className="bg-gradient-card border-0 backdrop-blur-sm">

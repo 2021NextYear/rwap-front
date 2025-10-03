@@ -23,9 +23,11 @@ import { useGlobalInfo, useTokenAmountByStake, useUserInfo } from '@/hooks/useCo
 import { useToast } from '@/hooks/use-toast'
 import { Button } from '@/components/Button'
 import { Progress } from '@/components/ui/progress'
+import { useTranslation } from 'react-i18next'
 
 const MintMining = () => {
   const { toast } = useToast()
+  const { t } = useTranslation()
 
   const { USDT } = useBalance()
   const { miningClaimedRewards, miningAddresses, superNodeCount, ordinaryNodeCount } =
@@ -41,11 +43,11 @@ const MintMining = () => {
   const userInfo = useUserInfo()
 
   const stats = [
-    { label: '总供应量', value: totalSupply, icon: Coins },
-    { label: '已挖出', value: miningClaimedRewards, icon: TrendingUp },
-    { label: '活跃矿工', value: miningAddresses, icon: Users },
-    { label: '节点', value: ordinaryNodeCount, icon: Zap },
-    { label: '超级节点', value: superNodeCount, icon: Zap },
+    { label: t('mint.stats.totalSupply'), value: totalSupply, icon: Coins },
+    { label: t('mint.stats.mined'), value: miningClaimedRewards, icon: TrendingUp },
+    { label: t('mint.stats.activeMiners'), value: miningAddresses, icon: Users },
+    { label: t('mint.stats.nodes'), value: ordinaryNodeCount, icon: Zap },
+    { label: t('mint.stats.superNodes'), value: superNodeCount, icon: Zap },
   ]
 
   const setStaking = async () => {
@@ -81,9 +83,9 @@ const MintMining = () => {
       const calldata = stakeMiningInterface.encodeFunctionData('mining', [_amount, getReferral()])
 
       await sendTransaction({ to: staking, data: calldata, value: '0' }, chainId)
-      toast({ title: '认购成功' })
+      toast({ title: t('common.toast.claim.success') })
     } catch (error) {
-      toast({ title: '认购失败' })
+      toast({ title: t('common.toast.claim.fail') })
     }
     setMiningLoading(false)
   }
@@ -92,9 +94,9 @@ const MintMining = () => {
     try {
       setCollectLoading(true)
       await collectReward('claimMiningRewards')
-      toast({ title: '领取成功' })
+      toast({ title: t('common.toast.claim.success') })
     } catch (error) {
-      toast({ title: '领取失败' })
+      toast({ title: t('common.toast.claim.fail') })
     }
     setCollectLoading(false)
   }
@@ -117,10 +119,10 @@ const MintMining = () => {
         <section className="py-20 px-4">
           <div className="container mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
-              Mint & Mining
+              {t('mint.title')}
             </h1>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              参与RWAF挖矿生态，铸造专属NFT，获取丰厚奖励
+              {t('mint.subtitle')}
             </p>
           </div>
         </section>
@@ -160,13 +162,15 @@ const MintMining = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Coins className="h-5 w-5" />
-                    RWAT
+                    {t('mint.card.title')}
                   </CardTitle>
-                  <CardDescription>认购RWAT，开启挖矿之旅</CardDescription>
+                  <CardDescription>{t('mint.card.desc')}</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div>
-                    <label className="block text-sm font-medium mb-2">认购</label>
+                    <label className="block text-sm font-medium mb-2">
+                      {t('mint.subscribe.label')}
+                    </label>
                     <div className="flex items-center gap-2">
                       <Input
                         value={mintAmount}
@@ -177,7 +181,7 @@ const MintMining = () => {
 
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
-                      <span>余额</span>
+                      <span>{t('common.balance')}</span>
                       <span>{USDT} USDT</span>
                     </div>
                   </div>
@@ -189,7 +193,7 @@ const MintMining = () => {
                     loading={miningLoading}
                     disabled={miningLoading || gt(100, USDT || 0) || !Number(mintAmount)}
                   >
-                    认购
+                    {t('mint.subscribe.cta')}
                   </Button>
                 </CardContent>
               </Card>
@@ -199,22 +203,22 @@ const MintMining = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Zap className="h-5 w-5" />
-                    我的挖矿
+                    {t('mint.my.title')}
                   </CardTitle>
-                  <CardDescription>查看挖矿进度和收益</CardDescription>
+                  <CardDescription>{t('mint.my.desc')}</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">认购金额</span>
+                      <span className="text-sm">{t('mint.my.amount')}</span>
                       <Badge>{userInfo.totalMiningAmount} USDT</Badge>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">算力</span>
+                      <span className="text-sm">{t('mint.my.hashrate')}</span>
                       <span className="font-medium">150 TH/s</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">挖矿收益</span>
+                      <span className="text-sm">{t('mint.my.rewards')}</span>
                       <span className="font-medium text-primary">
                         +{userInfo.claimedRewards.miningReward} RWAT
                       </span>
@@ -239,7 +243,7 @@ const MintMining = () => {
                       }
                       loading={collectLoading}
                     >
-                      领取收益 ({userInfo.claimableRewards.miningReward} RWAT)
+                      {t('mint.claim.cta')} ({userInfo.claimableRewards.miningReward} RWAT)
                     </Button>
                   </div>
                 </CardContent>
@@ -252,15 +256,30 @@ const MintMining = () => {
         <section className="py-16 px-4">
           <div className="container mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">节点收益</h2>
+              <h2 className="text-3xl font-bold mb-4">{t('mint.pools.title')}</h2>
               {/* <p className="text-muted-foreground">节点数据展示，超级节点享受手续费分红</p> */}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
-                { name: ' 矿工', apy: '91.25%', difficulty: '低', fee: '0%' },
-                { name: '节点', apy: '109.5%', difficulty: '中', fee: '40%' },
-                { name: '超级节点', apy: '127.75%', difficulty: '高', fee: '60%' },
+                {
+                  name: t('mint.pools.roles.miner'),
+                  apy: '91.25%',
+                  difficulty: t('mint.pools.difficulty'),
+                  fee: '0%',
+                },
+                {
+                  name: t('mint.pools.roles.node'),
+                  apy: '109.5%',
+                  difficulty: t('mint.pools.difficulty'),
+                  fee: '40%',
+                },
+                {
+                  name: t('mint.pools.roles.superNode'),
+                  apy: '127.75%',
+                  difficulty: t('mint.pools.difficulty'),
+                  fee: '60%',
+                },
               ].map((pool, index) => (
                 <Card key={index} className="bg-gradient-card border-0 backdrop-blur-sm">
                   <CardHeader>
@@ -269,12 +288,12 @@ const MintMining = () => {
                   <CardContent className="space-y-4">
                     <div className="text-center">
                       <div className="text-3xl font-bold text-primary mb-1">{pool.apy}</div>
-                      <div className="text-sm text-muted-foreground">年化收益率</div>
+                      <div className="text-sm text-muted-foreground">{t('mint.pools.apy')}</div>
                     </div>
 
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
-                        <span>难度</span>
+                        <span>{t('mint.pools.difficulty')}</span>
                         <Badge
                           variant={
                             index === 0 ? 'secondary' : index === 1 ? 'default' : 'destructive'
@@ -284,7 +303,7 @@ const MintMining = () => {
                         </Badge>
                       </div>
                       <div className="flex justify-between">
-                        <span>手续费分红</span>
+                        <span>{t('mint.pools.feeDividend')}</span>
                         <span>{pool.fee}</span>
                       </div>
                     </div>

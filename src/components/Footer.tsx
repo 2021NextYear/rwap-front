@@ -1,25 +1,33 @@
-import { Twitter, MessageCircle, Github, Mail } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Twitter, MessageCircle, Github, Mail } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { useTranslation } from 'react-i18next'
 
 const Footer = () => {
+  const { t } = useTranslation()
   const socialLinks = [
-    { icon: Twitter, label: "Twitter", href: "https://x.com/RWAFinacne" },
-    { icon: MessageCircle, label: "Telegram", href: "https://t.me/rwafcoin" }
-  ];
+    { icon: Twitter, label: 'Twitter', href: 'https://x.com/RWAFinacne' },
+    { icon: MessageCircle, label: 'Telegram', href: 'https://t.me/rwafcoin' },
+  ]
 
   const quickLinks = [
     // { label: "About", href: "#about" },
     // { label: "Timeline", href: "#timeline" },
-    { label: "Dexscreener", href: "https://dexscreener.com/bsc/0x16eae557919fedc8bda162919cc72d2e1317346a" },
-    { label: "AVE", href: "https://ave.ai/token/0x1e71525664b90393449494768a0120996d0be5b1-bsc?from=Home" }
-  ];
+    {
+      label: 'Dexscreener',
+      href: 'https://dexscreener.com/bsc/0x16eae557919fedc8bda162919cc72d2e1317346a',
+    },
+    {
+      label: 'AVE',
+      href: 'https://ave.ai/token/0x1e71525664b90393449494768a0120996d0be5b1-bsc?from=Home',
+    },
+  ]
 
   const resources = [
-    { label: "Docs", href: "https://bitc.gitbook.io/bitconnect" },
+    { label: 'Docs', href: 'https://bitc.gitbook.io/bitconnect' },
     // { label: "Whitepaper", href: "#" },
     // { label: "API", href: "#" },
-    { label: "Support", href: "https://bitc.gitbook.io/bitconnect/reesource/faq" }
-  ];
+    { label: 'Support', href: 'https://bitc.gitbook.io/bitconnect/reesource/faq' },
+  ]
 
   return (
     <footer className="bg-muted/30 border-t border-border/40">
@@ -34,11 +42,11 @@ const Footer = () => {
               <span className="text-xl font-bold gradient-text">RWAF</span>
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed">
-            Through RWAF, investors can flexibly select investment opportunities tailored to their needs and risk tolerance.
+              {t('footer.brand.description')}
             </p>
             <div className="flex space-x-3">
               {socialLinks.map((link, index) => {
-                const IconComponent = link.icon;
+                const IconComponent = link.icon
                 return (
                   <a
                     key={index}
@@ -48,14 +56,14 @@ const Footer = () => {
                   >
                     <IconComponent className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-smooth" />
                   </a>
-                );
+                )
               })}
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-semibold gradient-text mb-4">Quick Links</h3>
+            <h3 className="font-semibold gradient-text mb-4">{t('footer.quick.title')}</h3>
             <ul className="space-y-2">
               {quickLinks.map((link, index) => (
                 <li key={index}>
@@ -63,7 +71,7 @@ const Footer = () => {
                     href={link.href}
                     className="text-muted-foreground hover:text-primary transition-smooth text-sm"
                   >
-                    {link.label}
+                    {t(`footer.quick.links.${link.label.toLowerCase()}`)}
                   </a>
                 </li>
               ))}
@@ -72,7 +80,7 @@ const Footer = () => {
 
           {/* Resources */}
           <div>
-            <h3 className="font-semibold gradient-text mb-4">Resources</h3>
+            <h3 className="font-semibold gradient-text mb-4">{t('footer.resources.title')}</h3>
             <ul className="space-y-2">
               {resources.map((link, index) => (
                 <li key={index}>
@@ -80,7 +88,7 @@ const Footer = () => {
                     href={link.href}
                     className="text-muted-foreground hover:text-primary transition-smooth text-sm"
                   >
-                    {link.label}
+                    {t(`footer.resources.links.${link.label.toLowerCase()}`)}
                   </a>
                 </li>
               ))}
@@ -109,15 +117,19 @@ const Footer = () => {
         {/* Bottom Section */}
         <div className="border-t border-border/40 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-muted-foreground text-sm">
-              © 2025 RWAFINANCE. All rights reserved.
-            </div>
+            <div className="text-muted-foreground text-sm">{t('footer.bottom.copyright')}</div>
             <div className="flex space-x-6 text-sm">
-              <a href="https://bitc.gitbook.io/bitconnect" className="text-muted-foreground hover:text-primary transition-smooth">
-                Privacy Policy
+              <a
+                href="https://bitc.gitbook.io/bitconnect"
+                className="text-muted-foreground hover:text-primary transition-smooth"
+              >
+                {t('footer.bottom.privacy')}
               </a>
-              <a href="https://bitc.gitbook.io/bitconnect" className="text-muted-foreground hover:text-primary transition-smooth">
-                Terms of Service
+              <a
+                href="https://bitc.gitbook.io/bitconnect"
+                className="text-muted-foreground hover:text-primary transition-smooth"
+              >
+                {t('footer.bottom.terms')}
               </a>
               {/* <a href="#" className="text-muted-foreground hover:text-primary transition-smooth">
                 Cookie Policy
@@ -127,7 +139,7 @@ const Footer = () => {
         </div>
       </div>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

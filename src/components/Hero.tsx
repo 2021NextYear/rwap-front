@@ -1,8 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { Volume2 } from "lucide-react";
-import heroOrb from "@/assets/hero-orb.png";
+import { Button } from '@/components/ui/button'
+import { Volume2 } from 'lucide-react'
+import heroOrb from '@/assets/hero-orb.png'
+import { useTranslation } from 'react-i18next'
 
 const Hero = () => {
+  const { t } = useTranslation()
   return (
     <section className="min-h-screen flex items-center justify-center pt-20 pb-10">
       <div className="container mx-auto px-6">
@@ -10,10 +12,10 @@ const Hero = () => {
           <div className="space-y-8">
             <div className="space-y-6">
               <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-              RWAFinance（RWAF）<span className="gradient-text">是由Exovo Ltd、Elias Neocleous & Co LLC</span>,{" "}
-                <span className="gradient-text">塞浦路斯银行</span>,{" "}
-                <span className="gradient-text">等众多知名权威机构</span>{" "}
-                <span className="gradient-text">支持的国际供应链金融RWA产品。</span>
+                {t('hero.title0')} <span className="gradient-text">{t('hero.title1')}</span>,{' '}
+                <span className="gradient-text">{t('hero.title2')}</span>,{' '}
+                <span className="gradient-text">{t('hero.title3')}</span>{' '}
+                <span className="gradient-text">{t('hero.title4')}</span>
               </h1>
             </div>
 
@@ -66,9 +68,9 @@ const Hero = () => {
 
           <div className="flex justify-center lg:justify-end">
             <div className="relative">
-              <img 
-                src={heroOrb} 
-                alt="RWAI AI Agent" 
+              <img
+                src={heroOrb}
+                alt="RWAI AI Agent"
                 className="w-80 h-80 object-contain animate-float"
               />
               <div className="absolute inset-0 bg-gradient-primary opacity-20 rounded-full blur-3xl animate-glow"></div>
@@ -77,7 +79,7 @@ const Hero = () => {
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default Hero;
+export default Hero

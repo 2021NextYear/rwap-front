@@ -1,0 +1,318 @@
+{
+  "nav": {
+    "home": "Home",
+    "mint": "Mining",
+    "staking": "Staking",
+    "referral": "Referral"
+  },
+  "hero": {
+    "title0": "RWAFinance (RWAF)",
+    "title1": "is supported by Exovo Ltd and Elias Neocleous & Co LLC",
+    "title2": "Bank of Cyprus",
+    "title3": "and many other renowned authoritative institutions",
+    "title4": "an international supply-chain finance RWA product."
+  },
+
+  "common": {
+    "max": "Max",
+    "balance": "Balance",
+    "toast": {
+      "stake": {
+        "success": "Stake succeeded",
+        "fail": "Stake failed"
+      },
+      "claim": {
+        "success": "Claim succeeded",
+        "fail": "Claim failed"
+      },
+      "copy": {
+        "successTitle": "Copied",
+        "successDesc": "Referral link copied to clipboard",
+        "failTitle": "Copy failed",
+        "failDesc": "Please copy the link manually"
+      }
+    }
+  },
+  "staking": {
+    "title": "RWAF Staking",
+    "subtitle": "Stake RWAF tokens to earn steady yields and participate in governance",
+    "stats": {
+      "total": "Total Staked",
+      "apy": "APY",
+      "count": "Stakers",
+      "totalRewards": "Total Rewards"
+    },
+    "ops": {
+      "title": "Staking Operations",
+      "desc": "Stake or unstake your RWAF tokens"
+    },
+    "balance": "My RWAF Balance:",
+    "tabs": {
+      "stake": "Stake",
+      "unstake": "Stake for Others"
+    },
+    "amount": {
+      "label": "Stake Amount",
+      "placeholder": "Enter RWAT amount to stake"
+    },
+    "estimate": {
+      "year": "Estimated Yearly Rewards",
+      "day": "Estimated Daily Rewards"
+    },
+    "cta": {
+      "stake": "Stake RWAF"
+    },
+    "unstake": {
+      "label": "Stake for Others",
+      "amountPlaceholder": "Enter RWAF amount to stake for others",
+      "addressPlaceholder": "Enter address to stake for"
+    },
+    "notice": {
+      "title": "Notice",
+      "body": "Once you stake for others, it cannot be canceled. Please proceed with caution."
+    },
+    "my": {
+      "title": "My Staking",
+      "total": "Total Staked",
+      "claimed": "Claimed Rewards",
+      "pending": "Unclaimed Rewards",
+      "claim": "Claim Rewards"
+    },
+    "faq": {
+      "title": "FAQ",
+      "q1": "What is staking?",
+      "a1": "Staking means locking your RWAF tokens in a smart contract to earn network rewards and yield.",
+      "q2": "Is staking risky?",
+      "a2": "The smart contract has undergone security audits to ensure funds are 100% secure.",
+      "q3": "How are rewards calculated?",
+      "a3": "Rewards are calculated by APY and distributed to your account daily.",
+      "q4": "Can I unstake early?",
+      "a4": "Flexible staking can be canceled anytime. Locked staking requires waiting until the lock period ends."
+    }
+  },
+  "referral": {
+    "title": "Invite Friends",
+    "subtitle": "Invite friends to join the RWAF ecosystem and earn rich rewards together",
+    "link": {
+      "title": "My Referral Link",
+      "desc": "Share this link. You'll receive rewards after your friend registers"
+    },
+    "tabs": {
+      "rewards": "Rewards System",
+      "dividend": "Node Dividend"
+    },
+    "stats": {
+      "direct": "Direct Invites",
+      "indirect": "Indirect Invites",
+      "inviteReward": "Invite Rewards",
+      "teamUsers": "Team Users"
+    },
+    "rewards": {
+      "title": "Invite Rewards",
+      "subtitle": "The more invites, the more rewards!"
+    },
+    "dividend": {
+      "title": "Fee Dividend",
+      "pool": "Pool Amount",
+      "proportion": "Team Performance Proportion",
+      "claimed": "Claimed",
+      "unclaimed": "Unclaimed",
+      "tip": "Tip: Extra team income is transferred by the DAO to your address"
+    },
+    "claim": "Claim"
+  },
+  "mint": {
+    "title": "Mint & Mining",
+    "subtitle": "Participate in RWAF mining, mint exclusive NFTs, and earn generous rewards",
+    "stats": {
+      "totalSupply": "Total Supply",
+      "mined": "Mined",
+      "activeMiners": "Active Miners",
+      "nodes": "Nodes",
+      "superNodes": "Super Nodes"
+    },
+    "card": {
+      "title": "RWAT",
+      "desc": "Subscribe to RWAT to start your mining journey"
+    },
+    "subscribe": {
+      "label": "Subscribe",
+      "cta": "Subscribe"
+    },
+    "my": {
+      "title": "My Mining",
+      "desc": "View mining progress and rewards",
+      "amount": "Subscription Amount",
+      "hashrate": "Hashrate",
+      "rewards": "Mining Rewards"
+    },
+    "claim": {
+      "cta": "Claim Rewards"
+    },
+    "pools": {
+      "title": "Node Rewards",
+      "apy": "APY",
+      "difficulty": "Difficulty",
+      "feeDividend": "Fee Dividend",
+      "roles": {
+        "miner": "Miner",
+        "node": "Node",
+        "superNode": "Super Node"
+      }
+    }
+  },
+  "features": {
+    "title": {
+      "part1": "The crypto space can be",
+      "highlight1": "complex",
+      "part2": "due to",
+      "highlight2": "constant changes & volatility"
+    },
+    "subtitle": "I am here to help three specific groups:",
+    "items": {
+      "investors": {
+        "title": "Investors",
+        "desc": "to find new valuable projects through important KPIs"
+      },
+      "developers": {
+        "title": "Developers",
+        "desc": "to understand how to improve their project to be launch ready"
+      },
+      "institutions": {
+        "title": "Institutions",
+        "desc": "to run the end-to-end process of tokenization and launch"
+      }
+    }
+  },
+  "about": {
+    "title": { "part1": "Why", "highlight": "RWAI", "part2": "is Different" },
+    "description": "RWAI isn't just another AI tool – it's your dedicated crypto research partner. Built on cutting-edge technology and backed by industry leaders, RWAI provides unparalleled insights into the rapidly evolving crypto landscape.",
+    "capabilities": {
+      "realtime": {
+        "title": "Real-time Analysis",
+        "desc": "Monitor crypto markets 24/7 with advanced AI algorithms"
+      },
+      "risk": {
+        "title": "Risk Assessment",
+        "desc": "Comprehensive project evaluation and risk scoring"
+      },
+      "intelligence": {
+        "title": "Market Intelligence",
+        "desc": "Deep insights into market trends and opportunities"
+      },
+      "launch": {
+        "title": "Launch Support",
+        "desc": "End-to-end guidance for successful token launches"
+      }
+    },
+    "card": {
+      "title": "Advanced AI Engine",
+      "subtitle": "Powered by state-of-the-art machine learning algorithms",
+      "metrics": {
+        "market": "Market Analysis",
+        "risk": "Risk Assessment",
+        "accuracy": "99.8% Accuracy",
+        "launch": "Launch Optimization",
+        "realtime": "Real-time"
+      }
+    }
+  },
+  "stats": {
+    "items": {
+      "marketCap": { "label": "Market Cap", "desc": "Total market value" },
+      "community": { "label": "Community Members", "desc": "Active token holders" },
+      "growth": { "label": "Growth Rate", "desc": "Since launch" },
+      "analysis": { "label": "AI Analysis", "desc": "Continuous monitoring" }
+    }
+  },
+  "timeline": {
+    "title": { "highlight": "Roadmap", "tail": "Timeline" },
+    "subtitle": "Follow our journey as we build the future of crypto research and launch infrastructure",
+    "status": { "completed": "Completed", "inprogress": "In Progress", "upcoming": "Upcoming" },
+    "q3": {
+      "title": "Foundation & Launch",
+      "items": [
+        "RWAF Token Launch",
+        "Community Building",
+        "Basic Supply chain Research Tools",
+        "Exchange Listings"
+      ]
+    },
+    "q4": {
+      "title": "Supply chain Enhancement",
+      "items": [
+        "Advanced Market Analysis",
+        "Risk Assessment Features",
+        "Developer Tools Beta",
+        "Partnership Expansion"
+      ]
+    },
+    "q1": {
+      "title": "Platform Evolution",
+      "items": [
+        "Institutional Tools",
+        "Launch Pad Integration",
+        "Mobile Application",
+        "Supply chain Model Improvements"
+      ]
+    },
+    "q2": {
+      "title": "Ecosystem Expansion",
+      "items": [
+        "DeFi Integration",
+        "Cross-chain Support",
+        "Enterprise Solutions",
+        "Global Adoption"
+      ]
+    }
+  },
+  "tokenomics": {
+    "title": "Tokenomics",
+    "subtitle": "Transparent and sustainable token distribution designed for long-term growth",
+    "section": { "distribution": "Token Distribution" },
+    "centerToken": "Token",
+    "distribution": {
+      "public": "Public Sale",
+      "publicDesc": "Available for community purchase and Minging",
+      "liquidity": "Liquidity",
+      "liquidityDesc": "DEX liquidity provision",
+      "staking": "Staking",
+      "stakingDesc": "Vested over 2000 days",
+      "node": "Node award",
+      "nodeDesc": "Platform development & operations"
+    },
+    "stats": {
+      "totalSupply": "Total Supply",
+      "liquidity": "Liquity Supply",
+      "marketCap": "Market Cap",
+      "holders": "Holders"
+    }
+  },
+  "themeSelector": {
+    "title": "Choose Theme"
+  },
+  "footer": {
+    "brand": {
+      "description": "Through RWAF, investors can flexibly select investment opportunities tailored to their needs and risk tolerance."
+    },
+    "quick": {
+      "title": "Quick Links",
+      "links": {
+        "dexscreener": "Dexscreener",
+        "ave": "AVE"
+      }
+    },
+    "resources": {
+      "title": "Resources",
+      "links": {
+        "docs": "Docs",
+        "support": "Support"
+      }
+    },
+    "bottom": {
+      "copyright": "© 2025 RWAFINANCE. All rights reserved.",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service"
+    }
+  }
+}

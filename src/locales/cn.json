@@ -1,0 +1,277 @@
+{
+  "nav": {
+    "home": "首页",
+    "mint": "挖矿",
+    "staking": "质押",
+    "referral": "邀请"
+  },
+  "hero": {
+    "title0": "RWAFinance（RWAF）",
+    "title1": "是由Exovo Ltd、Elias Neocleous & Co LLC",
+    "title2": "塞浦路斯银行",
+    "title3": "等众多知名权威机构支持的国际供应链金融RWA产品。",
+    "title4": "支持的国际供应链金融RWA产品。"
+  },
+
+  "common": {
+    "max": "最大",
+    "balance": "余额",
+    "toast": {
+      "stake": {
+        "success": "质押成功",
+        "fail": "质押失败"
+      },
+      "claim": {
+        "success": "领取成功",
+        "fail": "领取失败"
+      },
+      "copy": {
+        "successTitle": "复制成功",
+        "successDesc": "邀请链接已复制到剪贴板",
+        "failTitle": "复制失败",
+        "failDesc": "请手动复制链接"
+      }
+    }
+  },
+  "staking": {
+    "title": "RWAF 质押",
+    "subtitle": "质押 RWAF 代币，获得稳定收益，参与网络治理",
+    "stats": {
+      "total": "总质押量",
+      "apy": "年化收益率",
+      "count": "质押者数量",
+      "totalRewards": "总奖励发放"
+    },
+    "ops": {
+      "title": "质押操作",
+      "desc": "质押或取消质押您的 RWAF 代币"
+    },
+    "balance": "我的RWAF余额：",
+    "tabs": {
+      "stake": "质押",
+      "unstake": "帮助质押"
+    },
+    "amount": {
+      "label": "质押数量",
+      "placeholder": "输入要质押的 RWAT 数量"
+    },
+    "estimate": {
+      "year": "预估年收益",
+      "day": "预估日收益"
+    },
+    "cta": {
+      "stake": "质押 RWAF"
+    },
+    "unstake": {
+      "label": "帮助质押",
+      "amountPlaceholder": "输入要帮助质押的 RWAF 数量",
+      "addressPlaceholder": "输入要帮助质押的地址"
+    },
+    "notice": {
+      "title": "说明",
+      "body": "一旦帮助别人质押，就不能取消，请谨慎操作"
+    },
+    "my": {
+      "title": "我的质押",
+      "total": "总质押量",
+      "claimed": "累计奖励",
+      "pending": "待领取奖励",
+      "claim": "领取奖励"
+    },
+    "faq": {
+      "title": "常见问题",
+      "q1": "什么是质押？",
+      "a1": "质押是指将您的 RWAF 代币锁定在智能合约中，以获得网络奖励和收益的过程。",
+      "q2": "质押有风险吗？",
+      "a2": "智能合约经过安全审计，确保了资金100%安全。",
+      "q3": "如何计算收益？",
+      "a3": "收益按照年化收益率（APY）计算，每日按比例分发到您的账户中。",
+      "q4": "可以提前取消质押吗？",
+      "a4": "灵活质押可随时取消，锁定质押需要等待锁定期结束才能取出。"
+    }
+  },
+  "referral": {
+    "title": "邀请好友",
+    "subtitle": "邀请朋友加入 RWAF 生态，共同获得丰厚奖励",
+    "link": {
+      "title": "我的邀请链接",
+      "desc": "分享此链接，好友注册后您将获得奖励"
+    },
+    "tabs": {
+      "rewards": "奖励体系",
+      "dividend": "节点分红"
+    },
+    "stats": {
+      "direct": "直接邀请",
+      "indirect": "间接邀请",
+      "inviteReward": "邀请奖励",
+      "teamUsers": "团队用户"
+    },
+    "rewards": {
+      "title": "邀请奖励",
+      "subtitle": "邀请越多，奖励越高！"
+    },
+    "dividend": {
+      "title": "手续费分红",
+      "pool": "奖池金额",
+      "proportion": "个人团队业绩占比",
+      "claimed": "已领取",
+      "unclaimed": "待领取",
+      "tip": "提示：团队额外收益，由DAO组织转账到地址"
+    },
+    "claim": "领取"
+  },
+  "mint": {
+    "title": "Mint & Mining",
+    "subtitle": "参与RWAF挖矿生态，铸造专属NFT，获取丰厚奖励",
+    "stats": {
+      "totalSupply": "总供应量",
+      "mined": "已挖出",
+      "activeMiners": "活跃矿工",
+      "nodes": "节点",
+      "superNodes": "超级节点"
+    },
+    "card": {
+      "title": "RWAT",
+      "desc": "认购RWAT，开启挖矿之旅"
+    },
+    "subscribe": {
+      "label": "认购",
+      "cta": "认购"
+    },
+    "my": {
+      "title": "我的挖矿",
+      "desc": "查看挖矿进度和收益",
+      "amount": "认购金额",
+      "hashrate": "算力",
+      "rewards": "挖矿收益"
+    },
+    "claim": {
+      "cta": "领取收益"
+    },
+    "pools": {
+      "title": "节点收益",
+      "apy": "年化收益率",
+      "difficulty": "难度",
+      "feeDividend": "手续费分红",
+      "roles": {
+        "miner": "矿工",
+        "node": "节点",
+        "superNode": "超级节点"
+      }
+    }
+  },
+  "features": {
+    "title": {
+      "part1": "加密世界可能",
+      "highlight1": "很复杂",
+      "part2": "由于",
+      "highlight2": "持续变化与高波动性"
+    },
+    "subtitle": "我将帮助以下三类人：",
+    "items": {
+      "investors": { "title": "投资者", "desc": "通过关键KPI发现有价值项目" },
+      "developers": { "title": "开发者", "desc": "了解如何打磨产品以完成发布" },
+      "institutions": { "title": "机构", "desc": "完成端到端的代币化与发布流程" }
+    }
+  },
+  "about": {
+    "title": { "part1": "为什么", "highlight": "RWAI", "part2": "与众不同" },
+    "description": "RWAI 不只是一个 AI 工具——它是你的加密研究伙伴。依托前沿技术与行业支持，提供对快速演进加密市场的深度洞察。",
+    "capabilities": {
+      "realtime": { "title": "实时分析", "desc": "7x24 小时监控加密市场" },
+      "risk": { "title": "风险评估", "desc": "全面的项目评估与风险打分" },
+      "intelligence": { "title": "市场情报", "desc": "洞察市场趋势与机会" },
+      "launch": { "title": "发行支持", "desc": "端到端指导助力成功发行" }
+    },
+    "card": {
+      "title": "先进 AI 引擎",
+      "subtitle": "由前沿机器学习算法驱动",
+      "metrics": {
+        "market": "市场分析",
+        "risk": "风险评估",
+        "accuracy": "99.8% 准确率",
+        "launch": "发行优化",
+        "realtime": "实时"
+      }
+    }
+  },
+  "stats": {
+    "items": {
+      "marketCap": { "label": "市值", "desc": "总市值" },
+      "community": { "label": "社区成员", "desc": "活跃持币人" },
+      "growth": { "label": "增长率", "desc": "自发行以来" },
+      "analysis": { "label": "AI 分析", "desc": "持续监测" }
+    }
+  },
+  "timeline": {
+    "title": { "highlight": "路线图", "tail": "时间线" },
+    "subtitle": "见证我们构建加密研究与发行基础设施的旅程",
+    "status": { "completed": "已完成", "inprogress": "进行中", "upcoming": "即将到来" },
+    "q3": {
+      "title": "基础与启动",
+      "items": ["RWAF 代币发行", "社区建设", "基础供应链研究工具", "交易所上市"]
+    },
+    "q4": {
+      "title": "供应链增强",
+      "items": ["高级市场分析", "风险评估功能", "开发者工具 Beta", "合作拓展"]
+    },
+    "q1": {
+      "title": "平台进化",
+      "items": ["机构工具", "LaunchPad 集成", "移动应用", "供应链模型优化"]
+    },
+    "q2": {
+      "title": "生态扩张",
+      "items": ["DeFi 集成", "跨链支持", "企业级方案", "全球采用"]
+    }
+  },
+  "tokenomics": {
+    "title": "代币经济",
+    "subtitle": "透明可持续的代币分配，面向长期增长",
+    "section": { "distribution": "代币分配" },
+    "centerToken": "代币",
+    "distribution": {
+      "public": "公募",
+      "publicDesc": "面向社区认购与挖矿",
+      "liquidity": "流动性",
+      "liquidityDesc": "DEX 流动性提供",
+      "staking": "质押",
+      "stakingDesc": "2000 天线性释放",
+      "node": "节点奖励",
+      "nodeDesc": "平台发展与运营"
+    },
+    "stats": {
+      "totalSupply": "总供应量",
+      "liquidity": "流动性供应",
+      "marketCap": "市值",
+      "holders": "持有人"
+    }
+  },
+  "themeSelector": {
+    "title": "选择主题"
+  },
+  "footer": {
+    "brand": {
+      "description": "通过 RWAF，投资者可以灵活选择符合自身需求与风险偏好的投资机会。"
+    },
+    "quick": {
+      "title": "快捷链接",
+      "links": {
+        "dexscreener": "Dexscreener",
+        "ave": "AVE"
+      }
+    },
+    "resources": {
+      "title": "资源",
+      "links": {
+        "docs": "文档",
+        "support": "支持"
+      }
+    },
+    "bottom": {
+      "copyright": "© 2025 RWAFINANCE. 保留所有权利。",
+      "privacy": "隐私政策",
+      "terms": "服务条款"
+    }
+  }
+}

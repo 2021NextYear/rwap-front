@@ -9,6 +9,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import FloatingShapes from '@/components/FloatingShapes'
 import { useToast } from '@/hooks/use-toast'
+import { useTranslation } from 'react-i18next'
 import { useAccount } from 'wagmi'
 import { collectReward, getUserInfo } from '@/utils'
 import { add, div, times } from '@/lib'
@@ -16,6 +17,7 @@ import { useGlobalInfo, useUserInfo } from '@/hooks/useContract'
 
 const Referral = () => {
   const { address } = useAccount()
+  const { t } = useTranslation()
   const [copied, setCopied] = useState(false)
   const { toast } = useToast()
   const [collectLoading, setCollectLoading] = useState(false)
@@ -23,16 +25,21 @@ const Referral = () => {
   const userInfo = useUserInfo()
   const referralLink = useMemo(() => `${window.location.origin}?referral=${address}`, [address])
   const stats = [
-    { label: '直接邀请', value: userInfo.directInviteCount, icon: Users, reward: '' },
-    { label: '间接邀请', value: userInfo.indirectCount, icon: Users, reward: '' },
     {
-      label: '邀请奖励',
+      label: t('referral.stats.direct'),
+      value: userInfo.directInviteCount,
+      icon: Users,
+      reward: '',
+    },
+    { label: t('referral.stats.indirect'), value: userInfo.indirectCount, icon: Users, reward: '' },
+    {
+      label: t('referral.stats.inviteReward'),
       value: userInfo.claimedRewards.inviteReward,
       icon: Gift,
       reward: '',
     },
     {
-      label: '团队用户',
+      label: t('referral.stats.teamUsers'),
       value: add(userInfo.directInviteCount, userInfo.indirectCount),
       icon: Trophy,
       reward: '',
@@ -59,14 +66,14 @@ const Referral = () => {
       await navigator.clipboard.writeText(text)
       setCopied(true)
       toast({
-        title: '复制成功',
-        description: '邀请链接已复制到剪贴板',
+        title: t('common.toast.copy.successTitle'),
+        description: t('common.toast.copy.successDesc'),
       })
       setTimeout(() => setCopied(false), 2000)
     } catch (err) {
       toast({
-        title: '复制失败',
-        description: '请手动复制链接',
+        title: t('common.toast.copy.failTitle'),
+        description: t('common.toast.copy.failDesc'),
         variant: 'destructive',
       })
     }
@@ -76,9 +83,9 @@ const Referral = () => {
     try {
       setCollectLoading(true)
       await collectReward('claimDividendRewards')
-      toast({ title: '领取成功' })
+      toast({ title: t('common.toast.claim.success') })
     } catch (error) {
-      toast({ title: '领取失败' })
+      toast({ title: t('common.toast.claim.fail') })
     }
     setCollectLoading(false)
   }
@@ -93,10 +100,10 @@ const Referral = () => {
         <section className="py-20 px-4">
           <div className="container mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
-              邀请好友
+              {t('referral.title')}
             </h1>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              邀请朋友加入 RWAF 生态，共同获得丰厚奖励
+              {t('referral.subtitle')}
             </p>
 
             {/* Referral Link Section */}
@@ -105,9 +112,9 @@ const Referral = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Share2 className="h-5 w-5" />
-                    我的邀请链接
+                    {t('referral.link.title')}
                   </CardTitle>
-                  <CardDescription>分享此链接，好友注册后您将获得奖励</CardDescription>
+                  <CardDescription>{t('referral.link.desc')}</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex gap-2">
@@ -154,15 +161,15 @@ const Referral = () => {
           <div className="container mx-auto max-w-6xl">
             <Tabs defaultValue="rewards" className="w-full">
               <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="rewards">奖励体系</TabsTrigger>
-                <TabsTrigger value="my-referrals">节点分红</TabsTrigger>
+                <TabsTrigger value="rewards">{t('referral.tabs.rewards')}</TabsTrigger>
+                <TabsTrigger value="my-referrals">{t('referral.tabs.dividend')}</TabsTrigger>
               </TabsList>
 
               {/* Rewards System */}
               <TabsContent value="rewards" className="space-y-8">
                 <div className="text-center mb-8">
-                  <h2 className="text-3xl font-bold mb-4">邀请奖励</h2>
-                  <p className="text-muted-foreground">邀请越多，奖励越高！</p>
+                  <h2 className="text-3xl font-bold mb-4">{t('referral.rewards.title')}</h2>
+                  <p className="text-muted-foreground">{t('referral.rewards.subtitle')}</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
@@ -232,7 +239,7 @@ const Referral = () => {
               {/* My Referrals */}
               <TabsContent value="my-referrals" className="space-y-8">
                 <div className="text-center mb-8">
-                  <h2 className="text-3xl font-bold mb-4">节点分红</h2>
+                  <h2 className="text-3xl font-bold mb-4">{t('referral.dividend.title')}</h2>
                   {/* <p className="text-muted-foreground">查看您邀请的用户详情</p> */}
                 </div>
 
@@ -281,35 +288,43 @@ const Referral = () => {
                   <div>
                     <Card className="bg-gradient-card border-0 backdrop-blur-sm">
                       <CardHeader>
-                        <CardTitle>手续费分红</CardTitle>
+                        <CardTitle>{t('referral.dividend.title')}</CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-4">
                         <div className="space-y-3">
                           <div className="flex justify-between">
-                            <span className="text-sm text-muted-foreground">奖池金额</span>
+                            <span className="text-sm text-muted-foreground">
+                              {t('referral.dividend.pool')}
+                            </span>
                             <span className="font-medium">
                               {globalInfo.dividendPoolAmount} RWAT
                             </span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-sm text-muted-foreground">个人团队业绩占比</span>
+                            <span className="text-sm text-muted-foreground">
+                              {t('referral.dividend.proportion')}
+                            </span>
                             <span className="font-medium">{proportion} %</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-sm text-muted-foreground">已领取</span>
+                            <span className="text-sm text-muted-foreground">
+                              {t('referral.dividend.claimed')}
+                            </span>
                             <span className="font-medium">
                               {userInfo.claimedRewards.dividendReward} RWAT
                             </span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-sm text-muted-foreground">待领取</span>
+                            <span className="text-sm text-muted-foreground">
+                              {t('referral.dividend.unclaimed')}
+                            </span>
                             <span className="font-medium">
                               {userInfo.claimableRewards.dividendReward} RWAT
                             </span>
                           </div>
                           <div className="flex justify-between">
                             <span className="text-sm text-muted-foreground">
-                              提示：团队额外收益，由DAO组织转账到地址
+                              {t('referral.dividend.tip')}
                             </span>
                           </div>
                         </div>
@@ -325,7 +340,7 @@ const Referral = () => {
                               Number(userInfo.claimableRewards.dividendReward) === 0
                             }
                           >
-                            领取
+                            {t('referral.claim')}
                           </Button>
                         </div>
                       </CardContent>

@@ -14,38 +14,42 @@ import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import '@rainbow-me/rainbowkit/styles.css'
 import { Updater } from './components/Updater'
 import { SWRConfig } from 'swr'
+import { useTranslation } from 'react-i18next'
 
 const queryClient = new QueryClient()
 
-const App = () => (
-  <SWRConfig
-    value={{
-      refreshWhenHidden: false,
-      refreshWhenOffline: false,
-    }}
-  >
-    <WagmiProvider config={wagmiConfig}>
-      <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <Updater />
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/mint" element={<MintMining />} />
-                <Route path="/staking" element={<Staking />} />
-                <Route path="/referral" element={<Referral />} />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          </TooltipProvider>
-        </RainbowKitProvider>
-      </QueryClientProvider>
-    </WagmiProvider>
-  </SWRConfig>
-)
+const App = () => {
+  const { i18n } = useTranslation()
+  return (
+    <SWRConfig
+      value={{
+        refreshWhenHidden: false,
+        refreshWhenOffline: false,
+      }}
+    >
+      <WagmiProvider config={wagmiConfig}>
+        <QueryClientProvider client={queryClient}>
+          <RainbowKitProvider locale={i18n.language as any}>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <Updater />
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/mint" element={<MintMining />} />
+                  <Route path="/staking" element={<Staking />} />
+                  <Route path="/referral" element={<Referral />} />
+                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </BrowserRouter>
+            </TooltipProvider>
+          </RainbowKitProvider>
+        </QueryClientProvider>
+      </WagmiProvider>
+    </SWRConfig>
+  )
+}
 
 export default App

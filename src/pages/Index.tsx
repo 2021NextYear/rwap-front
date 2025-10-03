@@ -1,13 +1,13 @@
-import Header from "@/components/Header";
-import Hero from "@/components/Hero";
-import Features from "@/components/Features";
-import About from "@/components/About";
-import Stats from "@/components/Stats";
-import Timeline from "@/components/Timeline";
-import Tokenomics from "@/components/Tokenomics";
-import Footer from "@/components/Footer";
-import FloatingShapes from "@/components/FloatingShapes";
-import ColorThemeSelector from "@/components/ColorThemeSelector";
+import Header from '@/components/Header'
+import Hero from '@/components/Hero'
+import Features from '@/components/Features'
+import About from '@/components/About'
+import Stats from '@/components/Stats'
+import Timeline from '@/components/Timeline'
+import Tokenomics from '@/components/Tokenomics'
+import Footer from '@/components/Footer'
+import FloatingShapes from '@/components/FloatingShapes'
+import ColorThemeSelector from '@/components/ColorThemeSelector'
 
 const Index = () => {
   return (
@@ -23,9 +23,9 @@ const Index = () => {
         <Tokenomics />
       </main>
       <Footer />
-      <ColorThemeSelector />
+      {/* <ColorThemeSelector /> */}
     </div>
-  );
-};
+  )
+}
 
-export default Index;
+export default Index
