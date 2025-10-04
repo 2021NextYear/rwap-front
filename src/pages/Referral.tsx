@@ -297,7 +297,7 @@ const Referral = () => {
                               {t('referral.dividend.pool')}
                             </span>
                             <span className="font-medium">
-                              {globalInfo.dividendPoolAmount} RWAT
+                              {globalInfo.dividendPoolAmount} RWAF
                             </span>
                           </div>
                           <div className="flex justify-between">
@@ -311,7 +311,7 @@ const Referral = () => {
                               {t('referral.dividend.claimed')}
                             </span>
                             <span className="font-medium">
-                              {userInfo.claimedRewards.dividendReward} RWAT
+                              {userInfo.claimedRewards.dividendReward} RWAF
                             </span>
                           </div>
                           <div className="flex justify-between">
@@ -319,7 +319,7 @@ const Referral = () => {
                               {t('referral.dividend.unclaimed')}
                             </span>
                             <span className="font-medium">
-                              {userInfo.claimableRewards.dividendReward} RWAT
+                              {userInfo.claimableRewards.dividendReward} RWAF
                             </span>
                           </div>
                           <div className="flex justify-between">

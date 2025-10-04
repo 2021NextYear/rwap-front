@@ -13,6 +13,8 @@ import {
   sanitizeInput,
   sendTransaction,
   stakeMiningInterface,
+  times,
+  toFixed,
 } from '@/lib'
 import { CHAIN_CONFIG } from '@/constants'
 import { collectReward, genErc20ApproveForContract, getReferral, getUserInfo } from '@/utils'
@@ -44,8 +46,16 @@ const MintMining = () => {
 
   const stats = [
     { label: t('mint.stats.totalSupply'), value: totalSupply, icon: Coins },
-    { label: t('mint.stats.mined'), value: miningClaimedRewards, icon: TrendingUp },
-    { label: t('mint.stats.activeMiners'), value: miningAddresses, icon: Users },
+    {
+      label: t('mint.stats.mined'),
+      value: miningClaimedRewards,
+      icon: TrendingUp,
+    },
+    {
+      label: t('mint.stats.activeMiners'),
+      value: miningAddresses,
+      icon: Users,
+    },
     { label: t('mint.stats.nodes'), value: ordinaryNodeCount, icon: Zap },
     { label: t('mint.stats.superNodes'), value: superNodeCount, icon: Zap },
   ]
@@ -171,18 +181,43 @@ const MintMining = () => {
                     <label className="block text-sm font-medium mb-2">
                       {t('mint.subscribe.label')}
                     </label>
-                    <div className="flex items-center gap-2">
-                      <Input
+                    <div className="p-6 rounded-md border border-ring-ring">
+                      <input
                         value={mintAmount}
+                        className="w-full text-xl outline-none border-none bg-transparent"
+                        type="text"
                         onChange={e => setMintAmount(sanitizeInput(e.target.value, 6, false))}
                       />
-                    </div>
-                  </div>
 
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span>{t('common.balance')}</span>
-                      <span>{USDT} USDT</span>
+                      <div className="space-y-2 text-muted-foreground">
+                        <div className="flex justify-end text-sm">
+                          <span className="mr-1">{t('common.balance')}:</span>
+                          <span>{USDT} USDT</span>
+                          <div
+                            className="ml-4"
+                            onClick={() => {
+                              setMintAmount(toFixed(USDT, 6))
+                            }}
+                          >
+                            {t('common.max')}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* 
+											<Input
+												className=""
+												value={mintAmount}
+												onChange={(e) =>
+													setMintAmount(
+														sanitizeInput(
+															e.target.value,
+															6,
+															false
+														)
+													)
+												}
+											/> */}
                     </div>
                   </div>
 
@@ -215,12 +250,14 @@ const MintMining = () => {
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-sm">{t('mint.my.hashrate')}</span>
-                      <span className="font-medium">150 TH/s</span>
+                      <span className="font-medium">
+                        {times(Number(userInfo.totalMiningAmount) || 0, 5, 4)}
+                      </span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-sm">{t('mint.my.rewards')}</span>
                       <span className="font-medium text-primary">
-                        +{userInfo.claimedRewards.miningReward} RWAT
+                        +{userInfo.claimedRewards.miningReward} RWAF
                       </span>
                     </div>
                   </div>
@@ -243,7 +280,7 @@ const MintMining = () => {
                       }
                       loading={collectLoading}
                     >
-                      {t('mint.claim.cta')} ({userInfo.claimableRewards.miningReward} RWAT)
+                      {t('mint.claim.cta')} ({userInfo.claimableRewards.miningReward} RWAF)
                     </Button>
                   </div>
                 </CardContent>

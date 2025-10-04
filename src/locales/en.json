@@ -53,7 +53,7 @@
     },
     "amount": {
       "label": "Stake Amount",
-      "placeholder": "Enter RWAT amount to stake"
+      "placeholder": "Enter RWAF amount to stake"
     },
     "estimate": {
       "year": "Estimated Yearly Rewards",
@@ -132,8 +132,8 @@
       "superNodes": "Super Nodes"
     },
     "card": {
-      "title": "RWAT",
-      "desc": "Subscribe to RWAT to start your mining journey"
+      "title": "RWAF",
+      "desc": "Subscribe to RWAF to start your mining journey"
     },
     "subscribe": {
       "label": "Subscribe",

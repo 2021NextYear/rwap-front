@@ -47,7 +47,7 @@ const Staking = () => {
   const stakingStats = [
     {
       label: t('staking.stats.total'),
-      value: `${totalStakingAmount} RWAT`,
+      value: `${totalStakingAmount} RWAF`,
       icon: Lock,
       trend: '+12.5%',
     },
@@ -55,51 +55,11 @@ const Staking = () => {
     { label: t('staking.stats.count'), value: stakingAddresses, icon: Wallet, trend: '+156' },
     {
       label: t('staking.stats.totalRewards'),
-      value: `${stakingClaimedRewards} RWAT`,
+      value: `${stakingClaimedRewards} RWAF`,
       icon: Trophy,
       trend: '+8.2%',
     },
   ]
-
-  const stakingPools = [
-    {
-      id: 1,
-      name: '灵活质押',
-      apy: '12%',
-      lockPeriod: '无锁定期',
-      minStake: '100 RWAF',
-      totalStaked: '800K RWAF',
-      description: '随时存取，灵活便捷',
-      risk: '低',
-    },
-    {
-      id: 2,
-      name: '30天锁定',
-      apy: '18%',
-      lockPeriod: '30天',
-      minStake: '500 RWAF',
-      totalStaked: '1.2M RWAF',
-      description: '短期锁定，稳定收益',
-      risk: '低',
-    },
-    {
-      id: 3,
-      name: '90天锁定',
-      apy: '25%',
-      lockPeriod: '90天',
-      minStake: '1000 RWAF',
-      totalStaked: '500K RWAF',
-      description: '中期锁定，高额回报',
-      risk: '中',
-    },
-  ]
-
-  const myStakingData = {
-    totalStaked: '5,000 RWAT',
-    totalRewards: '125.5 RWAT',
-    pendingRewards: '8.2 RWAT',
-    stakingPower: '0.2%',
-  }
 
   const stakingForSelf = async () => {
     try {

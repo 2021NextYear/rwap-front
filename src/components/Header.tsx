@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { Earth, Menu, X } from 'lucide-react'
+import { Globe, Menu, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useTranslation } from 'react-i18next'
@@ -16,7 +16,6 @@ const Header = () => {
     { label: t('nav.staking'), href: '/staking' },
     { label: t('nav.referral'), href: '/referral' },
   ]
-
   return (
     <header className="fixed top-0 left-0 right-0 z-50 glass transition-smooth">
       <div className="container mx-auto px-6 py-4">
@@ -35,7 +34,7 @@ const Header = () => {
                 localStorage.setItem('lang', newLng)
               }}
             >
-              <Earth className="w-4 h-4 mr-1" /> {language}
+              <Globe className="w-4 h-4 mr-1" /> {language}
             </div>
           </div>
 
@@ -90,7 +89,7 @@ const Header = () => {
                   localStorage.setItem('lang', newLng)
                 }}
               >
-                <Earth className="w-4 h-4 mr-1" /> {language}
+                <Globe className="w-4 h-4 mr-1" /> {language}
               </div>
             </div>
           </div>
