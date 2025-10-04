@@ -1,8 +1,9 @@
 import { Button } from '@/components/ui/button'
-import { Menu, X } from 'lucide-react'
+import { Earth, Menu, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useTranslation } from 'react-i18next'
+import Logo from '@/assets/logo1.png'
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -22,13 +23,10 @@ const Header = () => {
         <nav className="flex items-center justify-between">
           <div className="flex items-center">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">R</span>
-              </div>
-              <span className="text-xl font-bold gradient-text hidden md:block">rwaf</span>
+              <img src={Logo} alt="Logo" className="w-20" />
             </div>
             <div
-              className="ml-2 md:text-xl font-bold"
+              className="items-center ml-2 md:text-xl font-bold hidden md:flex"
               onClick={() => {
                 const newLng = language === 'en' ? 'zh-Hans' : 'en'
 
@@ -37,7 +35,7 @@ const Header = () => {
                 localStorage.setItem('lang', newLng)
               }}
             >
-              {language}
+              <Earth className="w-4 h-4 mr-1" /> {language}
             </div>
           </div>
 
@@ -81,6 +79,19 @@ const Header = () => {
                   {item.label}
                 </a>
               ))}
+
+              <div
+                className="items-center md:text-xl font-bold flex md:hidden"
+                onClick={() => {
+                  const newLng = language === 'en' ? 'zh-Hans' : 'en'
+
+                  i18n.changeLanguage(newLng)
+
+                  localStorage.setItem('lang', newLng)
+                }}
+              >
+                <Earth className="w-4 h-4 mr-1" /> {language}
+              </div>
             </div>
           </div>
         )}

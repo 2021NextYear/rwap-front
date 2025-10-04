@@ -1,6 +1,7 @@
 import { Twitter, MessageCircle, Github, Mail } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useTranslation } from 'react-i18next'
+import Logo from '@/assets/logo1.png'
 
 const Footer = () => {
   const { t } = useTranslation()
@@ -36,10 +37,7 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">R</span>
-              </div>
-              <span className="text-xl font-bold gradient-text">RWAF</span>
+              <img src={Logo} alt="Logo" className="w-20" />
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed">
               {t('footer.brand.description')}
