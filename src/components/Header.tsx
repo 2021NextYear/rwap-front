@@ -24,18 +24,6 @@ const Header = () => {
             <div className="flex items-center space-x-2">
               <img src={Logo} alt="Logo" className="w-20" />
             </div>
-            <div
-              className="items-center ml-2 md:text-xl font-bold hidden md:flex"
-              onClick={() => {
-                const newLng = language === 'en' ? 'zh-Hans' : 'en'
-
-                i18n.changeLanguage(newLng)
-
-                localStorage.setItem('lang', newLng)
-              }}
-            >
-              <Globe className="w-4 h-4 mr-1" /> {language}
-            </div>
           </div>
 
           {/* Desktop Navigation */}
@@ -53,7 +41,18 @@ const Header = () => {
 
           <div className="flex items-center space-x-4">
             <ConnectButton chainStatus="none" showBalance={false} />
+            <div
+              className="items-center ml-2 md:text-xl font-bold hidden md:flex"
+              onClick={() => {
+                const newLng = language === 'en' ? 'zh-Hans' : 'en'
 
+                i18n.changeLanguage(newLng)
+
+                localStorage.setItem('lang', newLng)
+              }}
+            >
+              <Globe className="w-4 h-4 mr-1" /> {language}
+            </div>
             {/* Mobile Menu Button */}
             <button
               className="md:hidden w-10 h-10 flex items-center justify-center text-muted-foreground hover:text-primary transition-smooth"
