@@ -6,10 +6,10 @@ import EN from '@/locales/en.json';
 // (tip move them in a JSON file and import them,
 // or even better, manage them separated from your code: https://react.i18next.com/guides/multiple-translation-files)
 const resources = {
-	en: {
+	English: {
 		translation: EN,
 	},
-	'zh-Hans': {
+	'Chinese': {
 		translation: CN,
 	},
 };

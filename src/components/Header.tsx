@@ -44,7 +44,7 @@ const Header = () => {
             <div
               className="items-center ml-2 md:text-xl font-bold hidden md:flex"
               onClick={() => {
-                const newLng = language === 'en' ? 'zh-Hans' : 'en'
+                const newLng = language === 'English' ? 'Chinese' : 'English'
 
                 i18n.changeLanguage(newLng)
 
@@ -81,7 +81,7 @@ const Header = () => {
               <div
                 className="items-center md:text-xl font-bold flex md:hidden"
                 onClick={() => {
-                  const newLng = language === 'en' ? 'zh-Hans' : 'en'
+                  const newLng = language === 'English' ? 'Chinese' : 'English'
 
                   i18n.changeLanguage(newLng)
 
