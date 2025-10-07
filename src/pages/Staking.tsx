@@ -14,6 +14,7 @@ import { CHAIN_CONFIG } from '@/constants'
 import { useAccount } from 'wagmi'
 import {
   div,
+  gt,
   number2Big,
   sanitizeInput,
   sendTransaction,
@@ -40,6 +41,7 @@ const Staking = () => {
   const [stakeOtherAmount, setStakeOtherAmount] = useState('')
   const [otherAddress, setOtherAddress] = useState('')
   const [miningLoading, setMiningLoading] = useState(false)
+  const [approveLoading, setApproveLoading] = useState(false)
   const [collectLoading, setCollectLoading] = useState(false)
 
   const userInfo = useUserInfo()
@@ -63,7 +65,6 @@ const Staking = () => {
 
   const stakingForSelf = async () => {
     try {
-      setMiningLoading(true)
       const _amount = number2Big(stakeSelfAmount, 18)
       const erc20Approve = await genErc20ApproveForContract(
         rwat,
@@ -73,6 +74,7 @@ const Staking = () => {
         chainId
       )
       if (erc20Approve) {
+        setApproveLoading(true)
         await sendTransaction(erc20Approve, chainId)
       }
 
@@ -80,19 +82,19 @@ const Staking = () => {
         _amount,
         getReferral(),
       ])
+      setMiningLoading(true)
 
       await sendTransaction({ to: staking, data: calldata, value: '0' }, chainId)
       toast({ title: t('common.toast.stake.success') })
     } catch (error) {
       toast({ title: t('common.toast.stake.fail') })
     }
+    setApproveLoading(false)
     setMiningLoading(false)
   }
 
   const stakingForOther = async () => {
     try {
-      setMiningLoading(true)
-      toast({ title: t('common.toast.stake.success') })
       const _amount = number2Big(stakeOtherAmount, 18)
       const erc20Approve = await genErc20ApproveForContract(
         rwat,
@@ -102,6 +104,7 @@ const Staking = () => {
         chainId
       )
       if (erc20Approve) {
+        setApproveLoading(true)
         await sendTransaction(erc20Approve, chainId)
       }
 
@@ -109,11 +112,14 @@ const Staking = () => {
         _amount,
         otherAddress,
       ])
+      setMiningLoading(true)
 
       await sendTransaction({ to: staking, data: calldata, value: '0' }, chainId)
+      toast({ title: t('common.toast.stake.success') })
     } catch (error) {
       toast({ title: t('common.toast.stake.fail') })
     }
+    setApproveLoading(false)
     setMiningLoading(false)
   }
 
@@ -257,12 +263,12 @@ const Staking = () => {
                         <Button
                           className="w-full"
                           size="lg"
-                          disabled={!stakeSelfAmount || miningLoading}
+                          disabled={!stakeSelfAmount || miningLoading || gt(stakeSelfAmount, RWAT)}
                           onClick={stakingForSelf}
                           loading={miningLoading}
                         >
                           <Lock className="mr-2 h-4 w-4" />
-                          {t('staking.cta.stake')}
+                          {t(approveLoading ? 'staking.approve' : 'staking.cta.stake')}
                         </Button>
                       </TabsContent>
 
@@ -311,13 +317,17 @@ const Staking = () => {
                         <Button
                           className="w-full"
                           size="lg"
-                          variant="outline"
-                          disabled={!stakeOtherAmount || miningLoading || !isAddress(otherAddress)}
+                          disabled={
+                            !stakeOtherAmount ||
+                            miningLoading ||
+                            !isAddress(otherAddress) ||
+                            gt(stakeOtherAmount, RWAT)
+                          }
                           onClick={stakingForOther}
                           loading={miningLoading}
                         >
-                          <Unlock className="mr-2 h-4 w-4" />
-                          {t('staking.tabs.unstake')}
+                          <Lock className="mr-2 h-4 w-4" />
+                          {t(approveLoading ? 'staking.approve' : 'staking.tabs.unstake')}
                         </Button>
                       </TabsContent>
                     </Tabs>

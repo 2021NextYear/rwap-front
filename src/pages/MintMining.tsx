@@ -40,6 +40,7 @@ const MintMining = () => {
   const { address } = useAccount()
   const [mintAmount, setMintAmount] = useState('100')
   const [miningLoading, setMiningLoading] = useState(false)
+  const [approveLoading, setApproveLoading] = useState(false)
   const [collectLoading, setCollectLoading] = useState(false)
 
   const userInfo = useUserInfo()
@@ -77,7 +78,6 @@ const MintMining = () => {
 
   const mining = async () => {
     try {
-      setMiningLoading(true)
       const _amount = number2Big(mintAmount, 18)
       const erc20Approve = await genErc20ApproveForContract(
         usdt,
@@ -87,16 +87,18 @@ const MintMining = () => {
         chainId
       )
       if (erc20Approve) {
+        setApproveLoading(true)
         await sendTransaction(erc20Approve, chainId)
       }
 
       const calldata = stakeMiningInterface.encodeFunctionData('mining', [_amount, getReferral()])
-
+      setMiningLoading(true)
       await sendTransaction({ to: staking, data: calldata, value: '0' }, chainId)
       toast({ title: t('common.toast.claim.success') })
     } catch (error) {
       toast({ title: t('common.toast.claim.fail') })
     }
+    setApproveLoading(false)
     setMiningLoading(false)
   }
 
@@ -192,7 +194,15 @@ const MintMining = () => {
                       <div className="space-y-2 text-muted-foreground">
                         <div className="flex justify-end text-sm">
                           <span className="mr-1">{t('common.balance')}:</span>
-                          <span>{USDT} USDT</span>
+                          <span className="flex items-center">
+                            {USDT}
+                            <img
+                              src="https://raw.githubusercontent.com/trustwallet/assets/refs/heads/master/blockchains/ethereum/assets/0xdAC17F958D2ee523a2206206994597C13D831ec7/logo.png"
+                              alt=""
+                              className="size-4 rounded-full mx-1"
+                            />{' '}
+                            USDT
+                          </span>
                           <div
                             className="ml-4"
                             onClick={() => {
@@ -203,21 +213,6 @@ const MintMining = () => {
                           </div>
                         </div>
                       </div>
-
-                      {/* 
-											<Input
-												className=""
-												value={mintAmount}
-												onChange={(e) =>
-													setMintAmount(
-														sanitizeInput(
-															e.target.value,
-															6,
-															false
-														)
-													)
-												}
-											/> */}
                     </div>
                   </div>
 
@@ -226,9 +221,14 @@ const MintMining = () => {
                     size="lg"
                     onClick={mining}
                     loading={miningLoading}
-                    disabled={miningLoading || gt(100, USDT || 0) || !Number(mintAmount)}
+                    disabled={
+                      miningLoading ||
+                      gt(100, USDT || 0) ||
+                      !Number(mintAmount) ||
+                      gt(mintAmount, USDT)
+                    }
                   >
-                    {t('mint.subscribe.cta')}
+                    {t(approveLoading ? 'mint.approve' : 'mint.subscribe.cta')}
                   </Button>
                 </CardContent>
               </Card>
@@ -273,7 +273,6 @@ const MintMining = () => {
                   <div className="pt-4 border-t">
                     <Button
                       className="w-full"
-                      variant="secondary"
                       onClick={collect}
                       disabled={
                         collectLoading || Number(userInfo.claimableRewards.miningReward) === 0

@@ -36,6 +36,7 @@
   "staking": {
     "title": "RWAF 质押",
     "subtitle": "质押 RWAF 代币，获得稳定收益，参与网络治理",
+    "approve": "授权RWAF",
     "stats": {
       "total": "总质押量",
       "apy": "年化收益率",
@@ -124,6 +125,8 @@
   "mint": {
     "title": "Mint & Mining",
     "subtitle": "参与RWAF挖矿生态，铸造专属NFT，获取丰厚奖励",
+    "approve": "授权USDT",
+
     "stats": {
       "totalSupply": "总供应量",
       "mined": "已挖出",
@@ -133,7 +136,7 @@
     },
     "card": {
       "title": "RWAF",
-      "desc": "认购RWAT，开启挖矿之旅"
+      "desc": "认购RWAF，开启挖矿之旅"
     },
     "subscribe": {
       "label": "认购",
@@ -172,7 +175,10 @@
     "items": {
       "investors": { "title": "客户", "desc": "所有供应链体系中服务的客户" },
       "developers": { "title": "企业", "desc": "打通供应链的企业，商家，平台" },
-      "institutions": { "title": "RWAF Dao组织", "desc": "完成积分，票据的确权，利用区块链技术打造RWA通证" }
+      "institutions": {
+        "title": "RWAF Dao组织",
+        "desc": "完成积分，票据的确权，利用区块链技术打造RWA通证"
+      }
     }
   },
   "about": {
@@ -218,11 +224,20 @@
     },
     "q1": {
       "title": "平台进化",
-      "items": ["与企业深度合作，端对端兑换RWAF通证", "与Binance达成深度合作", "商家批量入驻，打通整个供应链体系", "供应链模型优化"]
+      "items": [
+        "与企业深度合作，端对端兑换RWAF通证",
+        "与Binance达成深度合作",
+        "商家批量入驻，打通整个供应链体系",
+        "供应链模型优化"
+      ]
     },
     "q2": {
       "title": "生态扩张",
-      "items": ["DeFi 集成，与更多去中心化链上金融合作", "上线Binance,Coinbase等头部中心化交易所", "与全球顶尖的VC机构合作，为商家提供资源"]
+      "items": [
+        "DeFi 集成，与更多去中心化链上金融合作",
+        "上线Binance,Coinbase等头部中心化交易所",
+        "与全球顶尖的VC机构合作，为商家提供资源"
+      ]
     }
   },
   "tokenomics": {

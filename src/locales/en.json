@@ -36,6 +36,7 @@
   "staking": {
     "title": "RWAF Staking",
     "subtitle": "Stake RWAF tokens to earn steady yields and participate in governance",
+    "approve": "Approve RWAF",
     "stats": {
       "total": "Total Staked",
       "apy": "APY",
@@ -124,6 +125,7 @@
   "mint": {
     "title": "Mint & Mining",
     "subtitle": "Participate in RWAF mining, mint exclusive NFTs, and earn generous rewards",
+    "approve": "Approve RWAF",
     "stats": {
       "totalSupply": "Total Supply",
       "mined": "Mined",

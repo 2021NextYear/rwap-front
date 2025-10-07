@@ -15,7 +15,7 @@ const Footer = () => {
     // { label: "Timeline", href: "#timeline" },
     {
       label: 'Dexscreener',
-      href: 'https://dexscreener.com/bsc/0x16eae557919fedc8bda162919cc72d2e1317346a',
+      href: 'https://dexscreener.com/bsc/0x1e71525664b90393449494768a0120996d0be5b1',
     },
     {
       label: 'AVE',
