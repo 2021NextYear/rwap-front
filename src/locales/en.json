@@ -7,10 +7,10 @@
   },
   "hero": {
     "title0": "RWAFinance (RWAF)",
-    "title1": "is supported by Exovo Ltd and Elias Neocleous & Co LLC",
-    "title2": "Bank of Cyprus",
+    "title1": "is supported by Exovo Ltd",
+    "title2": "",
     "title3": "and many other renowned authoritative institutions",
-    "title4": "an international supply-chain finance RWA product."
+    "title4": " finance RWA product."
   },
 
   "common": {
@@ -185,8 +185,8 @@
     }
   },
   "about": {
-    "title": { "part1": "Why", "highlight": "RWAI", "part2": "is Different" },
-    "description": "RWAI isn't just another AI tool – it's your dedicated crypto research partner. Built on cutting-edge technology and backed by industry leaders, RWAI provides unparalleled insights into the rapidly evolving crypto landscape.",
+    "title": { "part1": "Why", "highlight": "RWAF", "part2": "is Different" },
+    "description": "RWAF isn't just another tool – it's your dedicated crypto research partner. Built on cutting-edge technology and backed by industry leaders, RWAI provides unparalleled insights into the rapidly evolving crypto landscape.",
     "capabilities": {
       "realtime": {
         "title": "Real-time Analysis",

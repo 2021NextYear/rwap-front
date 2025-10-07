@@ -29,7 +29,7 @@ const Timeline = () => {
       ],
     },
     {
-      quarter: 'Q4 2026',
+      quarter: 'Q4 2025',
       title: t('timeline.q1.title'),
       icon: Calendar,
       status: 'in-progress',
@@ -41,7 +41,7 @@ const Timeline = () => {
       ],
     },
     {
-      quarter: 'Q2 2026',
+      quarter: 'Q1 2026',
       title: t('timeline.q2.title'),
       icon: Trophy,
       status: 'upcoming',
