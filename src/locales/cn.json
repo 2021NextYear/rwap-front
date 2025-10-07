@@ -65,7 +65,7 @@
     },
     "unstake": {
       "label": "帮助质押",
-      "amountPlaceholder": "输入要帮助质押的 RWAF 数量",
+      "amountPlaceholder": "输入要帮助质押的RWAF数量",
       "addressPlaceholder": "输入要帮助质押的地址"
     },
     "notice": {
@@ -155,6 +155,7 @@
     "pools": {
       "title": "节点收益",
       "apy": "年化收益率",
+      "difficulty": "难度",
       "difficulty0": "低",
       "difficulty1": "中",
       "difficulty2": "高",

@@ -213,9 +213,9 @@ const Staking = () => {
                               onChange={e =>
                                 setStakeSelfAmount(sanitizeInput(e.target.value, 4, false))
                               }
-                              className="pr-20 text-sm"
+                              className="w-full "
                             />
-                            <Button
+                            {/* <Button
                               variant="ghost"
                               size="sm"
                               className="absolute right-2 top-1/2 -translate-y-1/2"
@@ -224,12 +224,12 @@ const Staking = () => {
                               }}
                             >
                               {t('common.max')}
-                            </Button>
+                            </Button> */}
                           </div>
                         </div>
 
-                        <div className="grid grid-cols-3 gap-2">
-                          {['25%', '50%', '75%'].map((percent, i) => (
+                        <div className="grid grid-cols-4 gap-2">
+                          {['25%', '50%', '75%', t('common.max')].map((percent, i) => (
                             <Button
                               key={percent}
                               variant="outline"
@@ -286,7 +286,7 @@ const Staking = () => {
                               onChange={e =>
                                 setStakeOtherAmount(sanitizeInput(e.target.value, 4, false))
                               }
-                              className="pr-20"
+                              className="pr-20 "
                             />
                             <Button
                               variant="ghost"
@@ -305,7 +305,7 @@ const Staking = () => {
                               placeholder={t('staking.unstake.addressPlaceholder')}
                               value={otherAddress}
                               onChange={e => setOtherAddress(e.target.value)}
-                              className="pr-20"
+                              className="w-full"
                             />
                           </div>
                         </div>
