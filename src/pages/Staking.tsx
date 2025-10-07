@@ -213,7 +213,7 @@ const Staking = () => {
                               onChange={e =>
                                 setStakeSelfAmount(sanitizeInput(e.target.value, 4, false))
                               }
-                              className="w-full "
+                              className="w-full text-sm"
                             />
                             {/* <Button
                               variant="ghost"
