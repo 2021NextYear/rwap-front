@@ -184,12 +184,22 @@ const MintMining = () => {
                       {t('mint.subscribe.label')}
                     </label>
                     <div className="p-6 rounded-md border border-ring-ring">
-                      <input
-                        value={mintAmount}
-                        className="w-full text-xl outline-none border-none bg-transparent"
-                        type="text"
-                        onChange={e => setMintAmount(sanitizeInput(e.target.value, 6, false))}
-                      />
+                      <div className="flex items-center justify-between mb-2">
+                        <input
+                          value={mintAmount}
+                          className="w-[70%]  outline-none border-none bg-transparent"
+                          type="text"
+                          onChange={e => setMintAmount(sanitizeInput(e.target.value, 4, false))}
+                        />
+                        <div
+                          className=" w-10"
+                          onClick={() => {
+                            setMintAmount(toFixed(USDT, 4))
+                          }}
+                        >
+                          {t('common.max')}
+                        </div>
+                      </div>
 
                       <div className="space-y-2 text-muted-foreground">
                         <div className="flex justify-end text-sm">
@@ -203,14 +213,6 @@ const MintMining = () => {
                             />{' '}
                             USDT
                           </span>
-                          <div
-                            className="ml-4"
-                            onClick={() => {
-                              setMintAmount(toFixed(USDT, 6))
-                            }}
-                          >
-                            {t('common.max')}
-                          </div>
                         </div>
                       </div>
                     </div>
@@ -251,7 +253,7 @@ const MintMining = () => {
                     <div className="flex justify-between items-center">
                       <span className="text-sm">{t('mint.my.hashrate')}</span>
                       <span className="font-medium">
-                        {times(Number(userInfo.totalMiningAmount) || 0, 5, 4)}
+                        {times(Number(userInfo.totalMiningAmount) || 0, 5)}
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
@@ -301,19 +303,19 @@ const MintMining = () => {
                 {
                   name: t('mint.pools.roles.miner'),
                   apy: '91.25%',
-                  difficulty: t('mint.pools.difficulty'),
+                  difficulty: t('mint.pools.difficulty0'),
                   fee: '0%',
                 },
                 {
                   name: t('mint.pools.roles.node'),
                   apy: '109.5%',
-                  difficulty: t('mint.pools.difficulty'),
+                  difficulty: t('mint.pools.difficulty1'),
                   fee: '40%',
                 },
                 {
                   name: t('mint.pools.roles.superNode'),
                   apy: '127.75%',
-                  difficulty: t('mint.pools.difficulty'),
+                  difficulty: t('mint.pools.difficulty2'),
                   fee: '60%',
                 },
               ].map((pool, index) => (

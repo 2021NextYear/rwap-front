@@ -22,7 +22,7 @@ function checkValue(number1: StrOrNum, number2: StrOrNum) {
 export const number2Small = (
   value: StrOrNum,
   decimals = TOKEN_DECIMLS_FULL,
-  tokenDecimls: number = TOKEN_DECIMLS_DEFAULT
+  tokenDecimls: number = USD_DECIMLS
 ): string => {
   if (isBadValue(value)) return '0'
 
@@ -40,7 +40,7 @@ export const number2Big = (value: StrOrNum, decimals = TOKEN_DECIMLS_FULL): stri
   return toFixed(number, TOKEN_DECIMLS_FULL)
 }
 
-export const toFixed = (value: StrOrNum, decimals = TOKEN_DECIMLS_DEFAULT): string => {
+export const toFixed = (value: StrOrNum, decimals = USD_DECIMLS): string => {
   if (isBadValue(value)) return '0'
 
   const number = Big(value).toFixed(decimals, Big.roundDown)
@@ -59,33 +59,21 @@ export const gte = (number1: StrOrNum, number2: StrOrNum): boolean => {
   return Big(_number1).gte(_number2)
 }
 
-export const add = (
-  number1: StrOrNum,
-  number2: StrOrNum,
-  decimals = TOKEN_DECIMLS_FULL
-): string => {
+export const add = (number1: StrOrNum, number2: StrOrNum, decimals = USD_DECIMLS): string => {
   const [_number1, _number2] = checkValue(number1, number2)
 
   const number = Big(_number1).add(_number2).toString()
   return toFixed(number, decimals)
 }
 
-export const minus = (
-  number1: StrOrNum,
-  number2: StrOrNum,
-  decimals = TOKEN_DECIMLS_FULL
-): string => {
+export const minus = (number1: StrOrNum, number2: StrOrNum, decimals = USD_DECIMLS): string => {
   const [_number1, _number2] = checkValue(number1, number2)
 
   const number = Big(_number1).minus(_number2).toString()
   return toFixed(number, decimals)
 }
 
-export const times = (
-  number1: StrOrNum,
-  number2: StrOrNum,
-  decimals = TOKEN_DECIMLS_FULL
-): string => {
+export const times = (number1: StrOrNum, number2: StrOrNum, decimals = USD_DECIMLS): string => {
   if (isBadValue(number1) || isBadValue(number2)) {
     return '0'
   }
@@ -94,11 +82,7 @@ export const times = (
   return toFixed(number, decimals)
 }
 
-export const div = (
-  number1: StrOrNum,
-  number2: StrOrNum,
-  decimals = TOKEN_DECIMLS_FULL
-): string => {
+export const div = (number1: StrOrNum, number2: StrOrNum, decimals = USD_DECIMLS): string => {
   if (isBadValue(number1) || isBadValue(number2)) {
     return '0'
   }

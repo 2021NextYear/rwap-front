@@ -210,15 +210,17 @@ const Staking = () => {
                             <Input
                               placeholder={t('staking.amount.placeholder')}
                               value={stakeSelfAmount}
-                              onChange={e => setStakeSelfAmount(sanitizeInput(e.target.value))}
-                              className="pr-20"
+                              onChange={e =>
+                                setStakeSelfAmount(sanitizeInput(e.target.value, 4, false))
+                              }
+                              className="pr-20 text-sm"
                             />
                             <Button
                               variant="ghost"
                               size="sm"
                               className="absolute right-2 top-1/2 -translate-y-1/2"
                               onClick={() => {
-                                setStakeSelfAmount(toFixed(RWAT, 6))
+                                setStakeSelfAmount(toFixed(RWAT, 4))
                               }}
                             >
                               {t('common.max')}
@@ -233,7 +235,7 @@ const Staking = () => {
                               variant="outline"
                               size="sm"
                               onClick={() => {
-                                setStakeSelfAmount(times(RWAT, (i + 1) * 0.25, 6))
+                                setStakeSelfAmount(times(RWAT, (i + 1) * 0.25, 4))
                               }}
                             >
                               {percent}
@@ -281,7 +283,9 @@ const Staking = () => {
                             <Input
                               placeholder={t('staking.unstake.amountPlaceholder')}
                               value={stakeOtherAmount}
-                              onChange={e => setStakeOtherAmount(sanitizeInput(e.target.value))}
+                              onChange={e =>
+                                setStakeOtherAmount(sanitizeInput(e.target.value, 4, false))
+                              }
                               className="pr-20"
                             />
                             <Button
@@ -289,7 +293,7 @@ const Staking = () => {
                               size="sm"
                               className="absolute right-2 top-1/2 -translate-y-1/2"
                               onClick={() => {
-                                setStakeOtherAmount(toFixed(RWAT, 6))
+                                setStakeOtherAmount(toFixed(RWAT, 4))
                               }}
                             >
                               {t('common.max')}

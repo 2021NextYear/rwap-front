@@ -155,6 +155,9 @@
       "title": "Node Rewards",
       "apy": "APY",
       "difficulty": "Difficulty",
+      "difficulty0": "Low",
+      "difficulty1": "Medium",
+      "difficulty2": "High",
       "feeDividend": "Fee Dividend",
       "roles": {
         "miner": "Miner",

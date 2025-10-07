@@ -43,15 +43,15 @@ export function useGlobalInfo() {
     return {
       miningAddresses,
       stakingAddresses,
-      miningClaimedRewards: number2Small(miningClaimedRewards, 18, 2),
-      stakingClaimedRewards: number2Small(stakingClaimedRewards, 18, 2),
-      totalMiningAmount: number2Small(totalMiningAmount, 18, 2),
-      totalStakingAmount: number2Small(totalStakingAmount, 18, 2),
+      miningClaimedRewards: number2Small(miningClaimedRewards, 18),
+      stakingClaimedRewards: number2Small(stakingClaimedRewards, 18),
+      totalMiningAmount: number2Small(totalMiningAmount, 18),
+      totalStakingAmount: number2Small(totalStakingAmount, 18),
       ordinaryNodeCount,
       superNodeCount,
-      ordinaryNodesKpi: number2Small(ordinaryNodesKpi, 18, 2),
-      superNodesKpi: number2Small(superNodesKpi, 18, 2),
-      dividendPoolAmount: number2Small(dividendPoolAmount, 18, 2),
+      ordinaryNodesKpi: number2Small(ordinaryNodesKpi, 18),
+      superNodesKpi: number2Small(superNodesKpi, 18),
+      dividendPoolAmount: number2Small(dividendPoolAmount, 18),
     }
   }, [data])
 }
@@ -71,7 +71,7 @@ export function useTokenAmountByStake() {
     }
   )
   return useMemo(() => {
-    return number2Small(String(data), 18, 0)
+    return number2Small(String(data), 18, 2)
   }, [data])
 }
 

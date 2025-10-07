@@ -155,7 +155,9 @@
     "pools": {
       "title": "节点收益",
       "apy": "年化收益率",
-      "difficulty": "难度",
+      "difficulty0": "低",
+      "difficulty1": "中",
+      "difficulty2": "高",
       "feeDividend": "手续费分红",
       "roles": {
         "miner": "矿工",
