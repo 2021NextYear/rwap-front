@@ -286,7 +286,7 @@ const Staking = () => {
                               onChange={e =>
                                 setStakeOtherAmount(sanitizeInput(e.target.value, 4, false))
                               }
-                              className="pr-20 "
+                              className="pr-20 text-sm"
                             />
                             <Button
                               variant="ghost"
@@ -305,7 +305,7 @@ const Staking = () => {
                               placeholder={t('staking.unstake.addressPlaceholder')}
                               value={otherAddress}
                               onChange={e => setOtherAddress(e.target.value)}
-                              className="w-full"
+                              className="w-full text-sm"
                             />
                           </div>
                         </div>

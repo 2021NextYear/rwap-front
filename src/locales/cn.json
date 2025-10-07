@@ -54,7 +54,7 @@
     },
     "amount": {
       "label": "质押数量",
-      "placeholder": "输入要质押的 RWAF 数量"
+      "placeholder": "输入要质押的RWAF数量"
     },
     "estimate": {
       "year": "预估年收益",
@@ -65,7 +65,7 @@
     },
     "unstake": {
       "label": "帮助质押",
-      "amountPlaceholder": "输入要帮助质押的RWAF数量",
+      "amountPlaceholder": "输入RWAF数量",
       "addressPlaceholder": "输入要帮助质押的地址"
     },
     "notice": {

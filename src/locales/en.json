@@ -65,7 +65,7 @@
     },
     "unstake": {
       "label": "Stake for Others",
-      "amountPlaceholder": "Enter RWAF amount to stake for others",
+      "amountPlaceholder": "Enter RWAF amount",
       "addressPlaceholder": "Enter address to stake for"
     },
     "notice": {
