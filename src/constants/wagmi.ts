@@ -17,11 +17,11 @@ const connectors = connectorsForWallets(
       wallets: [injectedWallet, metaMaskWallet, okxWallet, binanceWallet, rabbyWallet],
     },
   ],
-  { appName: 'RWAFinance', projectId: '4f478ae1b484e7bd2ddb13b33b456b11' }
+  { appName: 'RWAFinance', projectId: 'f37a652b712e5c22c7fbb1c608d171be' }
 )
 
 export const wagmiConfig = createConfig({
-  chains: [bsc],
+  chains: [bsc, bscTestnet],
   connectors: connectors,
   client({ chain }) {
     return createClient({ chain, transport: http() })
