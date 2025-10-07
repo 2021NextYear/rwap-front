@@ -69,7 +69,7 @@ const MintMining = () => {
   const setDexpair = async () => {
     const rwatContract = getRwatContract(rwat, chainId)
     const calldata = rwatInterface.encodeFunctionData('setDexPair', [
-      '0x5E4D765Bab86390871d0812e97A180f5B7861564',
+      '0x16eaE557919fedC8Bda162919cc72D2e1317346a',
       true,
     ])
     await sendTransaction({ to: rwat, data: calldata, value: '0' }, chainId)
