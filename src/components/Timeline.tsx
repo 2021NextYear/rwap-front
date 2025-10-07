@@ -5,7 +5,7 @@ const Timeline = () => {
   const { t } = useTranslation()
   const milestones = [
     {
-      quarter: 'Q3 2025',
+      quarter: 'Q2 2025',
       title: t('timeline.q3.title'),
       icon: Rocket,
       status: 'completed',
@@ -17,7 +17,7 @@ const Timeline = () => {
       ],
     },
     {
-      quarter: 'Q4 2025',
+      quarter: 'Q3 2025',
       title: t('timeline.q4.title'),
       icon: Target,
       status: 'completed',
@@ -29,7 +29,7 @@ const Timeline = () => {
       ],
     },
     {
-      quarter: 'Q1 2026',
+      quarter: 'Q4 2026',
       title: t('timeline.q1.title'),
       icon: Calendar,
       status: 'in-progress',

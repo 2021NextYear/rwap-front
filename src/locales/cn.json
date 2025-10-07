@@ -227,12 +227,12 @@
   },
   "tokenomics": {
     "title": "代币经济",
-    "subtitle": "透明可持续的代币分配，面向长期增长",
+    "subtitle": "透明可持续的代币分配，有助于生态健康发展",
     "section": { "distribution": "代币分配" },
     "centerToken": "代币",
     "distribution": {
-      "public": "公募",
-      "publicDesc": "面向社区认购与挖矿",
+      "public": "挖矿",
+      "publicDesc": "社区节点认购与挖矿",
       "liquidity": "流动性",
       "liquidityDesc": "DEX 流动性提供",
       "staking": "质押",
@@ -255,7 +255,7 @@
       "description": "通过 RWAF，投资者可以灵活选择符合自身需求与风险偏好的投资机会。"
     },
     "quick": {
-      "title": "快捷链接",
+      "title": "行情",
       "links": {
         "dexscreener": "Dexscreener",
         "ave": "AVE"
