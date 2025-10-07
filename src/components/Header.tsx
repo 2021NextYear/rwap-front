@@ -42,7 +42,7 @@ const Header = () => {
           <div className="flex items-center space-x-4">
             <ConnectButton chainStatus="none" showBalance={false} />
             <div
-              className="items-center ml-2 md:text-xl font-bold hidden md:flex"
+              className="items-center ml-2 md:text-xl font-bold hidden md:flex cursor-pointer"
               onClick={() => {
                 const newLng = language === 'en' ? 'zh-Hans' : 'en'
 
@@ -51,7 +51,7 @@ const Header = () => {
                 localStorage.setItem('lang', newLng)
               }}
             >
-              <Globe className="w-4 h-4 mr-1" /> {language}
+              <Globe className="size-6 mr-1" />
             </div>
             {/* Mobile Menu Button */}
             <button
@@ -79,7 +79,7 @@ const Header = () => {
               ))}
 
               <div
-                className="items-center md:text-xl font-bold flex md:hidden"
+                className="items-center md:text-xl font-bold flex md:hidden cursor-pointer"
                 onClick={() => {
                   const newLng = language === 'en' ? 'zh-Hans' : 'en'
 
@@ -88,7 +88,7 @@ const Header = () => {
                   localStorage.setItem('lang', newLng)
                 }}
               >
-                <Globe className="w-4 h-4 mr-1" /> {language}
+                <Globe className="size-6 mr-1" />
               </div>
             </div>
           </div>
