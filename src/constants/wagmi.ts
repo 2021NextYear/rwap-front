@@ -17,7 +17,7 @@ const connectors = connectorsForWallets(
       wallets: [injectedWallet, metaMaskWallet, okxWallet, binanceWallet, rabbyWallet],
     },
   ],
-  { appName: 'RWAFinance', projectId: 'c4f79cc821944d9680842e34466bfb' }
+  { appName: 'RWAFinance', projectId: '4f478ae1b484e7bd2ddb13b33b456b11' }
 )
 
 export const wagmiConfig = createConfig({
