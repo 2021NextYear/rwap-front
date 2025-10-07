@@ -7,9 +7,9 @@
   },
   "hero": {
     "title0": "RWAFinance（RWAF）",
-    "title1": "是由Exovo Ltd、Elias Neocleous & Co LLC",
-    "title2": "塞浦路斯银行",
-    "title3": "等众多知名权威机构支持的国际供应链金融RWA产品。",
+    "title1": "是由Exovo Ltd",
+    "title2": "",
+    "title3": "等众多知名权威机构",
     "title4": "支持的国际供应链金融RWA产品。"
   },
 
@@ -27,7 +27,7 @@
       },
       "copy": {
         "successTitle": "复制成功",
-        "successDesc": "邀请链接已复制到剪贴板",
+        "successDesc": "已复制",
         "failTitle": "复制失败",
         "failDesc": "请手动复制链接"
       }
@@ -87,7 +87,7 @@
       "q3": "如何计算收益？",
       "a3": "收益按照年化收益率（APY）计算，每日按比例分发到您的账户中。",
       "q4": "可以提前取消质押吗？",
-      "a4": "灵活质押可随时取消，锁定质押需要等待锁定期结束才能取出。"
+      "a4": "可以领取5倍质押金额的奖励，但是不可以提前取消质押。"
     }
   },
   "referral": {
@@ -95,7 +95,7 @@
     "subtitle": "邀请朋友加入 RWAF 生态，共同获得丰厚奖励",
     "link": {
       "title": "我的邀请链接",
-      "desc": "分享此链接，好友注册后您将获得奖励"
+      "desc": "分享此链接，好友参与后您将获得奖励"
     },
     "tabs": {
       "rewards": "奖励体系",
@@ -163,35 +163,35 @@
   },
   "features": {
     "title": {
-      "part1": "加密世界可能",
-      "highlight1": "很复杂",
-      "part2": "由于",
-      "highlight2": "持续变化与高波动性"
+      "part1": "RWAF供应链金融",
+      "highlight1": "金融",
+      "part2": "的体系",
+      "highlight2": "和经济模型"
     },
-    "subtitle": "我将帮助以下三类人：",
+    "subtitle": "RWAF供应链金融体系：",
     "items": {
-      "investors": { "title": "投资者", "desc": "通过关键KPI发现有价值项目" },
-      "developers": { "title": "开发者", "desc": "了解如何打磨产品以完成发布" },
-      "institutions": { "title": "机构", "desc": "完成端到端的代币化与发布流程" }
+      "investors": { "title": "客户", "desc": "所有供应链体系中服务的客户" },
+      "developers": { "title": "企业", "desc": "打通供应链的企业，商家，平台" },
+      "institutions": { "title": "RWAF Dao组织", "desc": "完成积分，票据的确权，利用区块链技术打造RWA通证" }
     }
   },
   "about": {
-    "title": { "part1": "为什么", "highlight": "RWAI", "part2": "与众不同" },
-    "description": "RWAI 不只是一个 AI 工具——它是你的加密研究伙伴。依托前沿技术与行业支持，提供对快速演进加密市场的深度洞察。",
+    "title": { "part1": "为什么", "highlight": "RWAF", "part2": "与众不同" },
+    "description": "RWAF不只是一个加密资产——它是商家形成联盟，消费者数据变现的工具。依托前沿技术与行业支持，提供对快速演进的RWA深度洞察。",
     "capabilities": {
-      "realtime": { "title": "实时分析", "desc": "7x24 小时监控加密市场" },
-      "risk": { "title": "风险评估", "desc": "全面的项目评估与风险打分" },
+      "realtime": { "title": "实时分析", "desc": "7x24 获取行业的供应链体系" },
+      "risk": { "title": "风险评估", "desc": "与RWAF合作的企业会进行全面的评估" },
       "intelligence": { "title": "市场情报", "desc": "洞察市场趋势与机会" },
-      "launch": { "title": "发行支持", "desc": "端到端指导助力成功发行" }
+      "launch": { "title": "兑换支持", "desc": "端到端指导企业兑换RWAF资产" }
     },
     "card": {
-      "title": "先进 AI 引擎",
-      "subtitle": "由前沿机器学习算法驱动",
+      "title": "RWA通证经济引擎",
+      "subtitle": "由完整的实体供应链体系驱动",
       "metrics": {
-        "market": "市场分析",
-        "risk": "风险评估",
-        "accuracy": "99.8% 准确率",
-        "launch": "发行优化",
+        "market": "全球市场",
+        "risk": "商家联盟",
+        "accuracy": "全行业覆盖",
+        "launch": "消费数据上链",
         "realtime": "实时"
       }
     }
@@ -210,19 +210,19 @@
     "status": { "completed": "已完成", "inprogress": "进行中", "upcoming": "即将到来" },
     "q3": {
       "title": "基础与启动",
-      "items": ["RWAF 代币发行", "社区建设", "基础供应链研究工具", "交易所上市"]
+      "items": ["RWAF 代币发行", "社区建设", "基础供应链体系的搭建", "去中心化交易所上市"]
     },
     "q4": {
       "title": "供应链增强",
-      "items": ["高级市场分析", "风险评估功能", "开发者工具 Beta", "合作拓展"]
+      "items": ["高级市场分析", "风险评估功能", "全球供应链体系的开发", "合作拓展"]
     },
     "q1": {
       "title": "平台进化",
-      "items": ["机构工具", "LaunchPad 集成", "移动应用", "供应链模型优化"]
+      "items": ["与企业深度合作，端对端兑换RWAF通证", "与Binance达成深度合作", "商家批量入驻，打通整个供应链体系", "供应链模型优化"]
     },
     "q2": {
       "title": "生态扩张",
-      "items": ["DeFi 集成", "跨链支持", "企业级方案", "全球采用"]
+      "items": ["DeFi 集成，与更多去中心化链上金融合作", "上线Binance,Coinbase等头部中心化交易所", "与全球顶尖的VC机构合作，为商家提供资源"]
     }
   },
   "tokenomics": {
