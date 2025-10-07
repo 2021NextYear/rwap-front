@@ -39,7 +39,7 @@ const Header = () => {
             ))}
           </div>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4" id="btn-wrapper">
             <ConnectButton chainStatus="none" showBalance={false} />
             <div
               className="items-center ml-2 md:text-xl font-bold hidden md:flex cursor-pointer"

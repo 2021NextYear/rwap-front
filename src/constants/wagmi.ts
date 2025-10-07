@@ -1,5 +1,18 @@
 import { http, createConfig } from 'wagmi'
-import { bsc, bscTestnet } from '@wagmi/core/chains'
+import {
+  bsc,
+  bscTestnet,
+  arbitrum,
+  polygon,
+  mainnet,
+  base,
+  optimism,
+  avalanche,
+  linea,
+  sei,
+  unichain,
+  sonic,
+} from '@wagmi/core/chains'
 import { connectorsForWallets } from '@rainbow-me/rainbowkit'
 import {
   okxWallet,
@@ -21,7 +34,20 @@ const connectors = connectorsForWallets(
 )
 
 export const wagmiConfig = createConfig({
-  chains: [bsc, bscTestnet],
+  chains: [
+    bsc,
+    bscTestnet,
+    arbitrum,
+    polygon,
+    mainnet,
+    base,
+    optimism,
+    avalanche,
+    linea,
+    sei,
+    unichain,
+    sonic,
+  ],
   connectors: connectors,
   client({ chain }) {
     return createClient({ chain, transport: http() })
