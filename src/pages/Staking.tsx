@@ -53,7 +53,7 @@ const Staking = () => {
       icon: Lock,
       trend: '+12.5%',
     },
-    { label: t('staking.stats.apy'), value: '18.5%', icon: TrendingUp, trend: '+2.1%' },
+    { label: t('staking.stats.apy'), value: '91.25%', icon: TrendingUp, trend: '+2.1%' },
     { label: t('staking.stats.count'), value: stakingAddresses, icon: Wallet, trend: '+156' },
     {
       label: t('staking.stats.totalRewards'),
