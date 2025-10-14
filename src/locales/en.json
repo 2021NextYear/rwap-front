@@ -17,6 +17,10 @@
     "max": "Max",
     "balance": "Balance",
     "toast": {
+      "mint": {
+        "success": "Subscribe succeeded",
+        "fail": "Subscribe failed"
+      },
       "stake": {
         "success": "Stake succeeded",
         "fail": "Stake failed"

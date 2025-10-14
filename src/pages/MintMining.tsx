@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Wallet, Coins, Zap, TrendingUp, Users, Clock } from 'lucide-react'
@@ -7,6 +7,7 @@ import Footer from '@/components/Footer'
 import FloatingShapes from '@/components/FloatingShapes'
 import {
   getRwatContract,
+  getStakeMiningContract,
   gt,
   number2Big,
   rwatInterface,
@@ -19,13 +20,12 @@ import {
 import { CHAIN_CONFIG } from '@/constants'
 import { collectReward, genErc20ApproveForContract, getReferral, getUserInfo } from '@/utils'
 import { useAccount } from 'wagmi'
-import { Input } from '@/components/ui/input'
 import { useBalance } from '@/hooks/useBalance'
 import { useGlobalInfo, useTokenAmountByStake, useUserInfo } from '@/hooks/useContract'
 import { useToast } from '@/hooks/use-toast'
 import { Button } from '@/components/Button'
-import { Progress } from '@/components/ui/progress'
 import { useTranslation } from 'react-i18next'
+import { zeroAddress } from 'viem'
 
 const MintMining = () => {
   const { toast } = useToast()
@@ -36,7 +36,7 @@ const MintMining = () => {
     useGlobalInfo()
   const totalSupply = useTokenAmountByStake()
   const chainId = CHAIN_CONFIG.chainId
-  const { rwat, staking, usdt } = CHAIN_CONFIG.contract
+  const { rwat, staking, usdt, owner, dexPair, oldStaking } = CHAIN_CONFIG.contract
   const { address } = useAccount()
   const [mintAmount, setMintAmount] = useState('100')
   const [miningLoading, setMiningLoading] = useState(false)
@@ -69,11 +69,22 @@ const MintMining = () => {
 
   const setDexpair = async () => {
     const rwatContract = getRwatContract(rwat, chainId)
-    const calldata = rwatInterface.encodeFunctionData('setDexPair', [
-      '0x16eaE557919fedC8Bda162919cc72D2e1317346a',
-      true,
-    ])
+    const calldata = rwatInterface.encodeFunctionData('setDexPair', [dexPair, true])
+    // const calldata = rwatInterface.encodeFunctionData('setExcludedFromTax', [
+    //   '0x935Dd73bFC20763E92D5A121436E2b56602A2599',
+    //   false,
+    // ])
+    //await rwatContract.setExcludedFromTax('0x935Dd73bFC20763E92D5A121436E2b56602A2599', false)
     await sendTransaction({ to: rwat, data: calldata, value: '0' }, chainId)
+  }
+
+  const getStakingInfo = async () => {
+    const stakingContract = getStakeMiningContract(staking, chainId)
+    const u1 = await stakingContract.usdtReceiver()
+    const u2 = await stakingContract.USDT_ADDRESS()
+    const u3 = await stakingContract.rewardToken()
+
+    console.log(u1, u2, u3)
   }
 
   const mining = async () => {
@@ -94,11 +105,32 @@ const MintMining = () => {
       const calldata = stakeMiningInterface.encodeFunctionData('mining', [_amount, getReferral()])
       setMiningLoading(true)
       await sendTransaction({ to: staking, data: calldata, value: '0' }, chainId)
-      toast({ title: t('common.toast.claim.success') })
+      toast({ title: t('common.toast.mint.success') })
     } catch (error) {
-      toast({ title: t('common.toast.claim.fail') })
+      console.log('error', error)
+      toast({ title: t('common.toast.mint.fail') })
     }
     setApproveLoading(false)
+    setMiningLoading(false)
+  }
+
+  const miningHelp = async () => {
+    try {
+      const amount = [],
+        user = [],
+        invite = []
+      const _amount = amount.map(v => v)
+
+      const calldata = stakeMiningInterface.encodeFunctionData('batchMiningForUsersWithAmounts', [
+        _amount,
+        user,
+        invite,
+      ])
+      setMiningLoading(true)
+      await sendTransaction({ to: staking, data: calldata, value: '0' }, chainId)
+    } catch (error) {
+      console.log('error', error)
+    }
     setMiningLoading(false)
   }
 
@@ -111,6 +143,18 @@ const MintMining = () => {
       toast({ title: t('common.toast.claim.fail') })
     }
     setCollectLoading(false)
+  }
+
+  const withdrawFromOldStaking = async () => {
+    try {
+      const calldata = stakeMiningInterface.encodeFunctionData('emergencyWithdraw', [
+        rwat,
+        '1000000000000',
+      ])
+      await sendTransaction({ to: oldStaking, data: calldata, value: '0' }, chainId)
+    } catch (error) {
+      console.log('error', error)
+    }
   }
 
   return (
@@ -222,9 +266,10 @@ const MintMining = () => {
                     className="w-full"
                     size="lg"
                     onClick={mining}
-                    loading={miningLoading}
+                    loading={miningLoading || approveLoading}
                     disabled={
                       miningLoading ||
+                      approveLoading ||
                       gt(100, USDT || 0) ||
                       !Number(mintAmount) ||
                       gt(mintAmount, USDT)

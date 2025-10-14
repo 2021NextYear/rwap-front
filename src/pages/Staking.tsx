@@ -265,9 +265,14 @@ const Staking = () => {
                         <Button
                           className="w-full"
                           size="lg"
-                          disabled={!stakeSelfAmount || miningLoading || gt(stakeSelfAmount, RWAT)}
+                          disabled={
+                            !stakeSelfAmount ||
+                            miningLoading ||
+                            approveLoading ||
+                            gt(stakeSelfAmount, RWAT)
+                          }
                           onClick={stakingForSelf}
-                          loading={miningLoading}
+                          loading={miningLoading || approveLoading}
                         >
                           <Lock className="mr-2 h-4 w-4" />
                           {t(approveLoading ? 'staking.approve' : 'staking.cta.stake')}

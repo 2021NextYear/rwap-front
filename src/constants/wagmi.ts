@@ -36,7 +36,6 @@ const connectors = connectorsForWallets(
 export const wagmiConfig = createConfig({
   chains: [
     bsc,
-    //bscTestnet,
     // arbitrum,
     // polygon,
     // mainnet,

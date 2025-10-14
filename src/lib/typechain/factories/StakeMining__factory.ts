@@ -7,25 +7,19 @@ import type { StakeMining, StakeMiningInterface } from "../StakeMining";
 
 const _abi = [
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_usdtAddress",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "_usdtReceiver",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "_rewardToken",
-        type: "address",
-      },
-    ],
+    inputs: [],
     stateMutability: "nonpayable",
     type: "constructor",
+  },
+  {
+    inputs: [],
+    name: "InvalidInitialization",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "NotInitializing",
+    type: "error",
   },
   {
     inputs: [
@@ -88,6 +82,19 @@ const _abi = [
       },
     ],
     name: "DividendDistributed",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint64",
+        name: "version",
+        type: "uint64",
+      },
+    ],
+    name: "Initialized",
     type: "event",
   },
   {
@@ -437,6 +444,47 @@ const _abi = [
     type: "function",
   },
   {
+    inputs: [
+      {
+        internalType: "uint256[]",
+        name: "_amounts",
+        type: "uint256[]",
+      },
+      {
+        internalType: "address[]",
+        name: "_users",
+        type: "address[]",
+      },
+      {
+        internalType: "address[]",
+        name: "_inviters",
+        type: "address[]",
+      },
+    ],
+    name: "batchMiningForUsersWithAmounts",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256[]",
+        name: "_amounts",
+        type: "uint256[]",
+      },
+      {
+        internalType: "address[]",
+        name: "_users",
+        type: "address[]",
+      },
+    ],
+    name: "batchStakingForOthersWithAmounts",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "claimDividendRewards",
     outputs: [],
@@ -762,6 +810,93 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
+        name: "user",
+        type: "address",
+      },
+    ],
+    name: "getUserMiningRecords",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "uint256",
+            name: "amount",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "reward",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "blockRate",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "startBlock",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "claimedReward",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct StakingImplementation.MiningRecord[]",
+        name: "",
+        type: "tuple[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+    ],
+    name: "getUserStakingRecords",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "uint256",
+            name: "amount",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "reward",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "startBlock",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "claimedReward",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct StakingImplementation.StakingRecord[]",
+        name: "",
+        type: "tuple[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
         name: "",
         type: "address",
       },
@@ -794,6 +929,29 @@ const _abi = [
       },
     ],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_usdtAddress",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "_usdtReceiver",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "_rewardToken",
+        type: "address",
+      },
+    ],
+    name: "initialize",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -1098,6 +1256,11 @@ const _abi = [
       {
         internalType: "uint256",
         name: "reward",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "blockRate",
         type: "uint256",
       },
       {

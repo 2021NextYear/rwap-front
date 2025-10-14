@@ -17,6 +17,10 @@
     "max": "最大",
     "balance": "余额",
     "toast": {
+      "mint": {
+        "success": "认购成功",
+        "fail": "认购失败"
+      },
       "stake": {
         "success": "质押成功",
         "fail": "质押失败"

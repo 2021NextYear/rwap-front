@@ -23,6 +23,49 @@ import type {
   TypedContractMethod,
 } from "./common";
 
+export declare namespace StakingImplementation {
+  export type MiningRecordStruct = {
+    amount: BigNumberish;
+    reward: BigNumberish;
+    blockRate: BigNumberish;
+    startBlock: BigNumberish;
+    claimedReward: BigNumberish;
+  };
+
+  export type MiningRecordStructOutput = [
+    amount: bigint,
+    reward: bigint,
+    blockRate: bigint,
+    startBlock: bigint,
+    claimedReward: bigint
+  ] & {
+    amount: bigint;
+    reward: bigint;
+    blockRate: bigint;
+    startBlock: bigint;
+    claimedReward: bigint;
+  };
+
+  export type StakingRecordStruct = {
+    amount: BigNumberish;
+    reward: BigNumberish;
+    startBlock: BigNumberish;
+    claimedReward: BigNumberish;
+  };
+
+  export type StakingRecordStructOutput = [
+    amount: bigint,
+    reward: bigint,
+    startBlock: bigint,
+    claimedReward: bigint
+  ] & {
+    amount: bigint;
+    reward: bigint;
+    startBlock: bigint;
+    claimedReward: bigint;
+  };
+}
+
 export interface StakeMiningInterface extends Interface {
   getFunction(
     nameOrSignature:
@@ -43,6 +86,8 @@ export interface StakeMiningInterface extends Interface {
       | "SUPER_NODE_INVITE_THRESHOLD"
       | "SUPER_NODE_THRESHOLD"
       | "USDT_ADDRESS"
+      | "batchMiningForUsersWithAmounts"
+      | "batchStakingForOthersWithAmounts"
       | "claimDividendRewards"
       | "claimDividendRewardsForUser"
       | "claimMiningRewards"
@@ -58,8 +103,11 @@ export interface StakeMiningInterface extends Interface {
       | "getGlobalStats"
       | "getIndirectInviteCount"
       | "getUserInfo"
+      | "getUserMiningRecords"
+      | "getUserStakingRecords"
       | "hasMined"
       | "hasStaked"
+      | "initialize"
       | "isGtSuperNodeAmount"
       | "isOrdinaryNode"
       | "isSuperNode"
@@ -90,6 +138,7 @@ export interface StakeMiningInterface extends Interface {
   getEvent(
     nameOrSignatureOrTopic:
       | "DividendDistributed"
+      | "Initialized"
       | "InviterBound"
       | "Mining"
       | "OwnershipTransferred"
@@ -163,6 +212,14 @@ export interface StakeMiningInterface extends Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "batchMiningForUsersWithAmounts",
+    values: [BigNumberish[], AddressLike[], AddressLike[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "batchStakingForOthersWithAmounts",
+    values: [BigNumberish[], AddressLike[]]
+  ): string;
+  encodeFunctionData(
     functionFragment: "claimDividendRewards",
     values?: undefined
   ): string;
@@ -223,12 +280,24 @@ export interface StakeMiningInterface extends Interface {
     values: [AddressLike]
   ): string;
   encodeFunctionData(
+    functionFragment: "getUserMiningRecords",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getUserStakingRecords",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
     functionFragment: "hasMined",
     values: [AddressLike]
   ): string;
   encodeFunctionData(
     functionFragment: "hasStaked",
     values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "initialize",
+    values: [AddressLike, AddressLike, AddressLike]
   ): string;
   encodeFunctionData(
     functionFragment: "isGtSuperNodeAmount",
@@ -391,6 +460,14 @@ export interface StakeMiningInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "batchMiningForUsersWithAmounts",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "batchStakingForOthersWithAmounts",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "claimDividendRewards",
     data: BytesLike
   ): Result;
@@ -450,8 +527,17 @@ export interface StakeMiningInterface extends Interface {
     functionFragment: "getUserInfo",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "getUserMiningRecords",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getUserStakingRecords",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "hasMined", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "hasStaked", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isGtSuperNodeAmount",
     data: BytesLike
@@ -557,6 +643,18 @@ export namespace DividendDistributedEvent {
     totalAmount: bigint;
     ordinaryAmount: bigint;
     superAmount: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace InitializedEvent {
+  export type InputTuple = [version: BigNumberish];
+  export type OutputTuple = [version: bigint];
+  export interface OutputObject {
+    version: bigint;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -743,6 +841,18 @@ export interface StakeMining extends BaseContract {
 
   USDT_ADDRESS: TypedContractMethod<[], [string], "view">;
 
+  batchMiningForUsersWithAmounts: TypedContractMethod<
+    [_amounts: BigNumberish[], _users: AddressLike[], _inviters: AddressLike[]],
+    [void],
+    "nonpayable"
+  >;
+
+  batchStakingForOthersWithAmounts: TypedContractMethod<
+    [_amounts: BigNumberish[], _users: AddressLike[]],
+    [void],
+    "nonpayable"
+  >;
+
   claimDividendRewards: TypedContractMethod<[], [void], "nonpayable">;
 
   claimDividendRewardsForUser: TypedContractMethod<
@@ -866,9 +976,31 @@ export interface StakeMining extends BaseContract {
     "view"
   >;
 
+  getUserMiningRecords: TypedContractMethod<
+    [user: AddressLike],
+    [StakingImplementation.MiningRecordStructOutput[]],
+    "view"
+  >;
+
+  getUserStakingRecords: TypedContractMethod<
+    [user: AddressLike],
+    [StakingImplementation.StakingRecordStructOutput[]],
+    "view"
+  >;
+
   hasMined: TypedContractMethod<[arg0: AddressLike], [boolean], "view">;
 
   hasStaked: TypedContractMethod<[arg0: AddressLike], [boolean], "view">;
+
+  initialize: TypedContractMethod<
+    [
+      _usdtAddress: AddressLike,
+      _usdtReceiver: AddressLike,
+      _rewardToken: AddressLike
+    ],
+    [void],
+    "nonpayable"
+  >;
 
   isGtSuperNodeAmount: TypedContractMethod<
     [arg0: AddressLike],
@@ -929,9 +1061,10 @@ export interface StakeMining extends BaseContract {
   userMiningRecords: TypedContractMethod<
     [arg0: AddressLike, arg1: BigNumberish],
     [
-      [bigint, bigint, bigint, bigint] & {
+      [bigint, bigint, bigint, bigint, bigint] & {
         amount: bigint;
         reward: bigint;
+        blockRate: bigint;
         startBlock: bigint;
         claimedReward: bigint;
       }
@@ -1052,6 +1185,20 @@ export interface StakeMining extends BaseContract {
     nameOrSignature: "USDT_ADDRESS"
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
+    nameOrSignature: "batchMiningForUsersWithAmounts"
+  ): TypedContractMethod<
+    [_amounts: BigNumberish[], _users: AddressLike[], _inviters: AddressLike[]],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "batchStakingForOthersWithAmounts"
+  ): TypedContractMethod<
+    [_amounts: BigNumberish[], _users: AddressLike[]],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
     nameOrSignature: "claimDividendRewards"
   ): TypedContractMethod<[], [void], "nonpayable">;
   getFunction(
@@ -1170,11 +1317,36 @@ export interface StakeMining extends BaseContract {
     "view"
   >;
   getFunction(
+    nameOrSignature: "getUserMiningRecords"
+  ): TypedContractMethod<
+    [user: AddressLike],
+    [StakingImplementation.MiningRecordStructOutput[]],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "getUserStakingRecords"
+  ): TypedContractMethod<
+    [user: AddressLike],
+    [StakingImplementation.StakingRecordStructOutput[]],
+    "view"
+  >;
+  getFunction(
     nameOrSignature: "hasMined"
   ): TypedContractMethod<[arg0: AddressLike], [boolean], "view">;
   getFunction(
     nameOrSignature: "hasStaked"
   ): TypedContractMethod<[arg0: AddressLike], [boolean], "view">;
+  getFunction(
+    nameOrSignature: "initialize"
+  ): TypedContractMethod<
+    [
+      _usdtAddress: AddressLike,
+      _usdtReceiver: AddressLike,
+      _rewardToken: AddressLike
+    ],
+    [void],
+    "nonpayable"
+  >;
   getFunction(
     nameOrSignature: "isGtSuperNodeAmount"
   ): TypedContractMethod<[arg0: AddressLike], [boolean], "view">;
@@ -1246,9 +1418,10 @@ export interface StakeMining extends BaseContract {
   ): TypedContractMethod<
     [arg0: AddressLike, arg1: BigNumberish],
     [
-      [bigint, bigint, bigint, bigint] & {
+      [bigint, bigint, bigint, bigint, bigint] & {
         amount: bigint;
         reward: bigint;
+        blockRate: bigint;
         startBlock: bigint;
         claimedReward: bigint;
       }
@@ -1327,6 +1500,13 @@ export interface StakeMining extends BaseContract {
     DividendDistributedEvent.OutputObject
   >;
   getEvent(
+    key: "Initialized"
+  ): TypedContractEvent<
+    InitializedEvent.InputTuple,
+    InitializedEvent.OutputTuple,
+    InitializedEvent.OutputObject
+  >;
+  getEvent(
     key: "InviterBound"
   ): TypedContractEvent<
     InviterBoundEvent.InputTuple,
@@ -1372,6 +1552,17 @@ export interface StakeMining extends BaseContract {
       DividendDistributedEvent.InputTuple,
       DividendDistributedEvent.OutputTuple,
       DividendDistributedEvent.OutputObject
+    >;
+
+    "Initialized(uint64)": TypedContractEvent<
+      InitializedEvent.InputTuple,
+      InitializedEvent.OutputTuple,
+      InitializedEvent.OutputObject
+    >;
+    Initialized: TypedContractEvent<
+      InitializedEvent.InputTuple,
+      InitializedEvent.OutputTuple,
+      InitializedEvent.OutputObject
     >;
 
     "InviterBound(address,address,address)": TypedContractEvent<
