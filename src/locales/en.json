@@ -281,7 +281,7 @@
     "section": { "distribution": "Token Distribution" },
     "centerToken": "Token",
     "distribution": {
-      "public": "Public Sale",
+      "public": "Mining",
       "publicDesc": "Available for community purchase and Minging",
       "liquidity": "Liquidity",
       "liquidityDesc": "DEX liquidity provision",

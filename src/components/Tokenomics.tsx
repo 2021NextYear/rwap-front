@@ -6,28 +6,28 @@ const Tokenomics = () => {
   const distribution = [
     {
       category: t('tokenomics.distribution.public'),
-      percentage: 90,
+      percentage: 95,
       color: 'from-violet-500 to-purple-500',
       icon: Users,
       description: t('tokenomics.distribution.publicDesc'),
     },
     {
       category: t('tokenomics.distribution.liquidity'),
-      percentage: 1,
+      percentage: 3.5,
       color: 'from-blue-500 to-cyan-500',
       icon: TrendingUp,
       description: t('tokenomics.distribution.liquidityDesc'),
     },
     {
       category: t('tokenomics.distribution.staking'),
-      percentage: 4,
+      percentage: 0.5,
       color: 'from-emerald-500 to-teal-500',
       icon: Lock,
       description: t('tokenomics.distribution.stakingDesc'),
     },
     {
       category: t('tokenomics.distribution.node'),
-      percentage: 5,
+      percentage: 1,
       color: 'from-orange-500 to-red-500',
       icon: PieChart,
       description: t('tokenomics.distribution.nodeDesc'),

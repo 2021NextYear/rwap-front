@@ -23,12 +23,12 @@ const Footer = () => {
     },
   ]
 
-  const resources = [
-    { label: 'Docs', href: 'https://bitc.gitbook.io/bitconnect' },
-    // { label: "Whitepaper", href: "#" },
-    // { label: "API", href: "#" },
-    { label: 'Support', href: 'https://bitc.gitbook.io/bitconnect/reesource/faq' },
-  ]
+  // const resources = [
+  //   { label: 'Docs', href: 'https://bitc.gitbook.io/bitconnect' },
+  //   // { label: "Whitepaper", href: "#" },
+  //   // { label: "API", href: "#" },
+  //   { label: 'Support', href: 'https://bitc.gitbook.io/bitconnect/reesource/faq' },
+  // ]
 
   return (
     <footer className="bg-muted/30 border-t border-border/40">
