@@ -49,7 +49,6 @@ const Timeline = () => {
         t('timeline.q2.items.0'),
         t('timeline.q2.items.1'),
         t('timeline.q2.items.2'),
-        t('timeline.q2.items.3'),
       ],
     },
   ]
