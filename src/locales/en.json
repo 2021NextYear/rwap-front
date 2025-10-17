@@ -79,6 +79,8 @@
     "my": {
       "title": "My Staking",
       "total": "Total Staked",
+      "totalRelease": "Total relsease",
+      "unRelease": "To be released",
       "claimed": "Claimed Rewards",
       "pending": "Unclaimed Rewards",
       "claim": "Claim Rewards"

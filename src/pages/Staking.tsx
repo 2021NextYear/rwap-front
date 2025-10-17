@@ -15,6 +15,7 @@ import { useAccount } from 'wagmi'
 import {
   div,
   gt,
+  minus,
   number2Big,
   sanitizeInput,
   sendTransaction,
@@ -360,6 +361,25 @@ const Staking = () => {
                           {t('staking.my.total')}
                         </span>
                         <span className="font-medium">{userInfo.totalStakingAmount}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-muted-foreground">
+                          {t('staking.my.totalRelease')}
+                        </span>
+                        <span className="font-medium">
+                          {times(userInfo.totalStakingAmount, 5, 2)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-muted-foreground">
+                          {t('staking.my.unRelease')}
+                        </span>
+                        <span className="font-medium">
+                          {minus(
+                            times(userInfo.totalStakingAmount, 5, 2),
+                            userInfo.claimedRewards.stakingReward
+                          )}
+                        </span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-sm text-muted-foreground">
