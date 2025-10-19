@@ -196,7 +196,9 @@ const MintMining = () => {
                           <Icon className="h-6 w-6 text-primary" />
                         </div>
                         <div>
-                          <div className="text-2xl font-bold">{stat.value}</div>
+                          <div className="text-2xl font-bold">
+                            <span className="text-primary">{stat.value}</span>
+                          </div>
                           <div className="text-sm text-muted-foreground">{stat.label}</div>
                         </div>
                       </div>
@@ -226,7 +228,7 @@ const MintMining = () => {
                     <label className="block text-sm font-medium mb-2">
                       {t('mint.subscribe.label')}
                     </label>
-                    <div className="p-6 rounded-md border border-ring-ring">
+                    <div className="p-6 rounded-md border border-yellow-100">
                       <div className="flex items-center justify-between mb-2">
                         <input
                           value={mintAmount}
@@ -248,7 +250,7 @@ const MintMining = () => {
                         <div className="flex justify-end text-sm">
                           <span className="mr-1">{t('common.balance')}:</span>
                           <span className="flex items-center">
-                            {USDT}
+                            <span className="text-primary">{USDT}</span>
                             <img
                               src="https://raw.githubusercontent.com/trustwallet/assets/refs/heads/master/blockchains/ethereum/assets/0xdAC17F958D2ee523a2206206994597C13D831ec7/logo.png"
                               alt=""
@@ -292,18 +294,24 @@ const MintMining = () => {
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
                       <span className="text-sm">{t('mint.my.amount')}</span>
-                      <Badge>{userInfo.totalMiningAmount} USDT</Badge>
+                      <Badge>
+                        <span className="mr-1">{userInfo.totalMiningAmount} </span> USDT
+                      </Badge>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-sm">{t('mint.my.hashrate')}</span>
                       <span className="font-medium">
-                        {times(Number(userInfo.totalMiningAmount) || 0, 5)}
+                        <span className="text-primary">
+                          {times(Number(userInfo.totalMiningAmount) || 0, 5)}
+                        </span>
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-sm">{t('mint.my.rewards')}</span>
-                      <span className="font-medium text-primary">
-                        +{userInfo.claimedRewards.miningReward} RWAF
+                      <span className="font-medium">
+                        +
+                        <span className="text-primary">{userInfo.claimedRewards.miningReward}</span>{' '}
+                        RWAF
                       </span>
                     </div>
                   </div>
@@ -325,7 +333,8 @@ const MintMining = () => {
                       }
                       loading={collectLoading}
                     >
-                      {t('mint.claim.cta')} ({userInfo.claimableRewards.miningReward} RWAF)
+                      {t('mint.claim.cta')} (
+                      <span className="">{userInfo.claimableRewards.miningReward}</span> RWAF)
                     </Button>
                   </div>
                 </CardContent>
@@ -369,7 +378,9 @@ const MintMining = () => {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="text-center">
-                      <div className="text-3xl font-bold text-primary mb-1">{pool.apy}</div>
+                      <div className="text-4xl font-bold mb-1">
+                        <span className="text-primary">{pool.apy}</span>
+                      </div>
                       <div className="text-sm text-muted-foreground">{t('mint.pools.apy')}</div>
                     </div>
 

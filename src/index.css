@@ -85,26 +85,26 @@
 
   .dark {
     /* BNB Chain 深色主题 - 黑色背景 + 黄色主题 */
-    --background: 228 14% 8%;  /* #14151A */
-    --foreground: 240 9% 97%;   /* #F7F7F8 */
+    --background: 228 14% 8%; /* #14151A */
+    --foreground: 240 9% 97%; /* #F7F7F8 */
 
-    --card: 228 11% 11%;        /* #181A1E */
+    --card: 228 11% 11%; /* #181A1E */
     --card-foreground: 240 9% 97%;
 
     --popover: 228 11% 11%;
     --popover-foreground: 240 9% 97%;
 
-    --primary: 54 100% 50%;     /* #FFE900 黄色主题 */
+    --primary: 54 100% 50%; /* #FFE900 黄色主题 */
     --primary-variant: 54 100% 60%;
-    --primary-foreground: 228 14% 8%;  /* 黑色文字在黄色背景上 */
+    --primary-foreground: 228 14% 8%; /* 黑色文字在黄色背景上 */
 
-    --secondary: 225 13% 14%;   /* #1E2026 */
+    --secondary: 225 13% 14%; /* #1E2026 */
     --secondary-foreground: 240 9% 97%;
 
     --muted: 225 13% 14%;
-    --muted-foreground: 234 8% 79%;  /* #C4C5CB */
+    --muted-foreground: 234 8% 79%; /* #C4C5CB */
 
-    --accent: 153 77% 49%;      /* #18DC7E 绿色辅助 */
+    --accent: 153 77% 49%; /* #18DC7E 绿色辅助 */
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 65%;
@@ -112,20 +112,16 @@
 
     --border: 225 13% 14%;
     --input: 228 11% 11%;
-    --ring: 54 100% 50%;        /* 黄色聚焦环 */
+    --ring: 54 100% 50%; /* 黄色聚焦环 */
 
     /* BNB Chain 风格渐变 - 偏黄色调 */
-    --gradient-primary: linear-gradient(
-      180deg,
-      hsl(54 100% 50%) 0%,
-      hsl(48 95% 45%) 100%
-    );
+    --gradient-primary: linear-gradient(180deg, hsl(54 100% 50%) 0%, hsl(48 95% 45%) 100%);
     --gradient-accent: linear-gradient(135deg, hsl(45 100% 48%) 0%, hsl(54 100% 55%) 100%);
     --gradient-soft: linear-gradient(180deg, hsl(228 14% 8%) 0%, hsl(228 11% 11%) 100%);
     --gradient-card: linear-gradient(
       145deg,
-      hsla(228 11% 11% / 0.9) 0%,
-      hsla(225 13% 14% / 0.6) 100%
+      hsla(228 11% 18% / 0.95) 0%,
+      hsla(225 13% 22% / 0.8) 100%
     );
 
     --glass-bg: hsla(228 11% 11% / 0.3);

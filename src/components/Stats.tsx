@@ -51,7 +51,10 @@ const Stats = () => {
                   <IconComponent className="w-8 h-8 text-white" />
                 </div>
 
-                <div className="text-3xl font-bold gradient-text mb-2">{stat.value}</div>
+                <div className="text-3xl font-bold mb-2">
+                  <span className="text-primary">{stat.value.replace(/[^\d.]/g, '')}</span>
+                  <span>{stat.value.replace(/[\d.]/g, '')}</span>
+                </div>
 
                 <h3 className="font-semibold text-foreground mb-1">{stat.label}</h3>
 

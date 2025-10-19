@@ -169,7 +169,11 @@ const Staking = () => {
                           {stat.trend}
                         </Badge>
                       </div>
-                      <div className="text-2xl font-bold mb-1">{stat.value}</div>
+                      <div className="text-2xl font-bold mb-1">
+                        <span className="text-primary">{stat?.value?.split(' ')[0]}</span>
+                        {stat?.value?.includes(' ') &&
+                          ` ${stat?.value?.split(' ').slice(1).join(' ')}`}
+                      </div>
                       <div className="text-sm text-muted-foreground">{stat.label}</div>
                     </CardContent>
                   </Card>
@@ -193,7 +197,7 @@ const Staking = () => {
                   <CardContent>
                     <div className="mb-2">
                       {t('staking.balance')}
-                      {RWAT}
+                      <span className="text-primary"> {RWAT}</span>
                     </div>
 
                     <Tabs defaultValue="stake" className="w-full">
@@ -214,7 +218,7 @@ const Staking = () => {
                               onChange={e =>
                                 setStakeSelfAmount(sanitizeInput(e.target.value, 4, false))
                               }
-                              className="w-full text-sm"
+                              className="w-full text-xs h-14 placeholder:text-xs text-foreground/80"
                             />
                             {/* <Button
                               variant="ghost"
@@ -247,17 +251,23 @@ const Staking = () => {
                         <div className="space-y-2 text-sm">
                           <div className="flex justify-between">
                             <span>{t('staking.estimate.year')}</span>
-                            <span className="text-primary">
-                              {Number(stakeSelfAmount)
-                                ? times(div(times(stakeSelfAmount, 5), 2000), 365)
-                                : '0'}{' '}
+                            <span>
+                              <span className="text-primary">
+                                {Number(stakeSelfAmount)
+                                  ? times(div(times(stakeSelfAmount, 5), 2000), 365)
+                                  : '0'}
+                              </span>{' '}
                               RWAF
                             </span>
                           </div>
                           <div className="flex justify-between">
                             <span>{t('staking.estimate.day')}</span>
-                            <span className="text-primary">
-                              {Number(stakeSelfAmount) ? div(times(stakeSelfAmount, 5), 2000) : '0'}{' '}
+                            <span>
+                              <span className="text-primary">
+                                {Number(stakeSelfAmount)
+                                  ? div(times(stakeSelfAmount, 5), 2000)
+                                  : '0'}
+                              </span>{' '}
                               RWAF
                             </span>
                           </div>
@@ -292,7 +302,7 @@ const Staking = () => {
                               onChange={e =>
                                 setStakeOtherAmount(sanitizeInput(e.target.value, 4, false))
                               }
-                              className="pr-20 text-sm"
+                              className="pr-20 text-xs h-14 placeholder:text-xs text-foreground/80"
                             />
                             <Button
                               variant="ghost"
@@ -311,7 +321,7 @@ const Staking = () => {
                               placeholder={t('staking.unstake.addressPlaceholder')}
                               value={otherAddress}
                               onChange={e => setOtherAddress(e.target.value)}
-                              className="w-full text-sm"
+                              className="w-full text-xs h-14 placeholder:text-xs text-foreground/80"
                             />
                           </div>
                         </div>
@@ -360,14 +370,18 @@ const Staking = () => {
                         <span className="text-sm text-muted-foreground">
                           {t('staking.my.total')}
                         </span>
-                        <span className="font-medium">{userInfo.totalStakingAmount}</span>
+                        <span className="font-medium">
+                          <span className="text-primary">{userInfo.totalStakingAmount}</span>
+                        </span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-sm text-muted-foreground">
                           {t('staking.my.totalRelease')}
                         </span>
                         <span className="font-medium">
-                          {times(userInfo.totalStakingAmount, 5, 2)}
+                          <span className="text-primary">
+                            {times(userInfo.totalStakingAmount, 5, 2)}
+                          </span>
                         </span>
                       </div>
                       <div className="flex justify-between items-center">
@@ -375,26 +389,32 @@ const Staking = () => {
                           {t('staking.my.unRelease')}
                         </span>
                         <span className="font-medium">
-                          {minus(
-                            times(userInfo.totalStakingAmount, 5, 2),
-                            userInfo.claimedRewards.stakingReward
-                          )}
+                          <span className="text-primary">
+                            {minus(
+                              times(userInfo.totalStakingAmount, 5, 2),
+                              userInfo.claimedRewards.stakingReward
+                            )}
+                          </span>
                         </span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-sm text-muted-foreground">
                           {t('staking.my.claimed')}
                         </span>
-                        <span className="font-medium text-primary">
-                          {times(userInfo.claimedRewards.stakingReward, 1)}
+                        <span className="font-medium">
+                          <span className="text-primary">
+                            {times(userInfo.claimedRewards.stakingReward, 1)}
+                          </span>
                         </span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-sm text-muted-foreground">
                           {t('staking.my.pending')}
                         </span>
-                        <span className="font-medium text-primary">
-                          {userInfo.claimableRewards.stakingReward}
+                        <span className="font-medium">
+                          <span className="text-primary">
+                            {userInfo.claimableRewards.stakingReward}
+                          </span>
                         </span>
                       </div>
                       {/* <div className="flex justify-between items-center">
@@ -421,7 +441,8 @@ const Staking = () => {
                         }
                         onClick={collect}
                       >
-                        {t('staking.my.claim')} ({userInfo.claimableRewards.stakingReward})
+                        {t('staking.my.claim')} (
+                        <span className="">{userInfo.claimableRewards.stakingReward}</span>)
                       </Button>
                     </div>
                   </CardContent>

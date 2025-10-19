@@ -152,7 +152,9 @@ const Referral = () => {
                           {stat.reward}
                         </Badge>
                       </div>
-                      <div className="text-2xl font-bold mb-1">{stat.value}</div>
+                      <div className="text-2xl font-bold mb-1">
+                        <span className="text-primary">{stat.value}</span>
+                      </div>
                       <div className="text-sm text-muted-foreground">{stat.label}</div>
                     </CardContent>
                   </Card>
@@ -191,8 +193,8 @@ const Referral = () => {
                       </CardHeader>
                       <CardContent className="space-y-4">
                         <div className="text-center">
-                          <div className="text-2xl font-bold text-primary mb-1">
-                            {tier.commission}
+                          <div className="text-3xl font-bold mb-1">
+                            <span className="text-primary">{tier.commission}</span>
                           </div>
                           <div className="text-sm text-muted-foreground">佣金比例</div>
                         </div>
@@ -303,21 +305,23 @@ const Referral = () => {
                               {t('referral.dividend.pool')}
                             </span>
                             <span className="font-medium">
-                              {globalInfo.dividendPoolAmount} RWAF
+                              <span className="text-primary">{globalInfo.dividendPoolAmount}</span> RWAF
                             </span>
                           </div>
                           <div className="flex justify-between">
                             <span className="text-sm text-muted-foreground">
                               {t('referral.dividend.proportion')}
                             </span>
-                            <span className="font-medium">{proportion} %</span>
+                            <span className="font-medium">
+                              <span className="text-primary">{proportion}</span> %
+                            </span>
                           </div>
                           <div className="flex justify-between">
                             <span className="text-sm text-muted-foreground">
                               {t('referral.dividend.claimed')}
                             </span>
                             <span className="font-medium">
-                              {userInfo.claimedRewards.dividendReward} RWAF
+                              <span className="text-primary">{userInfo.claimedRewards.dividendReward}</span> RWAF
                             </span>
                           </div>
                           <div className="flex justify-between">
@@ -325,7 +329,7 @@ const Referral = () => {
                               {t('referral.dividend.unclaimed')}
                             </span>
                             <span className="font-medium">
-                              {userInfo.claimableRewards.dividendReward} RWAF
+                              <span className="text-primary">{userInfo.claimableRewards.dividendReward}</span> RWAF
                             </span>
                           </div>
                           <div className="flex justify-between">
