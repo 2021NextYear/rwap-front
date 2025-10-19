@@ -124,8 +124,11 @@ export interface StakeMiningInterface extends Interface {
       | "totalStakingAddresses"
       | "totalStakingClaimedRewards"
       | "transferOwnership"
+      | "updateUserMiningBlockRate"
       | "usdtReceiver"
+      | "userInviteMiningRewards"
       | "userInviteRewards"
+      | "userInviteStakingRewards"
       | "userMiningRecords"
       | "userOrdinaryDividends"
       | "userStakingRecords"
@@ -361,11 +364,23 @@ export interface StakeMiningInterface extends Interface {
     values: [AddressLike]
   ): string;
   encodeFunctionData(
+    functionFragment: "updateUserMiningBlockRate",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
     functionFragment: "usdtReceiver",
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "userInviteMiningRewards",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
     functionFragment: "userInviteRewards",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "userInviteStakingRewards",
     values: [AddressLike]
   ): string;
   encodeFunctionData(
@@ -594,11 +609,23 @@ export interface StakeMiningInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "updateUserMiningBlockRate",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "usdtReceiver",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "userInviteMiningRewards",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "userInviteRewards",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "userInviteStakingRewards",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -912,10 +939,12 @@ export interface StakeMining extends BaseContract {
   getClaimedRewards: TypedContractMethod<
     [_user: AddressLike],
     [
-      [bigint, bigint, bigint, bigint] & {
+      [bigint, bigint, bigint, bigint, bigint, bigint] & {
         miningReward: bigint;
         stakingReward: bigint;
         inviteReward: bigint;
+        inviteMiningReward: bigint;
+        inviteStakingReward: bigint;
         dividendReward: bigint;
       }
     ],
@@ -1054,9 +1083,27 @@ export interface StakeMining extends BaseContract {
     "nonpayable"
   >;
 
+  updateUserMiningBlockRate: TypedContractMethod<
+    [_user: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+
   usdtReceiver: TypedContractMethod<[], [string], "view">;
 
+  userInviteMiningRewards: TypedContractMethod<
+    [arg0: AddressLike],
+    [bigint],
+    "view"
+  >;
+
   userInviteRewards: TypedContractMethod<[arg0: AddressLike], [bigint], "view">;
+
+  userInviteStakingRewards: TypedContractMethod<
+    [arg0: AddressLike],
+    [bigint],
+    "view"
+  >;
 
   userMiningRecords: TypedContractMethod<
     [arg0: AddressLike, arg1: BigNumberish],
@@ -1254,10 +1301,12 @@ export interface StakeMining extends BaseContract {
   ): TypedContractMethod<
     [_user: AddressLike],
     [
-      [bigint, bigint, bigint, bigint] & {
+      [bigint, bigint, bigint, bigint, bigint, bigint] & {
         miningReward: bigint;
         stakingReward: bigint;
         inviteReward: bigint;
+        inviteMiningReward: bigint;
+        inviteStakingReward: bigint;
         dividendReward: bigint;
       }
     ],
@@ -1408,10 +1457,19 @@ export interface StakeMining extends BaseContract {
     nameOrSignature: "transferOwnership"
   ): TypedContractMethod<[newOwner: AddressLike], [void], "nonpayable">;
   getFunction(
+    nameOrSignature: "updateUserMiningBlockRate"
+  ): TypedContractMethod<[_user: AddressLike], [void], "nonpayable">;
+  getFunction(
     nameOrSignature: "usdtReceiver"
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
+    nameOrSignature: "userInviteMiningRewards"
+  ): TypedContractMethod<[arg0: AddressLike], [bigint], "view">;
+  getFunction(
     nameOrSignature: "userInviteRewards"
+  ): TypedContractMethod<[arg0: AddressLike], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "userInviteStakingRewards"
   ): TypedContractMethod<[arg0: AddressLike], [bigint], "view">;
   getFunction(
     nameOrSignature: "userMiningRecords"

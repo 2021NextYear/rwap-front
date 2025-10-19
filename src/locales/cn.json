@@ -112,7 +112,9 @@
       "direct": "直接邀请",
       "indirect": "间接邀请",
       "inviteReward": "邀请奖励",
-      "teamUsers": "团队用户"
+      "teamUsers": "团队用户",
+      "inviteMiningReward": "挖矿邀请奖励",
+      "inviteStakingReward": "质押邀请奖励"
     },
     "rewards": {
       "title": "邀请奖励",

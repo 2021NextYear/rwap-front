@@ -92,6 +92,8 @@ export function useUserInfo() {
         stakingReward: '0',
         inviteReward: '0',
         dividendReward: '0',
+        inviteMiningReward: '0',
+        inviteStakingReward: '0',
       },
       {
         directInviter: '',
@@ -146,6 +148,8 @@ export function useUserInfo() {
         stakingReward: '0',
         inviteReward: '0',
         dividendReward: '0',
+        inviteMiningReward: '0',
+        inviteStakingReward: '0',
       }
     if (claimableRewards) {
       const { miningReward, stakingReward, inviteReward, dividendReward } = claimableRewards
@@ -158,12 +162,21 @@ export function useUserInfo() {
     }
 
     if (claimedRewards) {
-      const { miningReward, stakingReward, inviteReward, dividendReward } = claimedRewards
+      const {
+        miningReward,
+        stakingReward,
+        inviteReward,
+        dividendReward,
+        inviteMiningReward,
+        inviteStakingReward,
+      } = claimedRewards
       _claimedRewards = {
         miningReward: number2Small(String(miningReward), 18),
         stakingReward: number2Small(String(stakingReward), 18),
         inviteReward: number2Small(String(inviteReward), 18),
         dividendReward: number2Small(String(dividendReward), 18),
+        inviteMiningReward: number2Small(String(inviteMiningReward), 18),
+        inviteStakingReward: number2Small(String(inviteStakingReward), 18),
       }
     }
 

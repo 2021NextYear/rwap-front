@@ -112,7 +112,9 @@
       "direct": "Direct Invites",
       "indirect": "Indirect Invites",
       "inviteReward": "Invite Rewards",
-      "teamUsers": "Team Users"
+      "teamUsers": "Team Users",
+      "inviteMiningReward": "Mining invitation rewards",
+      "inviteStakingReward": "Staking invitation rewards"
     },
     "rewards": {
       "title": "Invite Rewards",

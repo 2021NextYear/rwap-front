@@ -142,7 +142,7 @@ const Staking = () => {
 
       <main className="relative z-10 pt-20">
         {/* Hero Section */}
-        <section className="py-20 px-4">
+        <section className="py-5 px-4 sm:py-10 ">
           <div className="container mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
               {t('staking.title')}
@@ -153,7 +153,7 @@ const Staking = () => {
           </div>
         </section>
         {/* Staking Stats */}
-        <section className="py-16 px-4">
+        <section className="py-5 px-4 sm:py-16 ">
           <div className="container mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
               {stakingStats.map((stat, index) => {
@@ -180,7 +180,7 @@ const Staking = () => {
         </section>
 
         {/* Main Staking Interface */}
-        <section className="py-16 px-4">
+        <section className="py-5 px-4 sm:py-16 ">
           <div className="container mx-auto max-w-6xl">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Staking Operations */}
@@ -432,7 +432,7 @@ const Staking = () => {
         </section>
 
         {/* Staking Pools */}
-        {/* <section className="py-16 px-4">
+        {/* <section className="py-5 px-4 sm:py-16 ">
           <div className="container mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold mb-4">质押池</h2>
@@ -482,7 +482,7 @@ const Staking = () => {
         </section> */}
 
         {/* FAQ Section */}
-        <section className="py-16 px-4">
+        <section className="py-5 px-4 sm:py-16 ">
           <div className="container mx-auto max-w-4xl">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold mb-4">{t('staking.faq.title')}</h2>

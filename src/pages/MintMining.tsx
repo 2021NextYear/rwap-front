@@ -147,11 +147,10 @@ const MintMining = () => {
 
   const withdrawFromOldStaking = async () => {
     try {
-      const calldata = stakeMiningInterface.encodeFunctionData('emergencyWithdraw', [
-        rwat,
-        '1000000000000',
-      ])
-      await sendTransaction({ to: oldStaking, data: calldata, value: '0' }, chainId)
+      // const calldata = stakeMiningInterface.encodeFunctionData('', [
+      //   '',
+      // ])
+      // await sendTransaction({ to: staking, data: calldata, value: '0' }, chainId)
     } catch (error) {
       console.log('error', error)
     }
@@ -172,7 +171,7 @@ const MintMining = () => {
             set pair
           </div>
         </div> */}
-        <section className="py-20 px-4">
+        <section className="py-5 px-4 sm:py-10 ">
           <div className="container mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
               {t('mint.title')}
@@ -184,7 +183,7 @@ const MintMining = () => {
         </section>
 
         {/* Mining Stats */}
-        <section className="py-16 px-4">
+        <section className="py-5 px-4 sm:py-16 ">
           <div className="container mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-16">
               {stats.map((stat, index) => {
@@ -210,7 +209,7 @@ const MintMining = () => {
         </section>
 
         {/* Mint Section */}
-        <section className="py-16 px-4">
+        <section className="py-5 px-4 sm:py-16 ">
           <div className="container mx-auto max-w-4xl">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Mint Interface */}
@@ -336,7 +335,7 @@ const MintMining = () => {
         </section>
 
         {/* Mining Pools */}
-        <section className="py-16 px-4">
+        <section className="py-5 px-4 sm:py-16 ">
           <div className="container mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold mb-4">{t('mint.pools.title')}</h2>

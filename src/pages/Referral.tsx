@@ -33,8 +33,14 @@ const Referral = () => {
     },
     { label: t('referral.stats.indirect'), value: userInfo.indirectCount, icon: Users, reward: '' },
     {
-      label: t('referral.stats.inviteReward'),
-      value: userInfo.claimedRewards.inviteReward,
+      label: t('referral.stats.inviteMiningReward'),
+      value: userInfo.claimedRewards.inviteMiningReward,
+      icon: Gift,
+      reward: '',
+    },
+    {
+      label: t('referral.stats.inviteStakingReward'),
+      value: userInfo.claimedRewards.inviteStakingReward,
       icon: Gift,
       reward: '',
     },
@@ -97,7 +103,7 @@ const Referral = () => {
 
       <main className="relative z-10 pt-20">
         {/* Hero Section */}
-        <section className="py-20 px-4">
+        <section className="py-5 px-4 sm:py-10 ">
           <div className="container mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
               {t('referral.title')}
@@ -130,9 +136,9 @@ const Referral = () => {
         </section>
 
         {/* Stats Section */}
-        <section className="py-16 px-4">
+        <section className="py-5 px-4 sm:py-16 ">
           <div className="container mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-16">
               {stats.map((stat, index) => {
                 const Icon = stat.icon
                 return (
@@ -157,7 +163,7 @@ const Referral = () => {
         </section>
 
         {/* Main Content */}
-        <section className="py-16 px-4">
+        <section className="py-5 px-4 sm:py-16 ">
           <div className="container mx-auto max-w-6xl">
             <Tabs defaultValue="rewards" className="w-full">
               <TabsList className="grid w-full grid-cols-2">

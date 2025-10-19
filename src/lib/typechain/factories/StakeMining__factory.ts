@@ -668,6 +668,16 @@ const _abi = [
       },
       {
         internalType: "uint256",
+        name: "inviteMiningReward",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "inviteStakingReward",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
         name: "dividendReward",
         type: "uint256",
       },
@@ -1202,6 +1212,19 @@ const _abi = [
     type: "function",
   },
   {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_user",
+        type: "address",
+      },
+    ],
+    name: "updateUserMiningBlockRate",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "usdtReceiver",
     outputs: [
@@ -1222,7 +1245,45 @@ const _abi = [
         type: "address",
       },
     ],
+    name: "userInviteMiningRewards",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
     name: "userInviteRewards",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "userInviteStakingRewards",
     outputs: [
       {
         internalType: "uint256",
