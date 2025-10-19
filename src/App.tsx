@@ -10,7 +10,7 @@ import Referral from './pages/Referral'
 import NotFound from './pages/NotFound'
 import { wagmiConfig } from './constants'
 import { WagmiProvider } from 'wagmi'
-import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
+import { RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit'
 import '@rainbow-me/rainbowkit/styles.css'
 import { Updater } from './components/Updater'
 import { SWRConfig } from 'swr'
@@ -29,7 +29,7 @@ const App = () => {
     >
       <WagmiProvider config={wagmiConfig}>
         <QueryClientProvider client={queryClient}>
-          <RainbowKitProvider locale={i18n.language as any}>
+          <RainbowKitProvider locale={i18n.language as any} theme={darkTheme()}>
             <TooltipProvider>
               <Toaster />
               <Sonner />

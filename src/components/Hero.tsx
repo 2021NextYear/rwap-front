@@ -71,7 +71,7 @@ const Hero = () => {
               <img
                 src={heroOrb}
                 alt="RWAI AI Agent"
-                className="w-80 h-80 object-contain animate-float"
+                className="w-80 h-80 object-contain animate-float rounded-full"
               />
               <div className="absolute inset-0 bg-gradient-primary opacity-20 rounded-full blur-3xl animate-glow"></div>
             </div>
